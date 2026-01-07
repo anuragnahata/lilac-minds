@@ -7,7 +7,6 @@ import {
   MapPin, 
   Instagram, 
   Mail, 
-  Phone, 
   ArrowRight, 
   BookOpen, 
   Wind,
@@ -17,7 +16,17 @@ import {
   Star,
   Video,
   Sun,
-  Cloud
+  Cloud,
+  Quote,
+  Award,
+  ChevronDown,
+  ChevronUp,
+  FileText,
+  Activity,
+  Compass,
+  PhoneCall,
+  CheckCircle,
+  Loader2
 } from 'lucide-react';
 
 // --- IMAGE OPTIMIZATION ---
@@ -30,11 +39,11 @@ const IMAGES = {
   logo: optimize("https://i.ibb.co/XZG4XH4N/Untitled-design.png", 400)
 };
 
-// --- SEO DATA ---
+// --- DATA ---
 const SEO_DATA = {
   title: "Lilac Minds | Psychologist & Career Counsellor in Jamnagar",
   description: "Lilac Minds, founded by Prarthana Thaker, offers expert psychotherapy, career counselling, and student mentorship in Jamnagar.",
-  keywords: "Psychologist Jamnagar, Career Counselling, Mental Health, Prarthana Thaker",
+  keywords: "Psychologist Jamnagar, Career Counselling, Mental Health, Prarthana Thaker, Psychotherapy, Student Counseling Gujarat",
   schema: {
     "@context": "https://schema.org",
     "@type": "MedicalOrganization",
@@ -49,6 +58,134 @@ const SEO_DATA = {
       "addressCountry": "IN"
     },
     "telephone": "+919876543210" 
+  }
+};
+
+const TESTIMONIAL_DATA = [
+  {
+    text: "Prarthana ma'am helped me find clarity when I was completely lost about my career path. Her guidance is practical yet so empathetic.",
+    name: "Riya S.",
+    type: "Career Counselling"
+  },
+  {
+    text: "I finally found a safe space to talk about my anxiety without feeling judged. The clinic vibe is so calming, it instantly relaxes you.",
+    name: "Aarav M.",
+    type: "Psychotherapy"
+  },
+  {
+    text: "The student mentorship program changed my approach to exams. I feel much more confident and less stressed now.",
+    name: "Dev P.",
+    type: "Student Mentorship"
+  }
+];
+
+const FAQS = [
+  {
+    question: "Is my conversation 100% confidential?",
+    answer: "Absolutely. We adhere to strict ethical guidelines regarding client confidentiality. What you share in the therapy room stays in the therapy room."
+  },
+  {
+    question: "How do I know if I need therapy?",
+    answer: "If you're feeling overwhelmed, stuck, or just need a neutral perspective to navigate life's challenges, therapy can be beneficial. You don't need to be in a crisis to seek support."
+  },
+  {
+    question: "Do you offer online sessions?",
+    answer: "Yes, we offer secure video consultations for clients across India and abroad. The quality of care remains exactly the same as in-person visits."
+  },
+  {
+    question: "What is the duration of a typical session?",
+    answer: "Standard sessions typically last between 45 to 60 minutes, giving us enough time to deep dive into your concerns."
+  }
+];
+
+const ASSESSMENT_DATA = {
+  anxiety: {
+    id: 'anxiety',
+    title: "Anxiety Screening (GAD-7)",
+    desc: "A standardized screening tool to assess the severity of anxiety symptoms.",
+    icon: Wind,
+    color: "text-blue-600",
+    bg: "bg-blue-50",
+    questions: [
+      "Feeling nervous, anxious, or on edge",
+      "Not being able to stop or control worrying",
+      "Worrying too much about different things",
+      "Trouble relaxing",
+      "Being so restless that it is hard to sit still",
+      "Becoming easily annoyed or irritable",
+      "Feeling afraid, as if something awful might happen"
+    ],
+    options: [
+      { label: "Not at all", score: 0 },
+      { label: "Several days", score: 1 },
+      { label: "More than half the days", score: 2 },
+      { label: "Nearly every day", score: 3 }
+    ],
+    getResult: (score) => {
+      if (score <= 4) return { level: "Minimal Anxiety", text: "Your symptoms suggest minimal anxiety. Keep practicing self-care." };
+      if (score <= 9) return { level: "Mild Anxiety", text: "You may be experiencing mild anxiety. Mindfulness and relaxation techniques might help." };
+      if (score <= 14) return { level: "Moderate Anxiety", text: "Your scores indicate moderate anxiety. Professional support could be very beneficial." };
+      return { level: "Severe Anxiety", text: "Your symptoms suggest severe anxiety. We strongly recommend speaking with a mental health professional." };
+    }
+  },
+  depression: {
+    id: 'depression',
+    title: "Depression Check (PHQ-9)",
+    desc: "Evaluate common symptoms of depression and low mood.",
+    icon: Cloud,
+    color: "text-gray-600",
+    bg: "bg-gray-50",
+    questions: [
+      "Little interest or pleasure in doing things",
+      "Feeling down, depressed, or hopeless",
+      "Trouble falling or staying asleep, or sleeping too much",
+      "Feeling tired or having little energy",
+      "Poor appetite or overeating",
+      "Feeling bad about yourself - or that you are a failure",
+      "Trouble concentrating on things, such as reading or TV",
+      "Moving or speaking so slowly that other people could have noticed",
+      "Thoughts that you would be better off dead, or of hurting yourself"
+    ],
+    options: [
+      { label: "Not at all", score: 0 },
+      { label: "Several days", score: 1 },
+      { label: "More than half the days", score: 2 },
+      { label: "Nearly every day", score: 3 }
+    ],
+    getResult: (score) => {
+      if (score <= 4) return { level: "Minimal Depression", text: "Your score suggests minimal to no depression." };
+      if (score <= 9) return { level: "Mild Depression", text: "You may have mild depressive symptoms. Monitoring your mood is recommended." };
+      if (score <= 14) return { level: "Moderate Depression", text: "Your symptoms indicate moderate depression. Counseling is recommended." };
+      if (score <= 19) return { level: "Moderately Severe Depression", text: "These scores suggest moderately severe depression. Professional help is advised." };
+      return { level: "Severe Depression", text: "Your score indicates severe depression. Please reach out to a professional immediately." };
+    }
+  },
+  career: {
+    id: 'career',
+    title: "Career Aptitude",
+    desc: "A brief check to see where your professional interests might lie.",
+    icon: Compass,
+    color: "text-violet-600",
+    bg: "bg-violet-50",
+    questions: [
+      "I enjoy solving complex problems and puzzles.",
+      "I like helping others learn or grow.",
+      "I enjoy creative activities like art, writing, or design.",
+      "I prefer structured environments with clear rules.",
+      "I like leading teams and persuading others.",
+      "I enjoy working with machines, tools, or physical objects."
+    ],
+    options: [
+      { label: "Disagree", score: 0, type: "" },
+      { label: "Neutral", score: 1, type: "" },
+      { label: "Agree", score: 2, type: "" }
+    ],
+    getResult: (score) => {
+      return { 
+        level: "Exploration Needed", 
+        text: "Your interests seem varied. A comprehensive career counselling session with aptitude testing is recommended to pinpoint your perfect path." 
+      };
+    }
   }
 };
 
@@ -89,7 +226,6 @@ const SplashScreen = () => {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.8, ease: "easeInOut" }}
     >
-      {/* Background Gradient Orb */}
       <motion.div 
         animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.8, 0.5] }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -97,7 +233,6 @@ const SplashScreen = () => {
       />
 
       <div className="relative z-10 flex flex-col items-center px-4">
-        {/* Logo */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -113,7 +248,6 @@ const SplashScreen = () => {
            />
         </motion.div>
 
-        {/* Title */}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -124,7 +258,6 @@ const SplashScreen = () => {
           Lilac Minds
         </motion.h1>
         
-        {/* Accent Line */}
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: "60px" }}
@@ -132,7 +265,6 @@ const SplashScreen = () => {
           className="h-1 bg-violet-500 mt-6 rounded-full"
         />
         
-        {/* Subtitle */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -146,9 +278,8 @@ const SplashScreen = () => {
   );
 };
 
-// --- MAIN SECTIONS ---
-
-const Navbar = ({ scrollToSection }) => {
+// --- NAVIGATION ---
+const Navbar = ({ currentView, onNavigate }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -158,14 +289,19 @@ const Navbar = ({ scrollToSection }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = ['About', 'Services', 'Clinic'];
+  const navItems = [
+    { label: 'About', target: 'about', type: 'scroll' },
+    { label: 'Services', target: 'services', type: 'scroll' },
+    { label: 'Clinic', target: 'clinic', type: 'scroll' },
+    { label: 'Resources', target: 'resources', type: 'page' },
+  ];
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled || mobileMenuOpen ? 'bg-white/90 backdrop-blur-md shadow-sm py-2' : 'bg-transparent py-4 md:py-6'}`}>
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
         <div 
           className="flex items-center gap-2 cursor-pointer z-50"
-          onClick={() => scrollToSection('hero')}
+          onClick={() => onNavigate('home')}
         >
           <img 
             src={IMAGES.logo} 
@@ -179,17 +315,17 @@ const Navbar = ({ scrollToSection }) => {
         
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((item) => (
+          {navItems.map((item) => (
             <button
-              key={item}
-              onClick={() => scrollToSection(item.toLowerCase())}
-              className="text-slate-600 hover:text-violet-600 font-medium text-sm transition-colors"
+              key={item.label}
+              onClick={() => onNavigate(item.target, item.type)}
+              className={`${currentView === 'resources' && item.target === 'resources' ? 'text-violet-700 font-bold' : 'text-slate-600 font-medium'} hover:text-violet-600 text-sm transition-colors`}
             >
-              {item}
+              {item.label}
             </button>
           ))}
           <button 
-            onClick={() => scrollToSection('contact')}
+            onClick={() => onNavigate('contact', 'scroll')}
             className="bg-slate-900 text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-violet-600 transition-all shadow-md hover:shadow-lg"
           >
             Book Now
@@ -214,17 +350,17 @@ const Navbar = ({ scrollToSection }) => {
             className="fixed inset-0 bg-white z-40 pt-24 px-6 md:hidden"
           >
             <div className="flex flex-col gap-6 text-center">
-              {navLinks.map((item) => (
+              {navItems.map((item) => (
                 <button
-                  key={item}
-                  onClick={() => { setMobileMenuOpen(false); scrollToSection(item.toLowerCase()); }}
+                  key={item.label}
+                  onClick={() => { setMobileMenuOpen(false); onNavigate(item.target, item.type); }}
                   className="text-2xl font-bold text-slate-800"
                 >
-                  {item}
+                  {item.label}
                 </button>
               ))}
               <button 
-                onClick={() => { setMobileMenuOpen(false); scrollToSection('contact'); }}
+                onClick={() => { setMobileMenuOpen(false); onNavigate('contact', 'scroll'); }}
                 className="bg-violet-600 text-white py-4 rounded-xl text-lg font-semibold mt-4"
               >
                 Book Appointment
@@ -237,15 +373,303 @@ const Navbar = ({ scrollToSection }) => {
   );
 };
 
-const Hero = ({ scrollToSection }) => {
+// --- RESOURCES VIEW ---
+const ResourcesView = ({ onNavigate }) => {
+  const [activeTest, setActiveTest] = useState(null); // 'anxiety', 'depression', 'career'
+  const [step, setStep] = useState('menu'); // 'menu', 'form', 'questions', 'result'
+  const [user, setUser] = useState({ name: '', phone: '', email: '', city: '' });
+  const [answers, setAnswers] = useState({});
+  const [result, setResult] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const startTest = (testId) => {
+    setActiveTest(ASSESSMENT_DATA[testId]);
+    setStep('form');
+    setAnswers({});
+    setResult(null);
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    setStep('questions');
+  };
+
+  const handleAnswer = (questionIndex, score) => {
+    const newAnswers = { ...answers, [questionIndex]: score };
+    setAnswers(newAnswers);
+
+    // Check if it's the last question
+    if (Object.keys(newAnswers).length === activeTest.questions.length) {
+      calculateAndSendResult(newAnswers);
+    }
+  };
+
+  const calculateAndSendResult = async (finalAnswers) => {
+    setIsSubmitting(true);
+    const totalScore = Object.values(finalAnswers).reduce((a, b) => a + b, 0);
+    const res = activeTest.getResult(totalScore);
+    setResult({ ...res, score: totalScore });
+
+    // Send data to Formspree
+    try {
+      await fetch("https://formspree.io/f/xeoylwwl", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          _subject: `New ${activeTest.title} Result: ${user.name}`,
+          user_name: user.name,
+          user_email: user.email,
+          user_phone: user.phone,
+          user_city: user.city,
+          test_name: activeTest.title,
+          test_score: totalScore,
+          result_level: res.level,
+          result_text: res.text,
+          message: "User completed an automated assessment on the website."
+        })
+      });
+    } catch (error) {
+      console.error("Error sending assessment result:", error);
+    } finally {
+      setIsSubmitting(false);
+      setStep('result');
+    }
+  };
+
+  const reset = () => {
+    setStep('menu');
+    setActiveTest(null);
+    setAnswers({});
+    setResult(null);
+  };
+
+  const helplines = [
+    { name: "Vandrevala Foundation", number: "1860 266 2345", desc: "24x7 Mental Health Support" },
+    { name: "iCall (TISS)", number: "022 2552 1111", desc: "Mon-Sat, 8 AM - 10 PM" },
+    { name: "Kirun Helpline", number: "1800 599 0019", desc: "Govt. of India (24x7)" },
+  ];
+
+  return (
+    <div className="pt-24 min-h-screen bg-slate-50">
+      <div className="max-w-4xl mx-auto px-6 py-12 md:py-20">
+        
+        {/* HEADER */}
+        {step === 'menu' && (
+          <div className="text-center mb-16">
+            <h1 className="text-4xl md:text-6xl font-bold text-slate-900 mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>Resources</h1>
+            <p className="text-lg text-slate-500 max-w-2xl mx-auto">
+              Curated tools, assessments, and helplines to support your mental wellness journey.
+            </p>
+          </div>
+        )}
+
+        {/* STEP 1: MENU */}
+        {step === 'menu' && (
+          <div className="grid lg:grid-cols-2 gap-12 mb-16">
+            <div>
+              <h3 className="text-2xl font-bold text-slate-800 mb-8 flex items-center gap-3">
+                <span className="p-2 bg-violet-100 rounded-lg text-violet-600"><FileText size={24} /></span>
+                Self-Assessments
+              </h3>
+              <div className="grid gap-4">
+                {Object.values(ASSESSMENT_DATA).map((test, i) => {
+                  const IconComponent = test.icon;
+                  return (
+                    <div 
+                      key={i} 
+                      onClick={() => startTest(test.id)}
+                      className="group flex items-start gap-4 p-6 rounded-2xl border border-slate-100 hover:border-violet-100 hover:shadow-lg transition-all cursor-pointer bg-white"
+                    >
+                      <div className={`p-3 rounded-full ${test.bg} ${test.color}`}>
+                        <IconComponent size={20} />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-bold text-slate-900 mb-1 group-hover:text-violet-700 transition-colors">{test.title}</h4>
+                        <p className="text-sm text-slate-500 mb-3">{test.desc}</p>
+                        <span className="text-xs font-semibold text-violet-500 uppercase tracking-wider flex items-center gap-1">
+                          Start Assessment <ArrowRight size={14} />
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* HELPLINES (Visible only in menu) */}
+            <div>
+              <h3 className="text-2xl font-bold text-slate-800 mb-8 flex items-center gap-3">
+                <span className="p-2 bg-red-100 rounded-lg text-red-600"><PhoneCall size={24} /></span>
+                Crisis Helplines (India)
+              </h3>
+              <div className="bg-white rounded-[2rem] p-8 border border-slate-100 shadow-sm">
+                <div className="space-y-6">
+                  {helplines.map((line, i) => (
+                    <div key={i} className="flex items-center justify-between pb-4 border-b border-slate-100 last:border-0 last:pb-0">
+                      <div>
+                        <div className="font-bold text-slate-900">{line.name}</div>
+                        <div className="text-sm text-slate-500">{line.desc}</div>
+                      </div>
+                      <a href={`tel:${line.number.replace(/\s/g, '')}`} className="bg-slate-50 px-4 py-2 rounded-full text-sm font-bold text-slate-700 shadow-sm hover:bg-violet-600 hover:text-white transition-colors">
+                        Call
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* STEP 2: USER DETAILS FORM */}
+        {step === 'form' && (
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-white rounded-[2rem] p-8 md:p-12 shadow-xl border border-slate-100 max-w-2xl mx-auto"
+          >
+            <button onClick={reset} className="text-slate-400 hover:text-slate-600 mb-6 flex items-center gap-2 text-sm font-bold">
+              <ArrowRight className="rotate-180" size={16} /> Back to Resources
+            </button>
+            <h2 className="text-2xl font-bold text-slate-900 mb-2">{activeTest.title}</h2>
+            <p className="text-slate-500 mb-8">Please provide your details to start the assessment.</p>
+            
+            <form onSubmit={handleFormSubmit} className="space-y-5">
+              <div>
+                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Full Name</label>
+                <input required type="text" className="w-full p-4 bg-slate-50 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-violet-500" 
+                  value={user.name} onChange={e => setUser({...user, name: e.target.value})}
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Mobile Number</label>
+                  <input required type="tel" className="w-full p-4 bg-slate-50 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-violet-500" 
+                    value={user.phone} onChange={e => setUser({...user, phone: e.target.value})}
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">City</label>
+                  <input required type="text" className="w-full p-4 bg-slate-50 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-violet-500" 
+                    value={user.city} onChange={e => setUser({...user, city: e.target.value})}
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Email Address</label>
+                <input required type="email" className="w-full p-4 bg-slate-50 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-violet-500" 
+                  value={user.email} onChange={e => setUser({...user, email: e.target.value})}
+                />
+              </div>
+              <button type="submit" className="w-full bg-violet-600 text-white font-bold py-4 rounded-xl hover:bg-violet-700 transition-colors shadow-lg mt-4">
+                Start Assessment
+              </button>
+            </form>
+          </motion.div>
+        )}
+
+        {/* STEP 3: QUESTIONS */}
+        {step === 'questions' && (
+          <div className="max-w-2xl mx-auto">
+            <div className="mb-8 flex items-center justify-between">
+              <h2 className="text-xl font-bold text-slate-900">{activeTest.title}</h2>
+              <span className="text-sm font-medium text-violet-600 bg-violet-50 px-3 py-1 rounded-full">
+                {Object.keys(answers).length} / {activeTest.questions.length}
+              </span>
+            </div>
+            
+            {isSubmitting ? (
+              <div className="flex flex-col items-center justify-center py-20">
+                <Loader2 className="animate-spin text-violet-600 w-12 h-12 mb-4" />
+                <p className="text-slate-600 font-medium">Analyzing results and generating report...</p>
+              </div>
+            ) : (
+              <div className="space-y-12">
+                {activeTest.questions.map((q, qIdx) => (
+                  <motion.div 
+                    key={qIdx}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: qIdx * 0.1 }}
+                    className={`bg-white p-6 rounded-2xl border ${answers[qIdx] !== undefined ? 'border-violet-500 ring-1 ring-violet-500' : 'border-slate-200'} shadow-sm`}
+                  >
+                    <p className="text-lg font-medium text-slate-800 mb-4">{qIdx + 1}. {q}</p>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                      {activeTest.options.map((opt, oIdx) => (
+                        <button
+                          key={oIdx}
+                          onClick={() => handleAnswer(qIdx, opt.score)}
+                          className={`p-3 rounded-xl text-sm font-medium transition-all ${
+                            answers[qIdx] === opt.score 
+                              ? 'bg-violet-600 text-white shadow-md' 
+                              : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
+                          }`}
+                        >
+                          {opt.label}
+                        </button>
+                      ))}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* STEP 4: RESULTS */}
+        {step === 'result' && result && (
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-white rounded-[2.5rem] p-8 md:p-12 shadow-2xl border border-slate-100 max-w-2xl mx-auto text-center"
+          >
+            <div className="w-20 h-20 bg-violet-100 rounded-full flex items-center justify-center mx-auto mb-6 text-violet-600">
+              <Award size={40} />
+            </div>
+            <h2 className="text-3xl font-bold text-slate-900 mb-2">Assessment Complete</h2>
+            <p className="text-slate-500 mb-8">Thank you, {user.name}. We have sent these details to the clinic for your records.</p>
+            
+            <div className="bg-slate-50 p-8 rounded-2xl mb-8 border border-slate-200">
+              <div className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-2">Result Indicator</div>
+              <div className="text-2xl font-bold text-violet-700 mb-3">{result.level}</div>
+              <p className="text-slate-600 leading-relaxed">{result.text}</p>
+            </div>
+
+            <div className="bg-yellow-50 border border-yellow-100 p-4 rounded-xl flex items-start gap-3 text-left mb-8">
+              <CheckCircle className="text-yellow-600 shrink-0 mt-0.5" size={20} />
+              <p className="text-sm text-yellow-800">
+                <strong>Note:</strong> This is a screening tool, not a medical diagnosis. The results are based on your responses and should be discussed with a professional.
+              </p>
+            </div>
+
+            <button 
+              onClick={() => onNavigate('contact', 'scroll')}
+              className="w-full bg-slate-900 text-white font-bold py-4 rounded-xl hover:bg-violet-600 transition-colors shadow-lg flex items-center justify-center gap-2"
+            >
+              Book a Consultation to Discuss <ArrowRight size={18} />
+            </button>
+            <button onClick={reset} className="mt-6 text-slate-400 text-sm hover:text-slate-600 underline">
+              Take another test
+            </button>
+          </motion.div>
+        )}
+
+      </div>
+    </div>
+  );
+};
+
+// --- CONTENT COMPONENTS ---
+const Hero = ({ onNavigate }) => {
   return (
     <section id="hero" className="min-h-[90vh] flex items-center justify-center relative pt-24 pb-12 overflow-hidden bg-gradient-to-b from-purple-50 to-white">
-      {/* Decorative Icons */}
       <FloatingIcon Icon={Heart} x="left-[10%]" y="top-[20%]" delay={0} color="text-pink-300" />
       <FloatingIcon Icon={Sun} x="right-[10%]" y="top-[15%]" delay={1.5} color="text-yellow-300" />
       <FloatingIcon Icon={Cloud} x="left-[5%]" y="bottom-[20%]" delay={2.5} color="text-blue-300" />
       
-      {/* Background Blobs */}
       <div className="absolute inset-0 pointer-events-none">
         <motion.div 
           animate={{ scale: [1, 1.1, 1] }}
@@ -279,13 +703,13 @@ const Hero = ({ scrollToSection }) => {
           
           <div className="flex flex-col sm:flex-row gap-3">
             <button 
-              onClick={() => scrollToSection('contact')}
+              onClick={() => onNavigate('contact', 'scroll')}
               className="bg-violet-600 text-white px-8 py-3.5 rounded-full text-base font-semibold hover:bg-violet-700 transition-all shadow-lg flex items-center justify-center gap-2 hover:-translate-y-1"
             >
               Start Your Journey <ArrowRight size={18} />
             </button>
             <button 
-              onClick={() => scrollToSection('services')}
+              onClick={() => onNavigate('services', 'scroll')}
               className="bg-white text-slate-800 border border-slate-200 px-8 py-3.5 rounded-full text-base font-semibold hover:bg-slate-50 transition-all flex items-center justify-center hover:-translate-y-1 hover:shadow-md"
             >
               How we help
@@ -311,7 +735,6 @@ const Hero = ({ scrollToSection }) => {
             <div className="absolute inset-0 bg-gradient-to-t from-violet-900/30 to-transparent"></div>
           </div>
           
-          {/* Animated Illustration Badges */}
           <motion.div 
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -330,6 +753,34 @@ const Hero = ({ scrollToSection }) => {
             <span className="font-bold text-slate-700 text-sm">Clarity</span>
           </motion.div>
         </motion.div>
+      </div>
+    </section>
+  );
+};
+
+const StatsSection = () => {
+  return (
+    <section className="py-12 bg-violet-900 text-white relative overflow-hidden">
+      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <div className="p-4">
+            <div className="text-4xl md:text-5xl font-bold mb-2 text-violet-200">5+</div>
+            <div className="text-sm md:text-base opacity-80">Years Experience</div>
+          </div>
+          <div className="p-4">
+            <div className="text-4xl md:text-5xl font-bold mb-2 text-pink-200">500+</div>
+            <div className="text-sm md:text-base opacity-80">Students Guided</div>
+          </div>
+          <div className="p-4">
+            <div className="text-4xl md:text-5xl font-bold mb-2 text-blue-200">100%</div>
+            <div className="text-sm md:text-base opacity-80">Confidentiality</div>
+          </div>
+          <div className="p-4">
+            <div className="text-4xl md:text-5xl font-bold mb-2 text-yellow-200">20+</div>
+            <div className="text-sm md:text-base opacity-80">Workshops Held</div>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -429,20 +880,14 @@ const Services = () => {
           </motion.div>
         </div>
 
-        <motion.div 
-          className="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
-          variants={{
-            hidden: { opacity: 0 },
-            show: { opacity: 1, transition: { staggerChildren: 0.2 } }
-          }}
-        >
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((s, i) => (
             <motion.div 
               key={i}
-              variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
               whileHover={{ y: -8, boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)" }}
               className="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 transition-all duration-300 group cursor-default"
             >
@@ -453,7 +898,38 @@ const Services = () => {
               <p className="text-slate-500 leading-relaxed">{s.desc}</p>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const TestimonialsSection = () => {
+  return (
+    <section className="py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-4">Kind Words</h2>
+          <p className="text-lg text-slate-500">Stories of growth and healing from our community.</p>
+        </div>
+        
+        <div className="grid md:grid-cols-3 gap-8">
+          {TESTIMONIAL_DATA.map((t, i) => (
+            <div key={i} className="bg-slate-50 p-8 rounded-[2rem] relative">
+              <Quote className="text-violet-200 mb-4 h-8 w-8" />
+              <p className="text-slate-700 italic mb-6 leading-relaxed">"{t.text}"</p>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-violet-200 rounded-full flex items-center justify-center text-violet-700 font-bold">
+                  {t.name[0]}
+                </div>
+                <div>
+                  <div className="font-bold text-slate-900">{t.name}</div>
+                  <div className="text-xs text-slate-500">{t.type}</div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -494,7 +970,7 @@ const BreathWidget = () => {
 
 const ClinicSection = () => {
   return (
-    <section id="clinic" className="py-20 md:py-32 bg-white">
+    <section id="clinic" className="py-20 md:py-32 bg-slate-50">
       <div className="max-w-7xl mx-auto px-6">
         <motion.div 
           initial={{ opacity: 0 }}
@@ -536,19 +1012,29 @@ const ClinicSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="bg-violet-50 p-8 rounded-[2.5rem] flex-1 flex flex-col justify-center border border-violet-100"
+              className="bg-white p-8 rounded-[2.5rem] flex-1 flex flex-col justify-center border border-slate-100 shadow-sm"
             >
               <div className="flex items-center gap-4 mb-6 text-slate-800 font-semibold">
-                <div className="p-3 bg-white rounded-full text-yellow-500 shadow-sm"><Star size={20} fill="currentColor"/></div>
-                <span className="text-lg">Private & Confidential</span>
+                <div className="p-3 bg-yellow-50 rounded-full text-yellow-600"><Star size={20} fill="currentColor"/></div>
+                <div>
+                  <div className="text-lg">Private & Confidential</div>
+                  <div className="text-xs text-slate-500 font-normal">Your privacy is our priority</div>
+                </div>
+              </div>
+              <div className="flex items-center gap-4 text-slate-800 font-semibold mb-6">
+                <div className="p-3 bg-blue-50 rounded-full text-blue-600"><Award size={20}/></div>
+                <div>
+                  <div className="text-lg">Certified Expert</div>
+                  <div className="text-xs text-slate-500 font-normal">Professional guidance</div>
+                </div>
               </div>
               <div className="flex items-center gap-4 text-slate-800 font-semibold">
-                <div className="p-3 bg-white rounded-full text-slate-400 shadow-sm"><Coffee size={20}/></div>
-                <span className="text-lg">Warm & Welcoming</span>
+                <div className="p-3 bg-purple-50 rounded-full text-purple-600"><Coffee size={20}/></div>
+                <div>
+                  <div className="text-lg">Warm & Welcoming</div>
+                  <div className="text-xs text-slate-500 font-normal">Judgment-free zone</div>
+                </div>
               </div>
-              <p className="mt-8 text-slate-600 leading-relaxed">
-                Located in the heart of the city, but quiet enough to hear your own thoughts.
-              </p>
             </motion.div>
             
             <motion.div
@@ -566,11 +1052,54 @@ const ClinicSection = () => {
   );
 };
 
+const FAQ = () => {
+  const [openIndex, setOpenIndex] = useState(null);
+
+  return (
+    <section className="py-20 bg-slate-50">
+      <div className="max-w-3xl mx-auto px-6">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-4">Common Questions</h2>
+          <p className="text-lg text-slate-500">Everything you need to know before your visit.</p>
+        </div>
+
+        <div className="space-y-4">
+          {FAQS.map((faq, i) => (
+            <div key={i} className="border border-slate-200 rounded-2xl overflow-hidden bg-white">
+              <button
+                onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                className="w-full p-6 text-left flex justify-between items-center bg-white hover:bg-slate-50 transition-colors"
+              >
+                <span className="font-bold text-slate-800 text-lg">{faq.question}</span>
+                {openIndex === i ? <ChevronUp className="text-violet-600" /> : <ChevronDown className="text-slate-400" />}
+              </button>
+              <AnimatePresence>
+                {openIndex === i && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    className="bg-white border-t border-slate-100"
+                  >
+                    <div className="p-6 pt-0 text-slate-600 leading-relaxed mt-4">
+                      {faq.answer}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
 const Booking = () => {
   const [appointmentType, setAppointmentType] = useState('in-person');
 
   return (
-    <section id="contact" className="py-20 md:py-32 bg-slate-50 relative overflow-hidden">
+    <section id="contact" className="py-20 md:py-32 bg-white relative overflow-hidden">
       {/* Decorative Circles */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-violet-100 rounded-full translate-x-1/2 -translate-y-1/2"></div>
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-pink-50 rounded-full -translate-x-1/2 translate-y-1/2"></div>
@@ -712,8 +1241,23 @@ const Footer = () => (
   </footer>
 );
 
+// --- VIEW MANAGER ---
+const MainContent = ({ onNavigate }) => (
+  <>
+    <Hero onNavigate={onNavigate} />
+    <StatsSection />
+    <Founder />
+    <Services />
+    <TestimonialsSection />
+    <ClinicSection />
+    <FAQ />
+    <Booking />
+  </>
+);
+
 export default function App() {
   const [loading, setLoading] = useState(true);
+  const [view, setView] = useState('home'); // 'home' or 'resources'
 
   useEffect(() => {
     // 1. Set Title & Meta Tags
@@ -769,8 +1313,24 @@ export default function App() {
     return () => clearTimeout(timer);
   }, []);
 
-  const scrollToSection = (id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  const handleNavigation = (target, type = 'scroll') => {
+    if (type === 'page' && target === 'resources') {
+      setView('resources');
+      window.scrollTo(0, 0);
+    } else {
+      // Navigate to Home sections
+      if (view !== 'home') {
+        setView('home');
+        // Wait for render then scroll
+        setTimeout(() => {
+          const el = document.getElementById(target);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      } else {
+        const el = document.getElementById(target);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
   };
   
   return (
@@ -785,12 +1345,12 @@ export default function App() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            <Navbar scrollToSection={scrollToSection} />
-            <Hero scrollToSection={scrollToSection} />
-            <Founder />
-            <Services />
-            <ClinicSection />
-            <Booking />
+            <Navbar currentView={view} onNavigate={handleNavigation} />
+            {view === 'home' ? (
+              <MainContent key="home" onNavigate={handleNavigation} />
+            ) : (
+              <ResourcesView key="resources" onNavigate={handleNavigation} />
+            )}
             <Footer />
           </motion.div>
         )}
