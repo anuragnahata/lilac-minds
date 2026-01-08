@@ -1,5 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { 
+  motion, 
+  AnimatePresence, 
+  useScroll, 
+  useTransform, 
+  useSpring, 
+  useMotionValue, 
+  useMotionTemplate 
+} from 'framer-motion';
 import { 
   Heart, 
   Brain, 
@@ -26,7 +34,9 @@ import {
   Compass,
   PhoneCall,
   CheckCircle,
-  Loader2
+  Loader2,
+  MessageCircle,
+  Moon
 } from 'lucide-react';
 
 // --- IMAGE OPTIMIZATION ---
@@ -104,8 +114,8 @@ const ASSESSMENT_DATA = {
     title: "Anxiety Screening (GAD-7)",
     desc: "A standardized screening tool to assess the severity of anxiety symptoms.",
     icon: Wind,
-    color: "text-blue-600",
-    bg: "bg-blue-50",
+    color: "text-blue-600 dark:text-blue-400",
+    bg: "bg-blue-50 dark:bg-blue-900/20",
     questions: [
       "Feeling nervous, anxious, or on edge",
       "Not being able to stop or control worrying",
@@ -133,8 +143,8 @@ const ASSESSMENT_DATA = {
     title: "Depression Check (PHQ-9)",
     desc: "Evaluate common symptoms of depression and low mood.",
     icon: Cloud,
-    color: "text-gray-600",
-    bg: "bg-gray-50",
+    color: "text-gray-600 dark:text-gray-400",
+    bg: "bg-gray-50 dark:bg-gray-800/50",
     questions: [
       "Little interest or pleasure in doing things",
       "Feeling down, depressed, or hopeless",
@@ -165,8 +175,8 @@ const ASSESSMENT_DATA = {
     title: "Career Aptitude",
     desc: "A brief check to see where your professional interests might lie.",
     icon: Compass,
-    color: "text-violet-600",
-    bg: "bg-violet-50",
+    color: "text-violet-600 dark:text-violet-400",
+    bg: "bg-violet-50 dark:bg-violet-900/20",
     questions: [
       "I enjoy solving complex problems and puzzles.",
       "I like helping others learn or grow.",
@@ -189,39 +199,124 @@ const ASSESSMENT_DATA = {
   }
 };
 
-// --- DECORATIVE COMPONENTS ---
+// --- UTILITY COMPONENTS ---
+
+const FloatingWhatsApp = () => (
+  <motion.a 
+    href="https://wa.me/918200711499" 
+    target="_blank" 
+    rel="noopener noreferrer"
+    initial={{ scale: 0 }}
+    animate={{ scale: 1 }}
+    whileHover={{ scale: 1.1 }}
+    whileTap={{ scale: 0.9 }}
+    className="fixed bottom-6 right-6 z-50 bg-violet-600 text-white p-3 md:p-4 rounded-full shadow-2xl hover:shadow-violet-500/30 hover:bg-violet-700 transition-all flex items-center gap-2 group border-2 border-white/20"
+  >
+    <MessageCircle size={28} className="fill-current" />
+    <span className="font-bold hidden md:inline-block max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 ease-in-out whitespace-nowrap">
+      Chat with us
+    </span>
+  </motion.a>
+);
+
+const Tilt3D = ({ children, className = "" }) => {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const mouseX = useSpring(x, { stiffness: 500, damping: 100 });
+  const mouseY = useSpring(y, { stiffness: 500, damping: 100 });
+
+  function handleMouseMove(event) {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseXPos = event.clientX - rect.left;
+    const mouseYPos = event.clientY - rect.top;
+    
+    const xPct = mouseXPos / width - 0.5;
+    const yPct = mouseYPos / height - 0.5;
+
+    x.set(xPct);
+    y.set(yPct);
+  }
+
+  function handleMouseLeave() {
+    x.set(0);
+    y.set(0);
+  }
+
+  const rotateX = useTransform(mouseY, [-0.5, 0.5], [10, -10]);
+  const rotateY = useTransform(mouseX, [-0.5, 0.5], [-10, 10]);
+  const highlightX = useTransform(mouseX, [-0.5, 0.5], [0, 100]);
+  const highlightY = useTransform(mouseY, [-0.5, 0.5], [0, 100]);
+
+  return (
+    <motion.div
+      style={{
+        rotateX,
+        rotateY,
+        transformStyle: "preserve-3d",
+      }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className={`relative ${className}`}
+    >
+      <div style={{ transform: "translateZ(20px)" }}>
+        {children}
+      </div>
+      <motion.div
+        style={{
+          background: useMotionTemplate`radial-gradient(
+            circle at ${highlightX}% ${highlightY}%,
+            rgba(255, 255, 255, 0.15),
+            transparent 80%
+          )`,
+        }}
+        className="absolute inset-0 rounded-[inherit] z-10 pointer-events-none"
+      />
+    </motion.div>
+  );
+};
+
+const ParallaxBackground = () => {
+  const { scrollY } = useScroll();
+  const y1 = useTransform(scrollY, [0, 1000], [0, 300]);
+  const y2 = useTransform(scrollY, [0, 1000], [0, -300]);
+  const rotate = useTransform(scrollY, [0, 1000], [0, 360]);
+
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+      <motion.div 
+        style={{ y: y1, rotate }}
+        className="absolute top-[20%] left-[5%] w-32 h-32 bg-violet-200/20 dark:bg-violet-500/10 rounded-full blur-xl"
+      />
+      <motion.div 
+        style={{ y: y2, rotate: rotate }}
+        className="absolute top-[40%] right-[10%] w-48 h-48 border border-pink-200/30 dark:border-pink-500/10 rounded-full"
+      />
+       <motion.div 
+        style={{ y: y1 }}
+        className="absolute bottom-[20%] left-[15%] w-24 h-24 bg-blue-100/30 dark:bg-blue-500/10 rounded-full blur-lg"
+      />
+    </div>
+  );
+};
 
 const DoodlePattern = () => (
-  <svg className="absolute inset-0 w-full h-full opacity-[0.03] pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+  <svg className="absolute inset-0 w-full h-full opacity-[0.03] dark:opacity-[0.05] pointer-events-none" xmlns="http://www.w3.org/2000/svg">
     <pattern id="pattern-doodle" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
       <circle cx="20" cy="20" r="2" fill="currentColor"/>
       <path d="M 50 50 Q 60 40 70 50 T 90 50" fill="none" stroke="currentColor" strokeWidth="2"/>
       <rect x="80" y="80" width="4" height="4" fill="currentColor" transform="rotate(45 82 82)"/>
     </pattern>
-    <rect width="100%" height="100%" fill="url(#pattern-doodle)"/>
+    <rect width="100%" height="100%" fill="url(#pattern-doodle)" className="text-slate-900 dark:text-white"/>
   </svg>
 );
 
-const FloatingIcon = ({ Icon, x, y, delay, color, size = 32 }) => (
-  <motion.div
-    animate={{ 
-      y: [0, -15, 0],
-      rotate: [0, 10, -10, 0],
-      scale: [1, 1.1, 1],
-      opacity: [0.3, 0.6, 0.3]
-    }}
-    transition={{ duration: 6, repeat: Infinity, delay: delay, ease: "easeInOut" }}
-    className={`absolute ${x} ${y} ${color} hidden md:block pointer-events-none`}
-  >
-    <Icon size={size} />
-  </motion.div>
-);
-
-// --- SPLASH SCREEN ---
 const SplashScreen = () => {
   return (
     <motion.div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-50 overflow-hidden"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-50 dark:bg-slate-950 overflow-hidden"
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.8, ease: "easeInOut" }}
@@ -229,7 +324,7 @@ const SplashScreen = () => {
       <motion.div 
         animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.8, 0.5] }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-violet-200/60 rounded-full blur-[80px] md:blur-[100px]"
+        className="absolute w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-violet-200/60 dark:bg-violet-900/30 rounded-full blur-[80px] md:blur-[100px]"
       />
 
       <div className="relative z-10 flex flex-col items-center px-4">
@@ -252,7 +347,7 @@ const SplashScreen = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
-          className="text-5xl md:text-7xl font-bold text-slate-800 tracking-tight text-center"
+          className="text-5xl md:text-7xl font-bold text-slate-800 dark:text-white tracking-tight text-center"
           style={{ fontFamily: "'Playfair Display', serif" }}
         >
           Lilac Minds
@@ -269,7 +364,7 @@ const SplashScreen = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5, duration: 0.8 }}
-          className="text-slate-400 text-xs md:text-sm mt-6 font-medium tracking-[0.3em] uppercase text-center"
+          className="text-slate-400 dark:text-slate-500 text-xs md:text-sm mt-6 font-medium tracking-[0.3em] uppercase text-center"
         >
           Psychology & Career Guidance
         </motion.p>
@@ -278,8 +373,7 @@ const SplashScreen = () => {
   );
 };
 
-// --- NAVIGATION ---
-const Navbar = ({ currentView, onNavigate }) => {
+const Navbar = ({ currentView, onNavigate, isDarkMode, toggleTheme }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -297,7 +391,11 @@ const Navbar = ({ currentView, onNavigate }) => {
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled || mobileMenuOpen ? 'bg-white/90 backdrop-blur-md shadow-sm py-2' : 'bg-transparent py-4 md:py-6'}`}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      scrolled || mobileMenuOpen 
+        ? 'bg-white/90 dark:bg-slate-900/90 backdrop-blur-md shadow-sm border-b border-slate-200/50 dark:border-white/5 py-2' 
+        : 'bg-transparent py-4 md:py-6'
+    }`}>
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
         <div 
           className="flex items-center gap-2 cursor-pointer z-50"
@@ -310,7 +408,7 @@ const Navbar = ({ currentView, onNavigate }) => {
             width="150"
             height="48"
           />
-          <span className="font-bold text-xl text-slate-800 tracking-tight">Lilac Minds</span>
+          <span className="font-bold text-xl text-slate-800 dark:text-white tracking-tight">Lilac Minds</span>
         </div>
         
         {/* Desktop Nav */}
@@ -319,26 +417,47 @@ const Navbar = ({ currentView, onNavigate }) => {
             <button
               key={item.label}
               onClick={() => onNavigate(item.target, item.type)}
-              className={`${currentView === 'resources' && item.target === 'resources' ? 'text-violet-700 font-bold' : 'text-slate-600 font-medium'} hover:text-violet-600 text-sm transition-colors`}
+              className={`${
+                currentView === 'resources' && item.target === 'resources' 
+                  ? 'text-violet-700 dark:text-violet-400 font-bold' 
+                  : 'text-slate-600 dark:text-slate-300 font-medium'
+              } hover:text-violet-600 dark:hover:text-white text-sm transition-colors`}
             >
               {item.label}
             </button>
           ))}
+          
+          {/* Dark Mode Toggle */}
+          <button 
+            onClick={toggleTheme}
+            className="p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+          >
+            {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
+
           <button 
             onClick={() => onNavigate('contact', 'scroll')}
-            className="bg-slate-900 text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-violet-600 transition-all shadow-md hover:shadow-lg"
+            className="bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-5 py-2 rounded-full text-sm font-bold hover:bg-violet-600 dark:hover:bg-violet-300 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 active:scale-95"
           >
             Book Now
           </button>
         </div>
 
         {/* Mobile Toggle */}
-        <button 
-          className="md:hidden text-slate-800 p-1 z-50"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        >
-          {mobileMenuOpen ? <X /> : <Menu />}
-        </button>
+        <div className="flex items-center gap-4 md:hidden">
+          <button 
+            onClick={toggleTheme}
+            className="p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+          >
+            {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
+          <button 
+            className="text-slate-800 dark:text-white p-1 z-50"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? <X /> : <Menu />}
+          </button>
+        </div>
       </div>
 
       <AnimatePresence>
@@ -347,14 +466,14 @@ const Navbar = ({ currentView, onNavigate }) => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: '100vh' }}
             exit={{ opacity: 0, height: 0 }}
-            className="fixed inset-0 bg-white z-40 pt-24 px-6 md:hidden"
+            className="fixed inset-0 bg-white dark:bg-slate-950 z-40 pt-24 px-6 md:hidden"
           >
             <div className="flex flex-col gap-6 text-center">
               {navItems.map((item) => (
                 <button
                   key={item.label}
                   onClick={() => { setMobileMenuOpen(false); onNavigate(item.target, item.type); }}
-                  className="text-2xl font-bold text-slate-800"
+                  className="text-2xl font-bold text-slate-800 dark:text-white"
                 >
                   {item.label}
                 </button>
@@ -373,10 +492,9 @@ const Navbar = ({ currentView, onNavigate }) => {
   );
 };
 
-// --- RESOURCES VIEW ---
 const ResourcesView = ({ onNavigate }) => {
-  const [activeTest, setActiveTest] = useState(null); // 'anxiety', 'depression', 'career'
-  const [step, setStep] = useState('menu'); // 'menu', 'form', 'questions', 'result'
+  const [activeTest, setActiveTest] = useState(null); 
+  const [step, setStep] = useState('menu'); 
   const [user, setUser] = useState({ name: '', phone: '', email: '', city: '' });
   const [answers, setAnswers] = useState({});
   const [result, setResult] = useState(null);
@@ -398,7 +516,6 @@ const ResourcesView = ({ onNavigate }) => {
     const newAnswers = { ...answers, [questionIndex]: score };
     setAnswers(newAnswers);
 
-    // Check if it's the last question
     if (Object.keys(newAnswers).length === activeTest.questions.length) {
       calculateAndSendResult(newAnswers);
     }
@@ -410,14 +527,10 @@ const ResourcesView = ({ onNavigate }) => {
     const res = activeTest.getResult(totalScore);
     setResult({ ...res, score: totalScore });
 
-    // Send data to Formspree
     try {
       await fetch("https://formspree.io/f/xeoylwwl", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
         body: JSON.stringify({
           _subject: `New ${activeTest.title} Result: ${user.name}`,
           user_name: user.name,
@@ -427,12 +540,11 @@ const ResourcesView = ({ onNavigate }) => {
           test_name: activeTest.title,
           test_score: totalScore,
           result_level: res.level,
-          result_text: res.text,
-          message: "User completed an automated assessment on the website."
+          result_text: res.text
         })
       });
     } catch (error) {
-      console.error("Error sending assessment result:", error);
+      console.error("Error sending result:", error);
     } finally {
       setIsSubmitting(false);
       setStep('result');
@@ -453,67 +565,64 @@ const ResourcesView = ({ onNavigate }) => {
   ];
 
   return (
-    <div className="pt-24 min-h-screen bg-slate-50">
-      <div className="max-w-4xl mx-auto px-6 py-12 md:py-20">
+    <div className="pt-24 min-h-screen bg-slate-50 dark:bg-slate-950 relative overflow-hidden transition-colors duration-300">
+      <ParallaxBackground />
+      <div className="max-w-4xl mx-auto px-6 py-12 md:py-20 relative z-10">
         
-        {/* HEADER */}
         {step === 'menu' && (
           <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-6xl font-bold text-slate-900 mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>Resources</h1>
-            <p className="text-lg text-slate-500 max-w-2xl mx-auto">
+            <h1 className="text-4xl md:text-6xl font-bold text-slate-900 dark:text-white mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>Resources</h1>
+            <p className="text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">
               Curated tools, assessments, and helplines to support your mental wellness journey.
             </p>
           </div>
         )}
 
-        {/* STEP 1: MENU */}
         {step === 'menu' && (
           <div className="grid lg:grid-cols-2 gap-12 mb-16">
             <div>
-              <h3 className="text-2xl font-bold text-slate-800 mb-8 flex items-center gap-3">
-                <span className="p-2 bg-violet-100 rounded-lg text-violet-600"><FileText size={24} /></span>
+              <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-8 flex items-center gap-3">
+                <span className="p-2 bg-violet-100 dark:bg-violet-900/40 rounded-lg text-violet-600 dark:text-violet-300"><FileText size={24} /></span>
                 Self-Assessments
               </h3>
               <div className="grid gap-4">
                 {Object.values(ASSESSMENT_DATA).map((test, i) => {
                   const IconComponent = test.icon;
                   return (
-                    <div 
-                      key={i} 
-                      onClick={() => startTest(test.id)}
-                      className="group flex items-start gap-4 p-6 rounded-2xl border border-slate-100 hover:border-violet-100 hover:shadow-lg transition-all cursor-pointer bg-white"
-                    >
-                      <div className={`p-3 rounded-full ${test.bg} ${test.color}`}>
-                        <IconComponent size={20} />
+                    <Tilt3D key={i} className="group flex items-start gap-4 p-6 rounded-2xl border border-slate-100 dark:border-white/10 bg-white dark:bg-slate-900 hover:border-violet-100 dark:hover:border-violet-500/30 hover:shadow-lg transition-all cursor-pointer">
+                      <div onClick={() => startTest(test.id)} className="w-full flex items-start gap-4">
+                        <div className={`p-3 rounded-full ${test.bg} ${test.color}`}>
+                          <IconComponent size={20} />
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-bold text-slate-900 dark:text-white mb-1 group-hover:text-violet-700 dark:group-hover:text-violet-400 transition-colors">{test.title}</h4>
+                          <p className="text-sm text-slate-500 dark:text-slate-400 mb-3">{test.desc}</p>
+                          <span className="text-xs font-semibold text-violet-500 dark:text-violet-400 uppercase tracking-wider flex items-center gap-1">
+                            Start Assessment <ArrowRight size={14} />
+                          </span>
+                        </div>
                       </div>
-                      <div className="flex-1">
-                        <h4 className="font-bold text-slate-900 mb-1 group-hover:text-violet-700 transition-colors">{test.title}</h4>
-                        <p className="text-sm text-slate-500 mb-3">{test.desc}</p>
-                        <span className="text-xs font-semibold text-violet-500 uppercase tracking-wider flex items-center gap-1">
-                          Start Assessment <ArrowRight size={14} />
-                        </span>
-                      </div>
-                    </div>
+                    </Tilt3D>
                   );
                 })}
               </div>
             </div>
 
-            {/* HELPLINES (Visible only in menu) */}
+            {/* HELPLINES */}
             <div>
-              <h3 className="text-2xl font-bold text-slate-800 mb-8 flex items-center gap-3">
-                <span className="p-2 bg-red-100 rounded-lg text-red-600"><PhoneCall size={24} /></span>
+              <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-8 flex items-center gap-3">
+                <span className="p-2 bg-red-100 dark:bg-red-900/20 rounded-lg text-red-600 dark:text-red-400"><PhoneCall size={24} /></span>
                 Crisis Helplines (India)
               </h3>
-              <div className="bg-white rounded-[2rem] p-8 border border-slate-100 shadow-sm">
+              <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-8 border border-slate-100 dark:border-white/10 shadow-sm">
                 <div className="space-y-6">
                   {helplines.map((line, i) => (
-                    <div key={i} className="flex items-center justify-between pb-4 border-b border-slate-100 last:border-0 last:pb-0">
+                    <div key={i} className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-white/5 last:border-0 last:pb-0">
                       <div>
-                        <div className="font-bold text-slate-900">{line.name}</div>
-                        <div className="text-sm text-slate-500">{line.desc}</div>
+                        <div className="font-bold text-slate-900 dark:text-white">{line.name}</div>
+                        <div className="text-sm text-slate-500 dark:text-slate-400">{line.desc}</div>
                       </div>
-                      <a href={`tel:${line.number.replace(/\s/g, '')}`} className="bg-slate-50 px-4 py-2 rounded-full text-sm font-bold text-slate-700 shadow-sm hover:bg-violet-600 hover:text-white transition-colors">
+                      <a href={`tel:${line.number.replace(/\s/g, '')}`} className="bg-slate-50 dark:bg-slate-800 px-4 py-2 rounded-full text-sm font-bold text-slate-700 dark:text-slate-200 shadow-sm hover:bg-violet-600 dark:hover:bg-violet-600 hover:text-white transition-colors">
                         Call
                       </a>
                     </div>
@@ -524,43 +633,43 @@ const ResourcesView = ({ onNavigate }) => {
           </div>
         )}
 
-        {/* STEP 2: USER DETAILS FORM */}
+        {/* DETAILS FORM */}
         {step === 'form' && (
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-white rounded-[2rem] p-8 md:p-12 shadow-xl border border-slate-100 max-w-2xl mx-auto"
+            className="bg-white dark:bg-slate-900 rounded-[2rem] p-8 md:p-12 shadow-xl border border-slate-100 dark:border-white/10 max-w-2xl mx-auto"
           >
-            <button onClick={reset} className="text-slate-400 hover:text-slate-600 mb-6 flex items-center gap-2 text-sm font-bold">
+            <button onClick={reset} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 mb-6 flex items-center gap-2 text-sm font-bold">
               <ArrowRight className="rotate-180" size={16} /> Back to Resources
             </button>
-            <h2 className="text-2xl font-bold text-slate-900 mb-2">{activeTest.title}</h2>
-            <p className="text-slate-500 mb-8">Please provide your details to start the assessment.</p>
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">{activeTest.title}</h2>
+            <p className="text-slate-500 dark:text-slate-400 mb-8">Please provide your details to start the assessment.</p>
             
             <form onSubmit={handleFormSubmit} className="space-y-5">
               <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Full Name</label>
-                <input required type="text" className="w-full p-4 bg-slate-50 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-violet-500" 
+                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Full Name</label>
+                <input required type="text" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all" 
                   value={user.name} onChange={e => setUser({...user, name: e.target.value})}
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Mobile Number</label>
-                  <input required type="tel" className="w-full p-4 bg-slate-50 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-violet-500" 
+                  <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Mobile Number</label>
+                  <input required type="tel" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all" 
                     value={user.phone} onChange={e => setUser({...user, phone: e.target.value})}
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">City</label>
-                  <input required type="text" className="w-full p-4 bg-slate-50 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-violet-500" 
+                  <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">City</label>
+                  <input required type="text" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all" 
                     value={user.city} onChange={e => setUser({...user, city: e.target.value})}
                   />
                 </div>
               </div>
               <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Email Address</label>
-                <input required type="email" className="w-full p-4 bg-slate-50 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-violet-500" 
+                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Email Address</label>
+                <input required type="email" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all" 
                   value={user.email} onChange={e => setUser({...user, email: e.target.value})}
                 />
               </div>
@@ -571,12 +680,12 @@ const ResourcesView = ({ onNavigate }) => {
           </motion.div>
         )}
 
-        {/* STEP 3: QUESTIONS */}
+        {/* QUESTIONS */}
         {step === 'questions' && (
           <div className="max-w-2xl mx-auto">
             <div className="mb-8 flex items-center justify-between">
-              <h2 className="text-xl font-bold text-slate-900">{activeTest.title}</h2>
-              <span className="text-sm font-medium text-violet-600 bg-violet-50 px-3 py-1 rounded-full">
+              <h2 className="text-xl font-bold text-slate-900 dark:text-white">{activeTest.title}</h2>
+              <span className="text-sm font-medium text-violet-600 dark:text-violet-400 bg-violet-50 dark:bg-violet-900/30 px-3 py-1 rounded-full">
                 {Object.keys(answers).length} / {activeTest.questions.length}
               </span>
             </div>
@@ -584,7 +693,7 @@ const ResourcesView = ({ onNavigate }) => {
             {isSubmitting ? (
               <div className="flex flex-col items-center justify-center py-20">
                 <Loader2 className="animate-spin text-violet-600 w-12 h-12 mb-4" />
-                <p className="text-slate-600 font-medium">Analyzing results and generating report...</p>
+                <p className="text-slate-600 dark:text-slate-400 font-medium">Analyzing results and generating report...</p>
               </div>
             ) : (
               <div className="space-y-12">
@@ -594,9 +703,9 @@ const ResourcesView = ({ onNavigate }) => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: qIdx * 0.1 }}
-                    className={`bg-white p-6 rounded-2xl border ${answers[qIdx] !== undefined ? 'border-violet-500 ring-1 ring-violet-500' : 'border-slate-200'} shadow-sm`}
+                    className={`bg-white dark:bg-slate-900 p-6 rounded-2xl border ${answers[qIdx] !== undefined ? 'border-violet-500 ring-1 ring-violet-500' : 'border-slate-200 dark:border-slate-700'} shadow-sm`}
                   >
-                    <p className="text-lg font-medium text-slate-800 mb-4">{qIdx + 1}. {q}</p>
+                    <p className="text-lg font-medium text-slate-800 dark:text-white mb-4">{qIdx + 1}. {q}</p>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                       {activeTest.options.map((opt, oIdx) => (
                         <button
@@ -605,7 +714,7 @@ const ResourcesView = ({ onNavigate }) => {
                           className={`p-3 rounded-xl text-sm font-medium transition-all ${
                             answers[qIdx] === opt.score 
                               ? 'bg-violet-600 text-white shadow-md' 
-                              : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
+                              : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700'
                           }`}
                         >
                           {opt.label}
@@ -619,39 +728,39 @@ const ResourcesView = ({ onNavigate }) => {
           </div>
         )}
 
-        {/* STEP 4: RESULTS */}
+        {/* RESULTS */}
         {step === 'result' && result && (
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-white rounded-[2.5rem] p-8 md:p-12 shadow-2xl border border-slate-100 max-w-2xl mx-auto text-center"
+            className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-8 md:p-12 shadow-2xl border border-slate-100 dark:border-white/10 max-w-2xl mx-auto text-center"
           >
-            <div className="w-20 h-20 bg-violet-100 rounded-full flex items-center justify-center mx-auto mb-6 text-violet-600">
+            <div className="w-20 h-20 bg-violet-100 dark:bg-violet-900/30 rounded-full flex items-center justify-center mx-auto mb-6 text-violet-600 dark:text-violet-400">
               <Award size={40} />
             </div>
-            <h2 className="text-3xl font-bold text-slate-900 mb-2">Assessment Complete</h2>
-            <p className="text-slate-500 mb-8">Thank you, {user.name}. We have sent these details to the clinic for your records.</p>
+            <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Assessment Complete</h2>
+            <p className="text-slate-500 dark:text-slate-400 mb-8">Thank you, {user.name}. We have sent these details to the clinic for your records.</p>
             
-            <div className="bg-slate-50 p-8 rounded-2xl mb-8 border border-slate-200">
+            <div className="bg-slate-50 dark:bg-slate-800 p-8 rounded-2xl mb-8 border border-slate-200 dark:border-slate-700">
               <div className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-2">Result Indicator</div>
-              <div className="text-2xl font-bold text-violet-700 mb-3">{result.level}</div>
-              <p className="text-slate-600 leading-relaxed">{result.text}</p>
+              <div className="text-2xl font-bold text-violet-700 dark:text-violet-400 mb-3">{result.level}</div>
+              <p className="text-slate-600 dark:text-slate-300 leading-relaxed">{result.text}</p>
             </div>
 
-            <div className="bg-yellow-50 border border-yellow-100 p-4 rounded-xl flex items-start gap-3 text-left mb-8">
-              <CheckCircle className="text-yellow-600 shrink-0 mt-0.5" size={20} />
-              <p className="text-sm text-yellow-800">
+            <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-100 dark:border-yellow-900/40 p-4 rounded-xl flex items-start gap-3 text-left mb-8">
+              <CheckCircle className="text-yellow-600 dark:text-yellow-400 shrink-0 mt-0.5" size={20} />
+              <p className="text-sm text-yellow-800 dark:text-yellow-200">
                 <strong>Note:</strong> This is a screening tool, not a medical diagnosis. The results are based on your responses and should be discussed with a professional.
               </p>
             </div>
 
             <button 
               onClick={() => onNavigate('contact', 'scroll')}
-              className="w-full bg-slate-900 text-white font-bold py-4 rounded-xl hover:bg-violet-600 transition-colors shadow-lg flex items-center justify-center gap-2"
+              className="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold py-4 rounded-xl hover:bg-violet-600 dark:hover:bg-violet-200 transition-colors shadow-lg flex items-center justify-center gap-2"
             >
               Book a Consultation to Discuss <ArrowRight size={18} />
             </button>
-            <button onClick={reset} className="mt-6 text-slate-400 text-sm hover:text-slate-600 underline">
+            <button onClick={reset} className="mt-6 text-slate-400 text-sm hover:text-slate-600 dark:hover:text-slate-200 underline">
               Take another test
             </button>
           </motion.div>
@@ -662,42 +771,134 @@ const ResourcesView = ({ onNavigate }) => {
   );
 };
 
-// --- CONTENT COMPONENTS ---
+// --- HERO 3D INTERACTIVE OBJECT (Digital Sunflower) ---
+const Hero3DObject = () => {
+  const { scrollY } = useScroll();
+  const rotateScroll = useTransform(scrollY, [0, 500], [0, 180]);
+  const scaleScroll = useTransform(scrollY, [0, 500], [1, 0.8]);
+  
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  
+  const handleMouseMove = (e) => {
+    const { clientX, clientY } = e;
+    const { innerWidth, innerHeight } = window;
+    x.set((clientX / innerWidth - 0.5) * 30); 
+    y.set((clientY / innerHeight - 0.5) * 30);
+  };
+
+  useEffect(() => {
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  const rotateX = useSpring(y, { stiffness: 100, damping: 20 });
+  const rotateY = useSpring(x, { stiffness: 100, damping: 20 });
+
+  // Generate petals
+  const petals = Array.from({ length: 16 });
+
+  return (
+    <div className="relative w-full h-[600px] flex items-center justify-center" style={{ perspective: "1000px" }}>
+      <motion.div
+        className="w-80 h-80 relative flex items-center justify-center"
+        style={{ 
+          transformStyle: "preserve-3d",
+          rotateX,
+          rotateY,
+          rotateZ: rotateScroll,
+          scale: scaleScroll
+        }}
+      >
+        {/* CENTER SEEDS (Theme Colors) */}
+        <div className="absolute w-24 h-24 bg-gradient-to-br from-violet-400 to-fuchsia-500 dark:from-violet-500 dark:to-fuchsia-600 rounded-full shadow-[0_0_40px_rgba(167,139,250,0.6)] z-20 flex items-center justify-center" style={{ transform: "translateZ(60px)" }}>
+           <div className="w-full h-full opacity-50 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]" />
+        </div>
+
+        {/* PETALS LAYER 1 (Inner) */}
+        {petals.map((_, i) => (
+          <motion.div
+            key={`petal-inner-${i}`}
+            className="absolute w-12 h-32 origin-bottom rounded-full border border-violet-200/50 dark:border-white/20 bg-violet-100/80 dark:bg-white/5 backdrop-blur-sm"
+            style={{
+              rotate: i * (360 / 16),
+              y: -80, // Move up to pivot around bottom
+              transform: `rotateZ(${i * (360 / 16)}deg) rotateX(20deg) translateZ(30px)`,
+            }}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: i * 0.05, duration: 1 }}
+          />
+        ))}
+
+        {/* PETALS LAYER 2 (Outer) */}
+        {petals.map((_, i) => (
+          <motion.div
+            key={`petal-outer-${i}`}
+            className="absolute w-14 h-40 origin-bottom rounded-full border border-violet-300/40 dark:border-white/10 bg-white/60 dark:bg-white/5 backdrop-blur-md shadow-lg"
+            style={{
+              rotate: i * (360 / 16) + 11.25, // Offset
+              y: -100,
+              transform: `rotateZ(${i * (360 / 16) + 11.25}deg) rotateX(10deg) translateZ(10px)`,
+            }}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.5 + i * 0.05, duration: 1 }}
+          />
+        ))}
+        
+        {/* Floating Particles around flower */}
+         {[0, 120, 240].map((deg, i) => (
+            <motion.div
+              key={`orbit-${i}`}
+              animate={{ rotate: 360 }}
+              transition={{ duration: 15 + i * 2, repeat: Infinity, ease: "linear" }}
+              className="absolute inset-[-60px] rounded-full z-30 pointer-events-none"
+              style={{ transform: `rotateZ(${deg}deg)` }}
+            >
+              <div className="w-3 h-3 bg-white dark:bg-violet-300 rounded-full shadow-[0_0_15px_white] absolute top-0 left-1/2" />
+            </motion.div>
+         ))}
+
+      </motion.div>
+    </div>
+  )
+}
+
+const FloatingIcon = ({ Icon, x, y, delay, color, size = 32 }) => (
+  <motion.div
+    animate={{ 
+      y: [0, -15, 0],
+      rotate: [0, 10, -10, 0],
+      scale: [1, 1.1, 1],
+      opacity: [0.3, 0.6, 0.3]
+    }}
+    transition={{ duration: 6, repeat: Infinity, delay: delay, ease: "easeInOut" }}
+    className={`absolute ${x} ${y} ${color} hidden md:block pointer-events-none`}
+  >
+    <Icon size={size} />
+  </motion.div>
+);
+
 const Hero = ({ onNavigate }) => {
   return (
-    <section id="hero" className="min-h-[90vh] flex items-center justify-center relative pt-24 pb-12 overflow-hidden bg-gradient-to-b from-purple-50 to-white">
-      <FloatingIcon Icon={Heart} x="left-[10%]" y="top-[20%]" delay={0} color="text-pink-300" />
-      <FloatingIcon Icon={Sun} x="right-[10%]" y="top-[15%]" delay={1.5} color="text-yellow-300" />
-      <FloatingIcon Icon={Cloud} x="left-[5%]" y="bottom-[20%]" delay={2.5} color="text-blue-300" />
-      
-      <div className="absolute inset-0 pointer-events-none">
-        <motion.div 
-          animate={{ scale: [1, 1.1, 1] }}
-          transition={{ duration: 10, repeat: Infinity }}
-          className="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-purple-200/40 rounded-full blur-[80px] mix-blend-multiply" 
-        />
-        <motion.div 
-          animate={{ scale: [1, 1.2, 1] }}
-          transition={{ duration: 15, repeat: Infinity }}
-          className="absolute bottom-0 left-0 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-indigo-100/60 rounded-full blur-[60px] mix-blend-multiply" 
-        />
-      </div>
-
+    <section id="hero" className="min-h-[90vh] flex items-center justify-center relative pt-24 pb-12 overflow-hidden bg-gradient-to-b from-purple-50 to-white dark:from-slate-950 dark:to-slate-900 transition-colors duration-300">
+      <ParallaxBackground />
       <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-10 md:gap-16 items-center relative z-10">
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <div className="inline-block px-3 py-1 bg-white/60 backdrop-blur-sm border border-slate-200 rounded-full text-violet-700 text-xs font-bold uppercase tracking-wider mb-6 shadow-sm">
+          <div className="inline-block px-3 py-1 bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm border border-slate-200 dark:border-slate-700 rounded-full text-violet-700 dark:text-violet-300 text-xs font-bold uppercase tracking-wider mb-6 shadow-sm">
             Based in Jamnagar
           </div>
           
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-slate-900 leading-tight mb-6">
-            Healing starts with a <span className="text-violet-600">Lilac</span> state of mind.
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-slate-900 dark:text-white leading-tight mb-6">
+            Healing starts with a <span className="text-violet-600 dark:text-violet-400">Lilac</span> state of mind.
           </h1>
           
-          <p className="text-lg md:text-xl text-slate-600 mb-8 leading-relaxed max-w-lg">
+          <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-8 leading-relaxed max-w-lg">
             A safe, warm place for therapy and career guidance. Founded by Prarthana Thaker, we're here to help you get through the tough times.
           </p>
           
@@ -710,7 +911,7 @@ const Hero = ({ onNavigate }) => {
             </button>
             <button 
               onClick={() => onNavigate('services', 'scroll')}
-              className="bg-white text-slate-800 border border-slate-200 px-8 py-3.5 rounded-full text-base font-semibold hover:bg-slate-50 transition-all flex items-center justify-center hover:-translate-y-1 hover:shadow-md"
+              className="bg-white dark:bg-slate-800 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 px-8 py-3.5 rounded-full text-base font-semibold hover:bg-slate-50 dark:hover:bg-slate-700 transition-all flex items-center justify-center hover:-translate-y-1 hover:shadow-md"
             >
               How we help
             </button>
@@ -718,40 +919,12 @@ const Hero = ({ onNavigate }) => {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.95, rotate: 2 }}
-          animate={{ opacity: 1, scale: 1, rotate: 0 }}
-          transition={{ duration: 1, delay: 0.2, type: "spring" }}
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 0.2 }}
           className="relative hidden lg:block"
         >
-          <div className="relative z-10 rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white h-[600px] group">
-            <img 
-              src={IMAGES.clinic} 
-              alt="Clinic Vibe" 
-              className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-1000" 
-              fetchpriority="high"
-              width="600"
-              height="600"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-violet-900/30 to-transparent"></div>
-          </div>
-          
-          <motion.div 
-            animate={{ y: [0, -10, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -left-8 top-1/4 bg-white p-4 rounded-2xl shadow-xl z-20 flex items-center gap-3"
-          >
-            <div className="bg-pink-100 p-2 rounded-full text-pink-500"><Heart size={20} /></div>
-            <span className="font-bold text-slate-700 text-sm">Compassion</span>
-          </motion.div>
-
-          <motion.div 
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            className="absolute -right-8 bottom-1/4 bg-white p-4 rounded-2xl shadow-xl z-20 flex items-center gap-3"
-          >
-            <div className="bg-blue-100 p-2 rounded-full text-blue-500"><Brain size={20} /></div>
-            <span className="font-bold text-slate-700 text-sm">Clarity</span>
-          </motion.div>
+          <Hero3DObject />
         </motion.div>
       </div>
     </section>
@@ -760,98 +933,82 @@ const Hero = ({ onNavigate }) => {
 
 const StatsSection = () => {
   return (
-    <section className="py-12 bg-violet-900 text-white relative overflow-hidden">
+    <section className="py-12 bg-violet-900 dark:bg-slate-900 text-white relative overflow-hidden border-t border-white/5">
       <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-          <div className="p-4">
-            <div className="text-4xl md:text-5xl font-bold mb-2 text-violet-200">5+</div>
-            <div className="text-sm md:text-base opacity-80">Years Experience</div>
-          </div>
-          <div className="p-4">
-            <div className="text-4xl md:text-5xl font-bold mb-2 text-pink-200">500+</div>
-            <div className="text-sm md:text-base opacity-80">Students Guided</div>
-          </div>
-          <div className="p-4">
-            <div className="text-4xl md:text-5xl font-bold mb-2 text-blue-200">100%</div>
-            <div className="text-sm md:text-base opacity-80">Confidentiality</div>
-          </div>
-          <div className="p-4">
-            <div className="text-4xl md:text-5xl font-bold mb-2 text-yellow-200">20+</div>
-            <div className="text-sm md:text-base opacity-80">Workshops Held</div>
-          </div>
-        </div>
-      </div>
+      
+      {/* 3D Breathing Orb Background for Stats */}
+      <motion.div 
+        animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-full blur-[100px] pointer-events-none"
+      />
     </section>
   );
 };
 
 const Founder = () => {
   return (
-    <section id="about" className="py-20 md:py-32 relative bg-white overflow-hidden">
+    <section id="about" className="py-20 md:py-32 relative bg-white dark:bg-slate-950 overflow-hidden transition-colors duration-300">
       <DoodlePattern />
-      <div className="max-w-6xl mx-auto px-6 relative z-10">
-        <div className="bg-gradient-to-br from-white to-violet-50/50 rounded-[2rem] md:rounded-[3rem] p-6 md:p-12 shadow-sm border border-slate-100">
-          <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
-            <div className="order-2 md:order-1">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-              >
-                <div className="flex items-center gap-2 text-violet-600 font-bold mb-2">
-                  <Sparkles size={18} />
-                  <span className="uppercase tracking-widest text-xs">The Founder</span>
-                </div>
-                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">Hi, I'm Prarthana.</h2>
-                
-                <div className="space-y-4 text-slate-600 leading-relaxed mb-8 text-lg">
-                  <p>
-                    I started <span className="font-semibold text-violet-700">Lilac Minds</span> because I believe everyone deserves a place where they are truly heard. Mental health isn't just about fixing problems—it's about understanding who you are.
-                  </p>
-                  <p>
-                    Whether you are a student confused about your future or someone feeling overwhelmed by life, I combine professional psychology with a friendly, down-to-earth approach to help you find your way.
-                  </p>
-                </div>
-
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <div className="flex-1 bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-4">
-                    <div className="bg-violet-100 p-3 rounded-full text-violet-600"><BookOpen size={20} /></div>
-                    <div>
-                      <div className="font-bold text-slate-900">Educator</div>
-                      <div className="text-xs text-slate-500">Guiding students</div>
-                    </div>
-                  </div>
-                  <div className="flex-1 bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-4">
-                    <div className="bg-pink-100 p-3 rounded-full text-pink-600"><Heart size={20} /></div>
-                    <div>
-                      <div className="font-bold text-slate-900">Counselor</div>
-                      <div className="text-xs text-slate-500">Healing hearts</div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
+      <div className="max-w-5xl mx-auto px-6 relative z-10">
+        <div className="text-center mb-16">
+           <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <div className="flex items-center justify-center gap-2 text-violet-600 dark:text-violet-400 font-bold mb-4">
+              <Sparkles size={18} />
+              <span className="uppercase tracking-widest text-xs">Our Story</span>
             </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
+              Rooted in Empathy, <br/> Guided by Science.
+            </h2>
+          </motion.div>
+        </div>
 
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="order-1 md:order-2 relative h-[400px] md:h-[550px]"
-            >
-              <div className="absolute inset-0 bg-violet-200 rounded-[2rem] rotate-3 transform translate-y-2"></div>
-              <img 
-                src={IMAGES.founder} 
-                alt="Prarthana Thaker" 
-                loading="lazy"
-                width="600"
-                height="800"
-                className="relative w-full h-full object-cover object-top rounded-[2rem] shadow-xl hover:rotate-0 transition-all duration-500"
-              />
-            </motion.div>
-          </div>
+        <div className="grid md:grid-cols-2 gap-12 mb-16">
+             <div className="bg-violet-50/50 dark:bg-slate-900/50 p-8 rounded-3xl border border-violet-100 dark:border-white/10 backdrop-blur-sm">
+                <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-4">The Vision</h3>
+                <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+                  Lilac Minds was founded by Prarthana Thaker with a singular mission: to bridge the gap between clinical psychology and human connection. We believe that mental health care shouldn't feel clinical or cold—it should feel like coming home to yourself.
+                </p>
+                <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+                   Whether navigating academic pressure as a student or seeking clarity in a complex career path, our approach combines evidence-based therapy with genuine, non-judgmental support.
+                </p>
+             </div>
+             <div className="space-y-6">
+                <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-100 dark:border-white/10 shadow-sm flex gap-4">
+                   <div className="bg-violet-100 dark:bg-violet-900/30 p-3 h-12 w-12 rounded-full text-violet-600 dark:text-violet-300 flex items-center justify-center shrink-0"><BookOpen size={24} /></div>
+                   <div>
+                      <h4 className="font-bold text-slate-900 dark:text-white mb-1">Educational Guidance</h4>
+                      <p className="text-sm text-slate-500 dark:text-slate-400">We don't just treat symptoms; we educate. Understanding the 'why' behind your feelings is the first step to mastering them.</p>
+                   </div>
+                </div>
+                <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-100 dark:border-white/10 shadow-sm flex gap-4">
+                   <div className="bg-pink-100 dark:bg-pink-900/30 p-3 h-12 w-12 rounded-full text-pink-600 dark:text-pink-300 flex items-center justify-center shrink-0"><Heart size={24} /></div>
+                   <div>
+                      <h4 className="font-bold text-slate-900 dark:text-white mb-1">Compassionate Care</h4>
+                      <p className="text-sm text-slate-500 dark:text-slate-400">A judgement-free zone where every emotion is valid, and every story matters. Your mental safety is our priority.</p>
+                   </div>
+                </div>
+                <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-100 dark:border-white/10 shadow-sm flex gap-4">
+                   <div className="bg-blue-100 dark:bg-blue-900/30 p-3 h-12 w-12 rounded-full text-blue-600 dark:text-blue-300 flex items-center justify-center shrink-0"><Compass size={24} /></div>
+                   <div>
+                      <h4 className="font-bold text-slate-900 dark:text-white mb-1">Future Focused</h4>
+                      <p className="text-sm text-slate-500 dark:text-slate-400">Beyond therapy, we offer robust career counselling to help align your professional life with your personal values.</p>
+                   </div>
+                </div>
+             </div>
+        </div>
+
+        <div className="bg-slate-900 dark:bg-slate-800 rounded-[3rem] p-12 text-center relative overflow-hidden shadow-2xl">
+            <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+            <Quote className="text-violet-500 w-12 h-12 mx-auto mb-6 opacity-50" />
+            <p className="text-xl md:text-2xl text-violet-100 font-medium italic leading-relaxed max-w-2xl mx-auto relative z-10">
+              "Mental health is not just about fixing what's broken, but about nurturing the incredible potential within every human mind."
+            </p>
+            <div className="mt-6 font-bold text-white">— Prarthana Thaker, Founder</div>
         </div>
       </div>
     </section>
@@ -860,14 +1017,14 @@ const Founder = () => {
 
 const Services = () => {
   const services = [
-    { title: "Psychotherapy", desc: "Talk through anxiety, sadness, or stress.", icon: <Brain size={24}/>, color: "bg-purple-100 text-purple-700" },
-    { title: "Career Counselling", desc: "Find the right career path for you.", icon: <MapPin size={24}/>, color: "bg-blue-100 text-blue-700" },
-    { title: "Student Mentorship", desc: "Help with exams and school pressure.", icon: <BookOpen size={24}/>, color: "bg-pink-100 text-pink-700" },
-    { title: "Online Therapy", desc: "Get support from your own home.", icon: <Wind size={24}/>, color: "bg-teal-100 text-teal-700" },
+    { title: "Psychotherapy", desc: "Talk through anxiety, sadness, or stress.", icon: <Brain size={24}/>, color: "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300" },
+    { title: "Career Counselling", desc: "Find the right career path for you.", icon: <MapPin size={24}/>, color: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300" },
+    { title: "Student Mentorship", desc: "Help with exams and school pressure.", icon: <BookOpen size={24}/>, color: "bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-300" },
+    { title: "Online Therapy", desc: "Get support from your own home.", icon: <Wind size={24}/>, color: "bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300" },
   ];
 
   return (
-    <section id="services" className="py-20 md:py-32 bg-slate-50 relative">
+    <section id="services" className="py-20 md:py-32 bg-slate-50 dark:bg-slate-900 relative transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="text-center mb-16">
           <motion.div
@@ -875,28 +1032,20 @@ const Services = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-4">How we help.</h2>
-            <p className="text-lg text-slate-500 max-w-2xl mx-auto">Simple, effective support for whatever you're facing. We tailor our approach to your unique needs.</p>
+            <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">How we help.</h2>
+            <p className="text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">Simple, effective support for whatever you're facing. We tailor our approach to your unique needs using Clinical Psychotherapy and Aptitude Testing.</p>
           </motion.div>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((s, i) => (
-            <motion.div 
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              whileHover={{ y: -8, boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)" }}
-              className="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 transition-all duration-300 group cursor-default"
-            >
+            <Tilt3D key={i} className="bg-white dark:bg-slate-800 p-8 rounded-[2rem] shadow-sm border border-slate-100 dark:border-white/5 group cursor-default">
               <div className={`w-14 h-14 ${s.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
                 {s.icon}
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-3">{s.title}</h3>
-              <p className="text-slate-500 leading-relaxed">{s.desc}</p>
-            </motion.div>
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">{s.title}</h3>
+              <p className="text-slate-500 dark:text-slate-400 leading-relaxed">{s.desc}</p>
+            </Tilt3D>
           ))}
         </div>
       </div>
@@ -906,28 +1055,28 @@ const Services = () => {
 
 const TestimonialsSection = () => {
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 bg-white dark:bg-slate-950 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-4">Kind Words</h2>
-          <p className="text-lg text-slate-500">Stories of growth and healing from our community.</p>
+          <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">Kind Words</h2>
+          <p className="text-lg text-slate-500 dark:text-slate-400">Stories of growth and healing from our community.</p>
         </div>
         
         <div className="grid md:grid-cols-3 gap-8">
           {TESTIMONIAL_DATA.map((t, i) => (
-            <div key={i} className="bg-slate-50 p-8 rounded-[2rem] relative">
-              <Quote className="text-violet-200 mb-4 h-8 w-8" />
-              <p className="text-slate-700 italic mb-6 leading-relaxed">"{t.text}"</p>
+            <Tilt3D key={i} className="bg-slate-50 dark:bg-slate-900 p-8 rounded-[2rem] relative border border-slate-100 dark:border-white/5">
+              <Quote className="text-violet-200 dark:text-violet-900 mb-4 h-8 w-8" />
+              <p className="text-slate-700 dark:text-slate-300 italic mb-6 leading-relaxed">"{t.text}"</p>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-violet-200 rounded-full flex items-center justify-center text-violet-700 font-bold">
+                <div className="w-10 h-10 bg-violet-200 dark:bg-violet-900/50 rounded-full flex items-center justify-center text-violet-700 dark:text-violet-300 font-bold">
                   {t.name[0]}
                 </div>
                 <div>
-                  <div className="font-bold text-slate-900">{t.name}</div>
-                  <div className="text-xs text-slate-500">{t.type}</div>
+                  <div className="font-bold text-slate-900 dark:text-white">{t.name}</div>
+                  <div className="text-xs text-slate-500 dark:text-slate-400">{t.type}</div>
                 </div>
               </div>
-            </div>
+            </Tilt3D>
           ))}
         </div>
       </div>
@@ -953,7 +1102,7 @@ const BreathWidget = () => {
   }, []);
 
   return (
-    <div className="bg-slate-900 text-white p-8 rounded-[2rem] flex flex-col items-center justify-center text-center shadow-2xl relative overflow-hidden">
+    <div className="bg-slate-900 dark:bg-slate-800 text-white p-8 rounded-[2rem] flex flex-col items-center justify-center text-center shadow-2xl relative overflow-hidden">
       <div className="absolute top-0 right-0 w-32 h-32 bg-violet-600 rounded-full blur-[50px] opacity-30 animate-pulse"></div>
       <h3 className="text-xl font-bold mb-6 relative z-10">Breathe with us</h3>
       <motion.div 
@@ -970,7 +1119,7 @@ const BreathWidget = () => {
 
 const ClinicSection = () => {
   return (
-    <section id="clinic" className="py-20 md:py-32 bg-slate-50">
+    <section id="clinic" className="py-20 md:py-32 bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6">
         <motion.div 
           initial={{ opacity: 0 }}
@@ -978,7 +1127,7 @@ const ClinicSection = () => {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-4">Our Space in Jamnagar</h2>
+          <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">Our Space in Jamnagar</h2>
           <div className="h-1 w-20 bg-violet-500 mx-auto rounded-full"></div>
         </motion.div>
         
@@ -1012,27 +1161,27 @@ const ClinicSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="bg-white p-8 rounded-[2.5rem] flex-1 flex flex-col justify-center border border-slate-100 shadow-sm"
+              className="bg-white dark:bg-slate-800 p-8 rounded-[2.5rem] flex-1 flex flex-col justify-center border border-slate-100 dark:border-white/10 shadow-sm"
             >
-              <div className="flex items-center gap-4 mb-6 text-slate-800 font-semibold">
-                <div className="p-3 bg-yellow-50 rounded-full text-yellow-600"><Star size={20} fill="currentColor"/></div>
+              <div className="flex items-center gap-4 mb-6 text-slate-800 dark:text-white font-semibold">
+                <div className="p-3 bg-yellow-50 dark:bg-yellow-900/30 rounded-full text-yellow-600 dark:text-yellow-400"><Star size={20} fill="currentColor"/></div>
                 <div>
                   <div className="text-lg">Private & Confidential</div>
-                  <div className="text-xs text-slate-500 font-normal">Your privacy is our priority</div>
+                  <div className="text-xs text-slate-500 dark:text-slate-400 font-normal">Your privacy is our priority</div>
                 </div>
               </div>
-              <div className="flex items-center gap-4 text-slate-800 font-semibold mb-6">
-                <div className="p-3 bg-blue-50 rounded-full text-blue-600"><Award size={20}/></div>
+              <div className="flex items-center gap-4 text-slate-800 dark:text-white font-semibold mb-6">
+                <div className="p-3 bg-blue-50 dark:bg-blue-900/30 rounded-full text-blue-600 dark:text-blue-400"><Award size={20}/></div>
                 <div>
                   <div className="text-lg">Certified Expert</div>
-                  <div className="text-xs text-slate-500 font-normal">Professional guidance</div>
+                  <div className="text-xs text-slate-500 dark:text-slate-400 font-normal">Professional guidance</div>
                 </div>
               </div>
-              <div className="flex items-center gap-4 text-slate-800 font-semibold">
-                <div className="p-3 bg-purple-50 rounded-full text-purple-600"><Coffee size={20}/></div>
+              <div className="flex items-center gap-4 text-slate-800 dark:text-white font-semibold">
+                <div className="p-3 bg-purple-50 dark:bg-purple-900/30 rounded-full text-purple-600 dark:text-purple-400"><Coffee size={20}/></div>
                 <div>
                   <div className="text-lg">Warm & Welcoming</div>
-                  <div className="text-xs text-slate-500 font-normal">Judgment-free zone</div>
+                  <div className="text-xs text-slate-500 dark:text-slate-400 font-normal">Judgment-free zone</div>
                 </div>
               </div>
             </motion.div>
@@ -1056,22 +1205,22 @@ const FAQ = () => {
   const [openIndex, setOpenIndex] = useState(null);
 
   return (
-    <section className="py-20 bg-slate-50">
+    <section className="py-20 bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
       <div className="max-w-3xl mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-4">Common Questions</h2>
-          <p className="text-lg text-slate-500">Everything you need to know before your visit.</p>
+          <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">Common Questions</h2>
+          <p className="text-lg text-slate-500 dark:text-slate-400">Everything you need to know before your visit.</p>
         </div>
 
         <div className="space-y-4">
           {FAQS.map((faq, i) => (
-            <div key={i} className="border border-slate-200 rounded-2xl overflow-hidden bg-white">
+            <div key={i} className="border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden bg-white dark:bg-slate-800">
               <button
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                className="w-full p-6 text-left flex justify-between items-center bg-white hover:bg-slate-50 transition-colors"
+                className="w-full p-6 text-left flex justify-between items-center bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
               >
-                <span className="font-bold text-slate-800 text-lg">{faq.question}</span>
-                {openIndex === i ? <ChevronUp className="text-violet-600" /> : <ChevronDown className="text-slate-400" />}
+                <span className="font-bold text-slate-800 dark:text-white text-lg">{faq.question}</span>
+                {openIndex === i ? <ChevronUp className="text-violet-600 dark:text-violet-400" /> : <ChevronDown className="text-slate-400" />}
               </button>
               <AnimatePresence>
                 {openIndex === i && (
@@ -1079,9 +1228,9 @@ const FAQ = () => {
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    className="bg-white border-t border-slate-100"
+                    className="bg-white dark:bg-slate-800 border-t border-slate-100 dark:border-slate-700"
                   >
-                    <div className="p-6 pt-0 text-slate-600 leading-relaxed mt-4">
+                    <div className="p-6 pt-0 text-slate-600 dark:text-slate-300 leading-relaxed mt-4">
                       {faq.answer}
                     </div>
                   </motion.div>
@@ -1099,37 +1248,37 @@ const Booking = () => {
   const [appointmentType, setAppointmentType] = useState('in-person');
 
   return (
-    <section id="contact" className="py-20 md:py-32 bg-white relative overflow-hidden">
+    <section id="contact" className="py-20 md:py-32 bg-white dark:bg-slate-950 relative overflow-hidden transition-colors duration-300">
       {/* Decorative Circles */}
-      <div className="absolute top-0 right-0 w-64 h-64 bg-violet-100 rounded-full translate-x-1/2 -translate-y-1/2"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-pink-50 rounded-full -translate-x-1/2 translate-y-1/2"></div>
+      <div className="absolute top-0 right-0 w-64 h-64 bg-violet-100 dark:bg-violet-900/20 rounded-full translate-x-1/2 -translate-y-1/2"></div>
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-pink-50 dark:bg-pink-900/10 rounded-full -translate-x-1/2 translate-y-1/2"></div>
 
       <div className="max-w-2xl mx-auto px-6 relative z-10">
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="bg-white rounded-[2.5rem] shadow-xl overflow-hidden border border-slate-100"
+          className="bg-white dark:bg-slate-900 rounded-[2.5rem] shadow-xl overflow-hidden border border-slate-100 dark:border-white/10"
         >
           <div className="p-10 bg-violet-700 text-white text-center relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
             <h2 className="text-3xl md:text-4xl font-bold mb-3 relative z-10">Let's Talk</h2>
-            <p className="text-violet-100 text-lg relative z-10">Schedule a visit with Prarthana.</p>
+            <p className="text-violet-100 text-lg relative z-10">Schedule a visit with Lilac Minds.</p>
           </div>
           
           <div className="p-8 md:p-12">
-            <div className="flex bg-slate-100 p-1.5 rounded-2xl mb-8">
+            <div className="flex bg-slate-100 dark:bg-slate-800 p-1.5 rounded-2xl mb-8">
               <button 
                 type="button"
                 onClick={() => setAppointmentType('in-person')}
-                className={`flex-1 py-3 rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all ${appointmentType === 'in-person' ? 'bg-white text-violet-700 shadow-md' : 'text-slate-500 hover:text-slate-700'}`}
+                className={`flex-1 py-3 rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all ${appointmentType === 'in-person' ? 'bg-white dark:bg-slate-700 text-violet-700 dark:text-white shadow-md' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'}`}
               >
                 <MapPin size={18} /> In-Clinic Visit
               </button>
               <button 
                 type="button"
                 onClick={() => setAppointmentType('online')}
-                className={`flex-1 py-3 rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all ${appointmentType === 'online' ? 'bg-white text-violet-700 shadow-md' : 'text-slate-500 hover:text-slate-700'}`}
+                className={`flex-1 py-3 rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all ${appointmentType === 'online' ? 'bg-white dark:bg-slate-700 text-violet-700 dark:text-white shadow-md' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'}`}
               >
                 <Video size={18} /> Online Call
               </button>
@@ -1145,26 +1294,26 @@ const Booking = () => {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-slate-500 uppercase ml-1">Name</label>
-                  <input required name="name" type="text" placeholder="Your Name" className="w-full p-4 bg-slate-50 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:bg-white transition-all" />
+                  <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase ml-1">Name</label>
+                  <input required name="name" type="text" placeholder="Your Name" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all" />
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-slate-500 uppercase ml-1">Phone</label>
-                  <input required name="phone" type="tel" placeholder="Phone Number" className="w-full p-4 bg-slate-50 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:bg-white transition-all" />
+                  <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase ml-1">Phone</label>
+                  <input required name="phone" type="tel" placeholder="Phone Number" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all" />
                 </div>
               </div>
               
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-500 uppercase ml-1">Email</label>
-                <input required name="email" type="email" placeholder="your@email.com" className="w-full p-4 bg-slate-50 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:bg-white transition-all" />
+                <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase ml-1">Email</label>
+                <input required name="email" type="email" placeholder="your@email.com" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all" />
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-500 uppercase ml-1">Service</label>
+                <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase ml-1">Service</label>
                 <select 
                   name="service" 
                   defaultValue=""
-                  className="w-full p-4 bg-slate-50 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-violet-500 text-slate-600 focus:bg-white transition-all"
+                  className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 text-slate-600 dark:text-slate-300 focus:bg-white dark:focus:bg-slate-800 transition-all"
                 >
                   <option value="" disabled>What do you need help with?</option>
                   <option>Psychotherapy</option>
@@ -1176,14 +1325,20 @@ const Booking = () => {
               </div>
               
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-500 uppercase ml-1">Message</label>
-                <textarea name="message" rows="3" placeholder="Anything else you'd like to share?" className="w-full p-4 bg-slate-50 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:bg-white transition-all"></textarea>
+                <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase ml-1">Message</label>
+                <textarea name="message" rows="3" placeholder="Anything else you'd like to share?" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all"></textarea>
               </div>
               
-              <button type="submit" className="w-full bg-slate-900 text-white font-bold py-4 rounded-xl hover:bg-violet-600 transition-colors shadow-lg mt-2 text-lg">
+              <button type="submit" className="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold py-4 rounded-xl hover:bg-violet-600 dark:hover:bg-violet-300 transition-colors shadow-lg mt-2 text-lg">
                 Request {appointmentType === 'online' ? 'Online' : 'In-Clinic'} Appointment
               </button>
             </form>
+            
+            <div className="mt-6 text-center">
+              <p className="text-slate-500 dark:text-slate-400 text-sm">
+                Prefer a quick chat? <a href="https://wa.me/918200711499" target="_blank" rel="noopener noreferrer" className="text-violet-600 dark:text-violet-400 font-bold hover:underline">Message us on WhatsApp</a>
+              </p>
+            </div>
           </div>
         </motion.div>
       </div>
@@ -1192,7 +1347,7 @@ const Booking = () => {
 };
 
 const Footer = () => (
-  <footer className="bg-slate-900 text-slate-400 py-16 text-sm">
+  <footer className="bg-slate-900 text-slate-400 py-16 text-sm border-t border-white/5">
     <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
       <div>
         <div className="flex items-center justify-center md:justify-start gap-2 mb-6">
@@ -1232,6 +1387,14 @@ const Footer = () => (
           <div className="p-3 bg-slate-800 rounded-full hover:bg-violet-600 text-white transition-all cursor-pointer">
             <Mail size={20} />
           </div>
+           <a 
+            href="https://wa.me/918200711499"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-3 bg-slate-800 rounded-full hover:bg-violet-600 text-white transition-all cursor-pointer"
+          >
+            <MessageCircle size={20} />
+          </a>
         </div>
       </div>
     </div>
@@ -1258,6 +1421,16 @@ const MainContent = ({ onNavigate }) => (
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [view, setView] = useState('home'); // 'home' or 'resources'
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+    if (!isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  };
 
   useEffect(() => {
     // 1. Set Title & Meta Tags
@@ -1334,7 +1507,7 @@ export default function App() {
   };
   
   return (
-    <div className="font-sans text-slate-900 bg-white selection:bg-violet-200 selection:text-violet-900 overflow-x-hidden">
+    <div className={`font-sans text-slate-900 bg-white selection:bg-violet-200 selection:text-violet-900 overflow-x-hidden ${isDarkMode ? 'dark' : ''}`}>
       <AnimatePresence mode="wait">
         {loading ? (
           <SplashScreen key="splash" />
@@ -1344,13 +1517,15 @@ export default function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
+            className="dark:bg-slate-950 transition-colors duration-300"
           >
-            <Navbar currentView={view} onNavigate={handleNavigation} />
+            <Navbar currentView={view} onNavigate={handleNavigation} isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
             {view === 'home' ? (
               <MainContent key="home" onNavigate={handleNavigation} />
             ) : (
               <ResourcesView key="resources" onNavigate={handleNavigation} />
             )}
+            <FloatingWhatsApp />
             <Footer />
           </motion.div>
         )}
