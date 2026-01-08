@@ -44,7 +44,8 @@ const optimize = (url, width) =>
   `https://wsrv.nl/?url=${encodeURIComponent(url)}&w=${width}&q=80&output=webp`;
 
 const IMAGES = {
-  founder: optimize("https://i.ibb.co/B5jNNF7j/IMG-8342.jpg", 800), 
+  // Founder image removed from UI but kept in config if needed later
+  // founder: optimize("https://i.ibb.co/B5jNNF7j/IMG-8342.jpg", 800), 
   clinic: optimize("https://i.ibb.co/mC1dMsgP/IMG-8337.jpg", 1200),
   logo: optimize("https://i.ibb.co/XZG4XH4N/Untitled-design.png", 400)
 };
@@ -52,7 +53,7 @@ const IMAGES = {
 // --- DATA ---
 const SEO_DATA = {
   title: "Lilac Minds | Psychologist & Career Counsellor in Jamnagar",
-  description: "Lilac Minds, founded by Prarthana Thaker, offers expert psychotherapy, career counselling, and student mentorship in Jamnagar.",
+  description: "Lilac Minds, founded by Prarthana Thaker, offers expert psychotherapy, career counselling, and student mentorship in Jamnagar. A safe haven for mental wellness.",
   keywords: "Psychologist Jamnagar, Career Counselling, Mental Health, Prarthana Thaker, Psychotherapy, Student Counseling Gujarat",
   schema: {
     "@context": "https://schema.org",
@@ -67,7 +68,7 @@ const SEO_DATA = {
       "postalCode": "361006",
       "addressCountry": "IN"
     },
-    "telephone": "+919876543210" 
+    "telephone": "+918200711499" 
   }
 };
 
@@ -210,7 +211,7 @@ const FloatingWhatsApp = () => (
     animate={{ scale: 1 }}
     whileHover={{ scale: 1.1 }}
     whileTap={{ scale: 0.9 }}
-    className="fixed bottom-6 right-6 z-50 bg-violet-600 text-white p-3 md:p-4 rounded-full shadow-2xl hover:shadow-violet-500/30 hover:bg-violet-700 transition-all flex items-center gap-2 group border-2 border-white/20"
+    className="fixed bottom-6 right-6 z-50 bg-violet-600 dark:bg-violet-500 text-white p-3 md:p-4 rounded-full shadow-2xl hover:shadow-violet-500/30 hover:bg-violet-700 dark:hover:bg-violet-600 transition-all flex items-center gap-2 group border-2 border-white/20"
   >
     <MessageCircle size={28} className="fill-current" />
     <span className="font-bold hidden md:inline-block max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 ease-in-out whitespace-nowrap">
