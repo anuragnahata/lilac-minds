@@ -37,8 +37,8 @@ import {
   Loader2,
   MessageCircle,
   Moon,
-  Battery,
-  Zap
+  Battery, // Restored for Burnout
+  Zap      // Restored for Energy/Stress
 } from 'lucide-react';
 
 // --- IMAGE OPTIMIZATION ---
@@ -111,7 +111,7 @@ const FAQS = [
   }
 ];
 
-// --- PSYCHOMETRIC TEST DATA (STANDARDIZED) ---
+// --- PSYCHOMETRIC TEST DATA (RESTORED & EXPANDED) ---
 const ASSESSMENT_DATA = {
   anxiety: {
     id: 'anxiety',
@@ -224,7 +224,6 @@ const ASSESSMENT_DATA = {
       "I feel I am working too hard on my job",
       "I feel like I'm at the end of my rope"
     ],
-    // Simplified Likert for self-check
     options: [
       { label: "Never", score: 0 },
       { label: "Rarely", score: 1 },
@@ -233,7 +232,6 @@ const ASSESSMENT_DATA = {
       { label: "Always", score: 4 }
     ],
     getResult: (score) => {
-      // Max score 32 
       let level, text, recommendations;
       if (score <= 10) {
         level = "Low Burnout Risk";
@@ -527,8 +525,8 @@ const Navbar = ({ currentView, onNavigate, isDarkMode, toggleTheme }) => {
           <img 
             src={IMAGES.logo} 
             alt="Lilac Minds Logo" 
-            className="h-12 w-auto object-contain hover:opacity-90 transition-opacity" 
-            width="150"
+            className="h-12 w-12 object-cover rounded-full hover:opacity-90 transition-opacity" 
+            width="48"
             height="48"
           />
           <span className="font-bold text-xl text-slate-800 dark:text-white tracking-tight">Lilac Minds</span>
@@ -862,7 +860,7 @@ const ResourcesView = ({ onNavigate }) => {
               <Award size={40} />
             </div>
             <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Assessment Complete</h2>
-            <p className="text-slate-500 dark:text-slate-400 mb-8">Thank you, {user.name}. We have sent these details to the clinic for your records.</p>
+            <p className="text-slate-500 dark:text-slate-400 mb-8">Thank you, {user.name}. Here are your results:</p>
             
             <div className="bg-slate-50 dark:bg-slate-800 p-8 rounded-2xl mb-8 border border-slate-200 dark:border-slate-700 text-left">
               <div className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-2">Result Indicator</div>
@@ -1001,6 +999,21 @@ const Hero3DObject = () => {
     </div>
   )
 }
+
+const FloatingIcon = ({ Icon, x, y, delay, color, size = 32 }) => (
+  <motion.div
+    animate={{ 
+      y: [0, -15, 0],
+      rotate: [0, 10, -10, 0],
+      scale: [1, 1.1, 1],
+      opacity: [0.3, 0.6, 0.3]
+    }}
+    transition={{ duration: 6, repeat: Infinity, delay: delay, ease: "easeInOut" }}
+    className={`absolute ${x} ${y} ${color} hidden md:block pointer-events-none`}
+  >
+    <Icon size={size} />
+  </motion.div>
+);
 
 const Hero = ({ onNavigate }) => {
   return (
@@ -1155,7 +1168,7 @@ const Services = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">How we help.</h2>
-            <p className="text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">Simple, effective support for whatever you're facing. We tailor our approach to your unique needs using Counselling and Aptitude Testing.</p>
+            <p className="text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">Simple, effective support for whatever you're facing. We tailor our approach to your unique needs using Clinical Psychotherapy and Aptitude Testing.</p>
           </motion.div>
         </div>
 
