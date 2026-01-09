@@ -36,7 +36,9 @@ import {
   CheckCircle,
   Loader2,
   MessageCircle,
-  Moon
+  Moon,
+  Zap,
+  Battery
 } from 'lucide-react';
 
 // --- IMAGE OPTIMIZATION ---
@@ -109,11 +111,12 @@ const FAQS = [
   }
 ];
 
+// --- PSYCHOMETRIC TEST DATA (STANDARDIZED) ---
 const ASSESSMENT_DATA = {
   anxiety: {
     id: 'anxiety',
     title: "Anxiety Screening (GAD-7)",
-    desc: "A standardized screening tool to assess the severity of anxiety symptoms.",
+    desc: "A standardized 7-item scale to measure the severity of Generalized Anxiety Disorder symptoms.",
     icon: Wind,
     color: "text-blue-600 dark:text-blue-400",
     bg: "bg-blue-50 dark:bg-blue-900/20",
@@ -124,7 +127,7 @@ const ASSESSMENT_DATA = {
       "Trouble relaxing",
       "Being so restless that it is hard to sit still",
       "Becoming easily annoyed or irritable",
-      "Feeling afraid, as if something awful might happen"
+      "Feeling afraid as if something awful might happen"
     ],
     options: [
       { label: "Not at all", score: 0 },
@@ -133,16 +136,31 @@ const ASSESSMENT_DATA = {
       { label: "Nearly every day", score: 3 }
     ],
     getResult: (score) => {
-      if (score <= 4) return { level: "Minimal Anxiety", text: "Your symptoms suggest minimal anxiety. Keep practicing self-care." };
-      if (score <= 9) return { level: "Mild Anxiety", text: "You may be experiencing mild anxiety. Mindfulness and relaxation techniques might help." };
-      if (score <= 14) return { level: "Moderate Anxiety", text: "Your scores indicate moderate anxiety. Professional support could be very beneficial." };
-      return { level: "Severe Anxiety", text: "Your symptoms suggest severe anxiety. We strongly recommend speaking with a mental health professional." };
+      let level, text, recommendations;
+      if (score <= 4) {
+        level = "Minimal Anxiety";
+        text = "Your score indicates minimal anxiety. This is a healthy range.";
+        recommendations = ["Continue your current routine", "Practice daily mindfulness", "Maintain healthy sleep habits"];
+      } else if (score <= 9) {
+        level = "Mild Anxiety";
+        text = "You may be experiencing mild anxiety. It is common to feel this way during stressful periods.";
+        recommendations = ["Try deep breathing exercises", "Limit caffeine and alcohol", "Establish a regular sleep schedule", "Consider journaling your worries"];
+      } else if (score <= 14) {
+        level = "Moderate Anxiety";
+        text = "Your symptoms suggest moderate anxiety. It might be affecting your daily life and focus.";
+        recommendations = ["Schedule a consultation with a counselor", "Practice progressive muscle relaxation", "Break big tasks into small steps", "Physical activity can help reduce tension"];
+      } else {
+        level = "Severe Anxiety";
+        text = "Your score indicates severe anxiety symptoms that likely impact your quality of life significantly.";
+        recommendations = ["We strongly recommend speaking to a professional immediately", "Do not hesitate to ask for help", "Focus on immediate grounding techniques", "Prioritize your mental health today"];
+      }
+      return { level, text, recommendations };
     }
   },
   depression: {
     id: 'depression',
     title: "Depression Check (PHQ-9)",
-    desc: "Evaluate common symptoms of depression and low mood.",
+    desc: "The Patient Health Questionnaire (PHQ-9) is used to monitor the severity of depression.",
     icon: Cloud,
     color: "text-gray-600 dark:text-gray-400",
     bg: "bg-gray-50 dark:bg-gray-800/50",
@@ -164,38 +182,114 @@ const ASSESSMENT_DATA = {
       { label: "Nearly every day", score: 3 }
     ],
     getResult: (score) => {
-      if (score <= 4) return { level: "Minimal Depression", text: "Your score suggests minimal to no depression." };
-      if (score <= 9) return { level: "Mild Depression", text: "You may have mild depressive symptoms. Monitoring your mood is recommended." };
-      if (score <= 14) return { level: "Moderate Depression", text: "Your symptoms indicate moderate depression. Counseling is recommended." };
-      if (score <= 19) return { level: "Moderately Severe Depression", text: "These scores suggest moderately severe depression. Professional help is advised." };
-      return { level: "Severe Depression", text: "Your score indicates severe depression. Please reach out to a professional immediately." };
+      let level, text, recommendations;
+      if (score <= 4) {
+        level = "Minimal Depression";
+        text = "Your score suggests minimal or no depressive symptoms.";
+        recommendations = ["Keep up your positive habits", "Stay connected with friends and family", "Prioritize hobbies you enjoy"];
+      } else if (score <= 9) {
+        level = "Mild Depression";
+        text = "You may be experiencing mild depressive symptoms. It's important to monitor how you feel.";
+        recommendations = ["Stick to a routine", "Get some sunlight and light exercise", "Reach out to a trusted friend", "Practice self-compassion"];
+      } else if (score <= 14) {
+        level = "Moderate Depression";
+        text = "Your symptoms indicate moderate depression. Professional support can provide you with effective coping strategies.";
+        recommendations = ["Consider booking a therapy session", "Challenge negative thought patterns", "Avoid isolation", "Focus on small, achievable goals"];
+      } else if (score <= 19) {
+        level = "Moderately Severe Depression";
+        text = "These scores suggest moderately severe depression. It is highly advisable to seek professional help.";
+        recommendations = ["Please consult a mental health professional", "Discuss treatment options", "Ensure you have a support system around you", "Be gentle with yourself"];
+      } else {
+        level = "Severe Depression";
+        text = "Your score indicates severe depression. Immediate professional intervention is recommended.";
+        recommendations = ["Seek immediate professional help", "Contact a crisis helpline if needed", "Do not face this alone", "Remember that help is available and effective"];
+      }
+      return { level, text, recommendations };
     }
   },
-  career: {
-    id: 'career',
-    title: "Career Aptitude",
-    desc: "A brief check to see where your professional interests might lie.",
-    icon: Compass,
-    color: "text-violet-600 dark:text-violet-400",
-    bg: "bg-violet-50 dark:bg-violet-900/20",
+  burnout: {
+    id: 'burnout',
+    title: "Burnout Assessment",
+    desc: "Check for signs of emotional exhaustion and professional burnout.",
+    icon: Battery,
+    color: "text-orange-600 dark:text-orange-400",
+    bg: "bg-orange-50 dark:bg-orange-900/20",
     questions: [
-      "I enjoy solving complex problems and puzzles.",
-      "I like helping others learn or grow.",
-      "I enjoy creative activities like art, writing, or design.",
-      "I prefer structured environments with clear rules.",
-      "I like leading teams and persuading others.",
-      "I enjoy working with machines, tools, or physical objects."
+      "I feel emotionally drained from my work/studies",
+      "I feel used up at the end of the day",
+      "I feel tired when I get up in the morning and have to face another day",
+      "I feel energetic and enthusiastic (Reverse)", // Note: Logic handles standard scoring, this is a simplified check
+      "I can effectively solve problems that arise", // Reverse
+      "I feel burned out from my work",
+      "I feel I am working too hard on my job",
+      "I feel like I'm at the end of my rope"
     ],
+    // Simplified Likert for self-check
     options: [
-      { label: "Disagree", score: 0, type: "" },
-      { label: "Neutral", score: 1, type: "" },
-      { label: "Agree", score: 2, type: "" }
+      { label: "Never", score: 0 },
+      { label: "Rarely", score: 1 },
+      { label: "Sometimes", score: 2 },
+      { label: "Often", score: 3 },
+      { label: "Always", score: 4 }
     ],
     getResult: (score) => {
-      return { 
-        level: "Exploration Needed", 
-        text: "Your interests seem varied. A comprehensive career counselling session with aptitude testing is recommended to pinpoint your perfect path." 
-      };
+      // Max score 32 (8 * 4)
+      let level, text, recommendations;
+      if (score <= 10) {
+        level = "Low Burnout Risk";
+        text = "You seem to be balancing your energy well.";
+        recommendations = ["Maintain your work-life boundaries", "Continue engaging in hobbies", "Take regular breaks"];
+      } else if (score <= 20) {
+        level = "Moderate Burnout Risk";
+        text = "You are showing some signs of exhaustion. It's time to pause and reassess.";
+        recommendations = ["Take a short vacation or mental health day", "Re-evaluate your workload", "Prioritize sleep and nutrition", "Learn to say 'no' to extra tasks"];
+      } else {
+        level = "High Burnout Risk";
+        text = "You appear to be experiencing significant burnout. Prioritizing recovery is essential.";
+        recommendations = ["Seek professional support immediately", "Discuss workload with supervisors/teachers", "Dedicate time to complete rest", "Disconnect from digital devices outside work hours"];
+      }
+      return { level, text, recommendations };
+    }
+  },
+  sleep: {
+    id: 'sleep',
+    title: "Sleep Quality Check (AIS)",
+    desc: "Assess your sleep patterns based on the Athens Insomnia Scale criteria.",
+    icon: Moon,
+    color: "text-indigo-600 dark:text-indigo-400",
+    bg: "bg-indigo-50 dark:bg-indigo-900/20",
+    questions: [
+      "Difficulty falling asleep",
+      "Awakening during the night",
+      "Early morning awakening",
+      "Total sleep duration",
+      "Overall quality of sleep",
+      "Sense of well-being during the day",
+      "Functioning (physical and mental) during the day",
+      "Sleepiness during the day"
+    ],
+    options: [
+      { label: "No problem", score: 0 },
+      { label: "Minor problem", score: 1 },
+      { label: "Considerable problem", score: 2 },
+      { label: "Serious problem", score: 3 }
+    ],
+    getResult: (score) => {
+      let level, text, recommendations;
+      if (score < 6) {
+        level = "Good Sleep Quality";
+        text = "Your sleep patterns appear healthy.";
+        recommendations = ["Maintain your sleep schedule", "Avoid screens before bed", "Keep your bedroom cool and dark"];
+      } else if (score <= 10) {
+        level = "Mild Sleep Difficulties";
+        text = "You may be facing some sleep disturbances.";
+        recommendations = ["Create a relaxing bedtime routine", "Avoid caffeine after 2 PM", "Limit naps during the day", "Try reading before bed"];
+      } else {
+        level = "Significant Insomnia Symptoms";
+        text = "Your score suggests possible insomnia. Consulting a specialist is recommended.";
+        recommendations = ["Consult a professional", "Cognitive Behavioral Therapy for Insomnia (CBT-I)", "Strict sleep hygiene protocols", "Review lifestyle factors impacting sleep"];
+      }
+      return { level, text, recommendations };
     }
   }
 };
@@ -740,12 +834,26 @@ const ResourcesView = ({ onNavigate }) => {
               <Award size={40} />
             </div>
             <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Assessment Complete</h2>
-            <p className="text-slate-500 dark:text-slate-400 mb-8">Thank you, {user.name}. We have sent these details to the clinic for your records.</p>
+            <p className="text-slate-500 dark:text-slate-400 mb-8">Thank you, {user.name}. Here are your results:</p>
             
-            <div className="bg-slate-50 dark:bg-slate-800 p-8 rounded-2xl mb-8 border border-slate-200 dark:border-slate-700">
+            <div className="bg-slate-50 dark:bg-slate-800 p-8 rounded-2xl mb-8 border border-slate-200 dark:border-slate-700 text-left">
               <div className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-2">Result Indicator</div>
               <div className="text-2xl font-bold text-violet-700 dark:text-violet-400 mb-3">{result.level}</div>
-              <p className="text-slate-600 dark:text-slate-300 leading-relaxed">{result.text}</p>
+              <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-6">{result.text}</p>
+              
+              {result.recommendations && (
+                <div>
+                   <div className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-3">Recommendations</div>
+                   <ul className="space-y-3">
+                     {result.recommendations.map((rec, i) => (
+                       <li key={i} className="flex items-start gap-3 text-slate-700 dark:text-slate-300">
+                         <CheckCircle size={18} className="text-violet-500 shrink-0 mt-0.5" />
+                         <span>{rec}</span>
+                       </li>
+                     ))}
+                   </ul>
+                </div>
+              )}
             </div>
 
             <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-100 dark:border-yellow-900/40 p-4 rounded-xl flex items-start gap-3 text-left mb-8">
@@ -1422,7 +1530,7 @@ const MainContent = ({ onNavigate }) => (
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [view, setView] = useState('home'); // 'home' or 'resources'
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true); // Default to Dark Mode
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
@@ -1483,6 +1591,11 @@ export default function App() {
     const timer = setTimeout(() => {
       setLoading(false);
     }, 2500);
+    
+    // Ensure dark mode is applied on mount if default is true
+    if (document.documentElement.classList.contains('dark')) {
+      setIsDarkMode(true);
+    }
 
     return () => clearTimeout(timer);
   }, []);
