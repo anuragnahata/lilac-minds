@@ -37,8 +37,10 @@ import {
   Loader2,
   MessageCircle,
   Moon,
-  Battery, // Restored for Burnout
-  Zap      // Restored for Energy/Stress
+  Battery, 
+  Zap,
+  Layout, // Added for UI
+  Library // Added for Articles
 } from 'lucide-react';
 
 // --- IMAGE OPTIMIZATION ---
@@ -108,6 +110,199 @@ const FAQS = [
   {
     question: "What is the duration of a typical session?",
     answer: "Standard sessions typically last between 45 to 60 minutes, giving us enough time to deep dive into your concerns."
+  }
+];
+
+// --- PSYCHOEDUCATIONAL ARTICLES (RCI & APA ALIGNED) ---
+const BLOGS_DATA = [
+  {
+    id: 101,
+    title: "Understanding Therapy: Dispelling Myths",
+    desc: "Therapy isn't just for crises. Learn how professional counseling fosters resilience and self-awareness in everyday life.",
+    tag: "Psychoeducation",
+    readTime: "6 min",
+    content: (
+      <div className="space-y-6">
+        <p className="text-lg leading-relaxed">
+          There is a pervasive stigma that therapy is a "last resort" for those who have "hit rock bottom." In reality, psychotherapy is a proactive tool for mental hygiene, much like going to the gym is for physical health. It provides a structured environment to analyze thoughts, regulate emotions, and improve interpersonal relationships.
+        </p>
+
+        <div className="bg-violet-50 dark:bg-violet-900/20 p-6 rounded-xl border border-violet-100 dark:border-white/10">
+          <h3 className="text-xl font-bold mb-4 text-violet-700 dark:text-violet-300">Common Myths vs. Facts</h3>
+          <ul className="space-y-4">
+            <li>
+              <p className="font-semibold text-slate-800 dark:text-white">Myth: "Therapy is only for people with severe mental illness."</p>
+              <p className="text-slate-600 dark:text-slate-400 mt-1"><strong>Fact:</strong> While psychologists treat clinical disorders, a large portion of practice involves helping healthy individuals navigate life transitions, grief, relationship issues, and career stress.</p>
+            </li>
+            <li>
+              <p className="font-semibold text-slate-800 dark:text-white">Myth: "The therapist will just tell me what to do."</p>
+              <p className="text-slate-600 dark:text-slate-400 mt-1"><strong>Fact:</strong> A psychologist's role is not to give advice, but to facilitate <em>insight</em>. We help you uncover patterns in your behavior and equip you with the tools to make your own empowered decisions.</p>
+            </li>
+             <li>
+              <p className="font-semibold text-slate-800 dark:text-white">Myth: "Talking to friends is the same as therapy."</p>
+              <p className="text-slate-600 dark:text-slate-400 mt-1"><strong>Fact:</strong> While social support is crucial, a therapist provides an objective, non-judgmental perspective backed by scientific training in human behavior. It is a one-way relationship focused entirely on <em>your</em> growth.</p>
+            </li>
+          </ul>
+        </div>
+
+        <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">The Therapeutic Alliance</h3>
+        <p>
+          Research consistently shows that the strongest predictor of successful therapy is not the specific technique used (like CBT or Psychoanalysis), but the quality of the relationship between the client and the therapist. This is known as the <strong>Therapeutic Alliance</strong>. It is a collaborative partnership based on trust, empathy, and shared goals.
+        </p>
+
+        <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">Confidentiality & Ethics</h3>
+        <p>
+          As mental health professionals registered with the Rehabilitation Council of India (RCI), we adhere to strict ethical codes. 
+          <strong>Confidentiality</strong> is paramount. This creates a safe container where you can explore your deepest vulnerabilities without fear of judgment or exposure.
+        </p>
+      </div>
+    )
+  },
+  {
+    id: 102,
+    title: "Exam Anxiety: A Neuro-Psychological View",
+    desc: "Why does the mind go blank during exams? Understanding the 'Fight or Flight' response and how to ground yourself.",
+    tag: "Student Mentorship",
+    readTime: "7 min",
+    content: (
+      <div className="space-y-6">
+        <p className="text-lg leading-relaxed">
+          It is a common phenomenon: you study for weeks, memorize every formula, but the moment you sit in the exam hall, your mind goes blank. This isn't a sign of low intelligence or poor preparation; it is a physiological hijack.
+        </p>
+        
+        <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">The Biology of "Blanking Out"</h3>
+        <p>
+          When you perceive the exam as a "threat," your brain's amygdala (the fear center) activates the <strong>Fight or Flight</strong> response. This floods your system with cortisol and adrenaline. While useful for running from a tiger, these hormones inhibit the <strong>Prefrontal Cortex</strong>—the part of the brain responsible for logic, memory retrieval, and problem-solving.
+        </p>
+
+        <div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-100 dark:border-white/10 my-8">
+           <h3 className="text-xl font-bold mb-4 text-blue-700 dark:text-blue-300">Immediate Grounding Techniques</h3>
+           <p className="mb-4">If you feel panic rising during an exam, use these techniques to bring your Prefrontal Cortex back online:</p>
+           
+           <div className="space-y-4">
+             <div>
+               <h4 className="font-bold text-slate-800 dark:text-white">1. The 4-7-8 Breathing Method</h4>
+               <p className="text-slate-600 dark:text-slate-400 text-sm">Inhale quietly through the nose for 4 seconds. Hold the breath for 7 seconds. Exhale forcefully through the mouth for 8 seconds. This rhythm stimulates the Vagus nerve, physically forcing your body to relax.</p>
+             </div>
+             <div>
+               <h4 className="font-bold text-slate-800 dark:text-white">2. The 5-4-3-2-1 Sensory Check</h4>
+               <p className="text-slate-600 dark:text-slate-400 text-sm">Acknowledge 5 things you see, 4 you can touch (desk texture, pen grip), 3 you hear, 2 you can smell, and 1 you can taste. This pulls your focus from internal panic to external reality.</p>
+             </div>
+           </div>
+        </div>
+
+        <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">Cognitive Reframing</h3>
+        <p>
+          Anxiety often stems from catastrophic thinking ("If I fail this, my life is over"). We work on <strong>Cognitive Restructuring</strong>—challenging these irrational thoughts.
+        </p>
+        <ul className="list-disc pl-5 space-y-2 mt-2 marker:text-violet-500">
+          <li><strong>Identify the thought:</strong> "I am going to fail."</li>
+          <li><strong>Challenge the evidence:</strong> "I have studied 80% of the syllabus. I have passed previous tests."</li>
+          <li><strong>Reframe:</strong> "I am prepared for most of this exam. I will do my best on what I know."</li>
+        </ul>
+        <p className="mt-4">Recognizing that anxiety is a biological response, not a personal failure, is the first step toward managing it.</p>
+      </div>
+    )
+  },
+  {
+    id: 103,
+    title: "Building Emotional Resilience",
+    desc: "Resilience is not a trait that people either have or do not have. It involves behaviors, thoughts, and actions that can be learned.",
+    tag: "Wellness",
+    readTime: "8 min",
+    content: (
+      <div className="space-y-6">
+        <p className="text-lg leading-relaxed">
+          Resilience is defined by the American Psychological Association (APA) as the process of adapting well in the face of adversity, trauma, tragedy, threats, or significant sources of stress. It means "bouncing back" from difficult experiences.
+        </p>
+
+        <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">The "Three C's" of Resilience</h3>
+        <p>Psychologist Suzanne Kobasa identified three key elements that resilient people share:</p>
+        <div className="grid md:grid-cols-3 gap-4 my-6">
+           <div className="bg-slate-50 dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+             <h4 className="font-bold text-violet-600 dark:text-violet-400 mb-2">1. Challenge</h4>
+             <p className="text-sm text-slate-600 dark:text-slate-400">Viewing a difficulty as a challenge to overcome rather than a paralyzing threat.</p>
+           </div>
+           <div className="bg-slate-50 dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+             <h4 className="font-bold text-violet-600 dark:text-violet-400 mb-2">2. Commitment</h4>
+             <p className="text-sm text-slate-600 dark:text-slate-400">Being committed to your goals, relationships, and values, giving you a reason to push through.</p>
+           </div>
+           <div className="bg-slate-50 dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+             <h4 className="font-bold text-violet-600 dark:text-violet-400 mb-2">3. Control</h4>
+             <p className="text-sm text-slate-600 dark:text-slate-400">Focusing your energy on what you <em>can</em> change, rather than worrying about what you cannot.</p>
+           </div>
+        </div>
+
+        <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">Practical Strategies for Growth</h3>
+        <ul className="list-disc pl-5 space-y-4 marker:text-violet-500">
+          <li>
+            <strong>Cultivate a Growth Mindset:</strong> Understand that setbacks are feedback, not failure. Ask yourself, "What can I learn from this?" rather than "Why is this happening to me?"
+          </li>
+          <li>
+            <strong>Prioritize Social Connection:</strong> Isolation breeds despair. Resilient people actively seek support. Sharing your burden with a trusted friend or therapist validates your feelings.
+          </li>
+          <li>
+            <strong>Practice Self-Compassion:</strong> Treat yourself with the same kindness you would offer a friend. Self-criticism activates the threat system, while self-compassion activates the self-soothing system, releasing oxytocin.
+          </li>
+        </ul>
+        
+        <div className="mt-8 p-6 bg-green-50 dark:bg-green-900/20 rounded-xl border border-green-100 dark:border-white/10 flex items-start gap-4">
+           <CheckCircle className="text-green-600 dark:text-green-400 shrink-0 mt-1" />
+           <div>
+             <h4 className="font-bold text-green-800 dark:text-green-300">Try This: The "Three Good Things" Exercise</h4>
+             <p className="text-green-700 dark:text-green-400 text-sm mt-1">Every night for one week, write down three things that went well that day and <em>why</em> they went well. This rewires the brain to scan for positives (neuroplasticity), gradually building a buffer against stress.</p>
+           </div>
+        </div>
+      </div>
+    )
+  },
+  {
+    id: 104,
+    title: "Career Confusion: Choosing the Right Path",
+    desc: "Confused between passion and practicality? How Aptitude Testing and counselling help align your skills with the market.",
+    tag: "Career Counselling",
+    readTime: "5 min",
+    content: (
+      <div className="space-y-6">
+        <p className="text-lg leading-relaxed">
+          In a world with thousands of career options, "analysis paralysis" is real. Students and professionals often feel torn between what they <em>love</em> to do, what they are <em>good</em> at, and what pays the bills. This intersection is what the Japanese call <strong>Ikigai</strong>.
+        </p>
+        
+        <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">The Science of Aptitude</h3>
+        <p>
+          Career choices should not be based on trends or parental pressure alone. A scientific approach involves assessing three distinct pillars:
+        </p>
+        
+        <div className="space-y-4 my-6">
+           <div className="flex items-start gap-3">
+             <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center text-indigo-600 font-bold shrink-0">1</div>
+             <div>
+                <h4 className="font-bold text-slate-900 dark:text-white">Aptitude (Potential)</h4>
+                <p className="text-slate-600 dark:text-slate-400 text-sm">Your innate ability to learn specific skills (e.g., Numerical, Verbal, Spatial, Mechanical). You might love music, but do you have the aptitude for composition?</p>
+             </div>
+           </div>
+           <div className="flex items-start gap-3">
+             <div className="w-8 h-8 rounded-full bg-pink-100 dark:bg-pink-900/50 flex items-center justify-center text-pink-600 font-bold shrink-0">2</div>
+             <div>
+                <h4 className="font-bold text-slate-900 dark:text-white">Personality (Behavior)</h4>
+                <p className="text-slate-600 dark:text-slate-400 text-sm">Are you introverted or extroverted? Do you prefer structure or chaos? A creative personality might struggle in a rigid audit role.</p>
+             </div>
+           </div>
+           <div className="flex items-start gap-3">
+             <div className="w-8 h-8 rounded-full bg-teal-100 dark:bg-teal-900/50 flex items-center justify-center text-teal-600 font-bold shrink-0">3</div>
+             <div>
+                <h4 className="font-bold text-slate-900 dark:text-white">Interest (Passion)</h4>
+                <p className="text-slate-600 dark:text-slate-400 text-sm">What topics naturally engage you for hours? Interest fuels the motivation needed to master a domain.</p>
+             </div>
+           </div>
+        </div>
+
+        <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">The Role of Counselling</h3>
+        <p>
+          Psychometric testing provides the data, but counselling provides the <em>context</em>. A career counsellor helps you interpret these results within the reality of the job market, your family situation, and your long-term life goals. It transforms raw data into a roadmap.
+        </p>
+      </div>
+    )
   }
 ];
 
@@ -614,7 +809,8 @@ const Navbar = ({ currentView, onNavigate, isDarkMode, toggleTheme }) => {
 };
 
 const ResourcesView = ({ onNavigate }) => {
-  const [activeTest, setActiveTest] = useState(null); 
+  const [activeTest, setActiveTest] = useState(null);
+  const [activeArticle, setActiveArticle] = useState(null); // Added state for article
   const [step, setStep] = useState('menu'); 
   const [user, setUser] = useState({ name: '', phone: '', email: '', city: '' });
   const [answers, setAnswers] = useState({});
@@ -626,6 +822,13 @@ const ResourcesView = ({ onNavigate }) => {
     setStep('form');
     setAnswers({});
     setResult(null);
+  };
+
+  const openArticle = (id) => {
+    const article = BLOGS_DATA.find(b => b.id === id);
+    setActiveArticle(article);
+    setStep('article');
+    window.scrollTo(0, 0);
   };
 
   const handleFormSubmit = (e) => {
@@ -675,6 +878,7 @@ const ResourcesView = ({ onNavigate }) => {
   const reset = () => {
     setStep('menu');
     setActiveTest(null);
+    setActiveArticle(null);
     setAnswers({});
     setResult(null);
   };
@@ -700,58 +904,121 @@ const ResourcesView = ({ onNavigate }) => {
         )}
 
         {step === 'menu' && (
-          <div className="grid lg:grid-cols-2 gap-12 mb-16">
-            <div>
-              <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-8 flex items-center gap-3">
-                <span className="p-2 bg-violet-100 dark:bg-violet-900/40 rounded-lg text-violet-600 dark:text-violet-300"><FileText size={24} /></span>
-                Self-Assessments
-              </h3>
-              <div className="grid gap-4">
-                {Object.values(ASSESSMENT_DATA).map((test, i) => {
-                  const IconComponent = test.icon;
-                  return (
-                    <Tilt3D key={i} className="group flex items-start gap-4 p-6 rounded-2xl border border-slate-100 dark:border-white/10 bg-white dark:bg-slate-900 hover:border-violet-100 dark:hover:border-violet-500/30 hover:shadow-lg transition-all cursor-pointer">
-                      <div onClick={() => startTest(test.id)} className="w-full flex items-start gap-4">
-                        <div className={`p-3 rounded-full ${test.bg} ${test.color}`}>
-                          <IconComponent size={20} />
+          <>
+            <div className="grid lg:grid-cols-2 gap-12 mb-16">
+              <div>
+                <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-8 flex items-center gap-3">
+                  <span className="p-2 bg-violet-100 dark:bg-violet-900/40 rounded-lg text-violet-600 dark:text-violet-300"><FileText size={24} /></span>
+                  Self-Assessments
+                </h3>
+                <div className="grid gap-4">
+                  {Object.values(ASSESSMENT_DATA).map((test, i) => {
+                    const IconComponent = test.icon;
+                    return (
+                      <Tilt3D key={i} className="group flex items-start gap-4 p-6 rounded-2xl border border-slate-100 dark:border-white/10 bg-white dark:bg-slate-900 hover:border-violet-100 dark:hover:border-violet-500/30 hover:shadow-lg transition-all cursor-pointer">
+                        <div onClick={() => startTest(test.id)} className="w-full flex items-start gap-4">
+                          <div className={`p-3 rounded-full ${test.bg} ${test.color}`}>
+                            <IconComponent size={20} />
+                          </div>
+                          <div className="flex-1">
+                            <h4 className="font-bold text-slate-900 dark:text-white mb-1 group-hover:text-violet-700 dark:group-hover:text-violet-400 transition-colors">{test.title}</h4>
+                            <p className="text-sm text-slate-500 dark:text-slate-400 mb-3">{test.desc}</p>
+                            <span className="text-xs font-semibold text-violet-500 dark:text-violet-400 uppercase tracking-wider flex items-center gap-1">
+                              Start Assessment <ArrowRight size={14} />
+                            </span>
+                          </div>
                         </div>
-                        <div className="flex-1">
-                          <h4 className="font-bold text-slate-900 dark:text-white mb-1 group-hover:text-violet-700 dark:group-hover:text-violet-400 transition-colors">{test.title}</h4>
-                          <p className="text-sm text-slate-500 dark:text-slate-400 mb-3">{test.desc}</p>
-                          <span className="text-xs font-semibold text-violet-500 dark:text-violet-400 uppercase tracking-wider flex items-center gap-1">
-                            Start Assessment <ArrowRight size={14} />
-                          </span>
-                        </div>
-                      </div>
-                    </Tilt3D>
-                  );
-                })}
+                      </Tilt3D>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
 
-            {/* HELPLINES */}
-            <div>
-              <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-8 flex items-center gap-3">
-                <span className="p-2 bg-red-100 dark:bg-red-900/20 rounded-lg text-red-600 dark:text-red-400"><PhoneCall size={24} /></span>
-                Crisis Helplines (India)
-              </h3>
-              <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-8 border border-slate-100 dark:border-white/10 shadow-sm">
-                <div className="space-y-6">
-                  {helplines.map((line, i) => (
-                    <div key={i} className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-white/5 last:border-0 last:pb-0">
-                      <div>
-                        <div className="font-bold text-slate-900 dark:text-white">{line.name}</div>
-                        <div className="text-sm text-slate-500 dark:text-slate-400">{line.desc}</div>
+              {/* HELPLINES */}
+              <div>
+                <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-8 flex items-center gap-3">
+                  <span className="p-2 bg-red-100 dark:bg-red-900/20 rounded-lg text-red-600 dark:text-red-400"><PhoneCall size={24} /></span>
+                  Crisis Helplines (India)
+                </h3>
+                <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-8 border border-slate-100 dark:border-white/10 shadow-sm">
+                  <div className="space-y-6">
+                    {helplines.map((line, i) => (
+                      <div key={i} className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-white/5 last:border-0 last:pb-0">
+                        <div>
+                          <div className="font-bold text-slate-900 dark:text-white">{line.name}</div>
+                          <div className="text-sm text-slate-500 dark:text-slate-400">{line.desc}</div>
+                        </div>
+                        <a href={`tel:${line.number.replace(/\s/g, '')}`} className="bg-slate-50 dark:bg-slate-800 px-4 py-2 rounded-full text-sm font-bold text-slate-700 dark:text-slate-200 shadow-sm hover:bg-violet-600 dark:hover:bg-violet-600 hover:text-white transition-colors">
+                          Call
+                        </a>
                       </div>
-                      <a href={`tel:${line.number.replace(/\s/g, '')}`} className="bg-slate-50 dark:bg-slate-800 px-4 py-2 rounded-full text-sm font-bold text-slate-700 dark:text-slate-200 shadow-sm hover:bg-violet-600 dark:hover:bg-violet-600 hover:text-white transition-colors">
-                        Call
-                      </a>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+
+            {/* TOOLS FOR GROWTH SECTION */}
+            <div className="mb-16">
+              <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-8 flex items-center gap-3">
+                <span className="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg text-indigo-600 dark:text-indigo-400"><Library size={24} /></span>
+                Tools for Growth
+              </h3>
+              <div className="grid md:grid-cols-3 gap-6">
+                 {BLOGS_DATA.map((blog, i) => (
+                    <Tilt3D key={i} className="group p-0 rounded-2xl border border-slate-100 dark:border-white/10 bg-white dark:bg-slate-900 hover:border-violet-100 dark:hover:border-violet-500/30 hover:shadow-lg transition-all cursor-pointer overflow-hidden flex flex-col h-full">
+                       <div className="h-2 bg-gradient-to-r from-violet-500 to-fuchsia-500 w-full" />
+                       <div className="p-6 flex flex-col h-full" onClick={() => openArticle(blog.id)}>
+                          <div className="flex items-center gap-2 mb-3">
+                             <span className="px-2 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">{blog.tag}</span>
+                             <span className="text-[10px] text-slate-400 flex items-center gap-1"><Coffee size={10} /> {blog.readTime}</span>
+                          </div>
+                          <h4 className="font-bold text-lg text-slate-900 dark:text-white mb-2 group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors leading-tight">{blog.title}</h4>
+                          <p className="text-sm text-slate-500 dark:text-slate-400 mb-4 flex-grow leading-relaxed">{blog.desc}</p>
+                          <div className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-300 group-hover:gap-3 transition-all pt-4 border-t border-slate-50 dark:border-slate-800">
+                             Read Article <ArrowRight size={14} />
+                          </div>
+                       </div>
+                    </Tilt3D>
+                 ))}
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* ARTICLE READER */}
+        {step === 'article' && activeArticle && (
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-white dark:bg-slate-900 rounded-[2rem] p-8 md:p-12 shadow-xl border border-slate-100 dark:border-white/10 max-w-3xl mx-auto"
+          >
+            <button onClick={reset} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 mb-8 flex items-center gap-2 text-sm font-bold">
+              <ArrowRight className="rotate-180" size={16} /> Back to Resources
+            </button>
+            
+            <span className="px-3 py-1 rounded-full bg-violet-100 dark:bg-violet-900/30 text-violet-600 dark:text-violet-300 text-xs font-bold uppercase tracking-wider mb-4 inline-block">
+              {activeArticle.tag}
+            </span>
+            
+            <h1 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
+              {activeArticle.title}
+            </h1>
+            
+            <div className="prose dark:prose-invert max-w-none text-slate-600 dark:text-slate-300 leading-loose">
+              {activeArticle.content}
+            </div>
+
+            <div className="mt-12 pt-8 border-t border-slate-100 dark:border-slate-800">
+              <h4 className="font-bold text-slate-900 dark:text-white mb-4">Was this helpful?</h4>
+              <button 
+                onClick={() => onNavigate('contact')}
+                className="text-violet-600 dark:text-violet-400 font-bold hover:underline flex items-center gap-2"
+              >
+                Book a consultation to discuss this further <ArrowRight size={16} />
+              </button>
+            </div>
+          </motion.div>
         )}
 
         {/* DETAILS FORM */}
