@@ -37,8 +37,8 @@ import {
   Loader2,
   MessageCircle,
   Moon,
-  Zap,
-  Battery
+  Battery,
+  Zap
 } from 'lucide-react';
 
 // --- IMAGE OPTIMIZATION ---
@@ -83,7 +83,7 @@ const TESTIMONIAL_DATA = [
   {
     text: "I finally found a safe space to talk about my anxiety without feeling judged. The clinic vibe is so calming, it instantly relaxes you.",
     name: "Aarav M.",
-    type: "Psychotherapy"
+    type: "Personal Counselling"
   },
   {
     text: "The student mentorship program changed my approach to exams. I feel much more confident and less stressed now.",
@@ -218,8 +218,8 @@ const ASSESSMENT_DATA = {
       "I feel emotionally drained from my work/studies",
       "I feel used up at the end of the day",
       "I feel tired when I get up in the morning and have to face another day",
-      "I feel energetic and enthusiastic (Reverse)", // Note: Logic handles standard scoring, this is a simplified check
-      "I can effectively solve problems that arise", // Reverse
+      "I feel energetic and enthusiastic (Reverse)", 
+      "I can effectively solve problems that arise", 
       "I feel burned out from my work",
       "I feel I am working too hard on my job",
       "I feel like I'm at the end of my rope"
@@ -233,7 +233,7 @@ const ASSESSMENT_DATA = {
       { label: "Always", score: 4 }
     ],
     getResult: (score) => {
-      // Max score 32 (8 * 4)
+      // Max score 32 
       let level, text, recommendations;
       if (score <= 10) {
         level = "Low Burnout Risk";
@@ -290,6 +290,34 @@ const ASSESSMENT_DATA = {
         recommendations = ["Consult a professional", "Cognitive Behavioral Therapy for Insomnia (CBT-I)", "Strict sleep hygiene protocols", "Review lifestyle factors impacting sleep"];
       }
       return { level, text, recommendations };
+    }
+  },
+  career: {
+    id: 'career',
+    title: "Career Aptitude",
+    desc: "A brief check to see where your professional interests might lie.",
+    icon: Compass,
+    color: "text-violet-600 dark:text-violet-400",
+    bg: "bg-violet-50 dark:bg-violet-900/20",
+    questions: [
+      "I enjoy solving complex problems and puzzles.",
+      "I like helping others learn or grow.",
+      "I enjoy creative activities like art, writing, or design.",
+      "I prefer structured environments with clear rules.",
+      "I like leading teams and persuading others.",
+      "I enjoy working with machines, tools, or physical objects."
+    ],
+    options: [
+      { label: "Disagree", score: 0, type: "" },
+      { label: "Neutral", score: 1, type: "" },
+      { label: "Agree", score: 2, type: "" }
+    ],
+    getResult: (score) => {
+      return { 
+        level: "Exploration Needed", 
+        text: "Your interests seem varied. A comprehensive career counselling session with aptitude testing is recommended to pinpoint your perfect path.",
+        recommendations: ["Book a career counselling session", "Explore different fields online", "Talk to professionals in fields of interest"]
+      };
     }
   }
 };
@@ -834,7 +862,7 @@ const ResourcesView = ({ onNavigate }) => {
               <Award size={40} />
             </div>
             <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Assessment Complete</h2>
-            <p className="text-slate-500 dark:text-slate-400 mb-8">Thank you, {user.name}. Here are your results:</p>
+            <p className="text-slate-500 dark:text-slate-400 mb-8">Thank you, {user.name}. We have sent these details to the clinic for your records.</p>
             
             <div className="bg-slate-50 dark:bg-slate-800 p-8 rounded-2xl mb-8 border border-slate-200 dark:border-slate-700 text-left">
               <div className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-2">Result Indicator</div>
@@ -974,21 +1002,6 @@ const Hero3DObject = () => {
   )
 }
 
-const FloatingIcon = ({ Icon, x, y, delay, color, size = 32 }) => (
-  <motion.div
-    animate={{ 
-      y: [0, -15, 0],
-      rotate: [0, 10, -10, 0],
-      scale: [1, 1.1, 1],
-      opacity: [0.3, 0.6, 0.3]
-    }}
-    transition={{ duration: 6, repeat: Infinity, delay: delay, ease: "easeInOut" }}
-    className={`absolute ${x} ${y} ${color} hidden md:block pointer-events-none`}
-  >
-    <Icon size={size} />
-  </motion.div>
-);
-
 const Hero = ({ onNavigate }) => {
   return (
     <section id="hero" className="min-h-[90vh] flex items-center justify-center relative pt-24 pb-12 overflow-hidden bg-gradient-to-b from-purple-50 to-white dark:from-slate-950 dark:to-slate-900 transition-colors duration-300">
@@ -1126,10 +1139,10 @@ const Founder = () => {
 
 const Services = () => {
   const services = [
-    { title: "Psychotherapy", desc: "Talk through anxiety, sadness, or stress.", icon: <Brain size={24}/>, color: "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300" },
-    { title: "Career Counselling", desc: "Find the right career path for you.", icon: <MapPin size={24}/>, color: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300" },
-    { title: "Student Mentorship", desc: "Help with exams and school pressure.", icon: <BookOpen size={24}/>, color: "bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-300" },
-    { title: "Online Therapy", desc: "Get support from your own home.", icon: <Wind size={24}/>, color: "bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300" },
+    { title: "Personal Counselling", desc: "Navigating anxiety, stress, relationships, and emotional well-being. Available online & offline.", icon: <Brain size={24}/>, color: "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300" },
+    { title: "Career Counselling", desc: "Scientific aptitude testing and personalized guidance to find your true path.", icon: <MapPin size={24}/>, color: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300" },
+    { title: "Student Mentorship", desc: "Supporting students with exam stress, focus, and academic pressure.", icon: <BookOpen size={24}/>, color: "bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-300" },
+    { title: "Psychometric Assessments", desc: "Standardized assessments for personality, IQ, and career suitability.", icon: <FileText size={24}/>, color: "bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300" },
   ];
 
   return (
@@ -1142,7 +1155,7 @@ const Services = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">How we help.</h2>
-            <p className="text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">Simple, effective support for whatever you're facing. We tailor our approach to your unique needs using Clinical Psychotherapy and Aptitude Testing.</p>
+            <p className="text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">Simple, effective support for whatever you're facing. We tailor our approach to your unique needs using Counselling and Aptitude Testing.</p>
           </motion.div>
         </div>
 
@@ -1425,10 +1438,10 @@ const Booking = () => {
                   className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 text-slate-600 dark:text-slate-300 focus:bg-white dark:focus:bg-slate-800 transition-all"
                 >
                   <option value="" disabled>What do you need help with?</option>
-                  <option>Psychotherapy</option>
+                  <option>Personal Counselling</option>
                   <option>Career Counselling</option>
                   <option>Student Mentorship</option>
-                  <option>Online Therapy</option>
+                  <option>Psychometric Assessment</option>
                   <option>Other</option>
                 </select>
               </div>
