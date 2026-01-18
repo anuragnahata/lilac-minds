@@ -39,27 +39,27 @@ import {
   Moon,
   Battery, 
   Zap,
-  Layout, // Added for UI
-  Library // Added for Articles
+  Layout,
+  Library
 } from 'lucide-react';
 
 // --- IMAGE OPTIMIZATION ---
 const optimize = (url, width) => 
   `https://wsrv.nl/?url=${encodeURIComponent(url)}&w=${width}&q=80&output=webp`;
 
+// Clinic Images
+const CLINIC_IMAGES = [
+  "https://i.ibb.co/XkYptFZF/Whats-App-Image-2026-01-13-at-16-03-31-1.jpg",
+  "https://i.ibb.co/KjwdjyN2/Whats-App-Image-2026-01-13-at-16-03-32.jpg",
+  "https://i.ibb.co/WvWwT1jN/Whats-App-Image-2026-01-13-at-16-03-33-1.jpg",
+  "https://i.ibb.co/JFqf1Ts1/Whats-App-Image-2026-01-13-at-16-03-33.jpg"
+].map(url => optimize(url, 1200));
+
 const IMAGES = {
-  // Founder image removed from UI but kept in config if needed later
-  // founder: optimize("https://i.ibb.co/B5jNNF7j/IMG-8342.jpg", 800),
-  clinic: [
-    optimize("https://i.ibb.co/XkYptFZF/Whats-App-Image-2026-01-13-at-16-03-31-1.jpg", 1200),
-    optimize("https://i.ibb.co/KjwdjyN2/Whats-App-Image-2026-01-13-at-16-03-32.jpg", 1200),
-    optimize("https://i.ibb.co/WvWwT1jN/Whats-App-Image-2026-01-13-at-16-03-33-1.jpg", 1200),
-    optimize("https://i.ibb.co/JFqf1Ts1/Whats-App-Image-2026-01-13-at-16-03-33.jpg", 1200)
-  ],
   logo: optimize("https://i.ibb.co/XZG4XH4N/Untitled-design.png", 400)
 };
 
-// --- DATA ---
+// --- DATA CONSTANTS ---
 const SEO_DATA = {
   title: "Lilac Minds | Psychologist & Career Counsellor in Jamnagar",
   description: "Lilac Minds, founded by Prarthana Thaker, offers expert psychotherapy, career counselling, and student mentorship in Jamnagar. A safe haven for mental wellness.",
@@ -118,144 +118,100 @@ const FAQS = [
   }
 ];
 
-// --- PSYCHOEDUCATIONAL ARTICLES (RCI & APA ALIGNED) ---
+// --- BLOG DATA ---
 const BLOGS_DATA = [
   {
     id: 101,
-    title: "Understanding Therapy: Dispelling Myths",
-    desc: "Therapy isn't just for crises. Learn how professional counseling fosters resilience and self-awareness in everyday life.",
+    title: "Understanding Therapy: Dispelling Myths & Embracing Growth",
+    desc: "Therapy isn't just for crises. Discover how professional counseling fosters resilience, self-awareness, and emotional hygiene in everyday life.",
     tag: "Psychoeducation",
-    readTime: "6 min",
+    readTime: "8 min",
     content: (
-      <div className="space-y-6">
-        <p className="text-lg leading-relaxed">
-          There is a pervasive stigma that therapy is a "last resort" for those who have "hit rock bottom." In reality, psychotherapy is a proactive tool for mental hygiene, much like going to the gym is for physical health. It provides a structured environment to analyze thoughts, regulate emotions, and improve interpersonal relationships.
+      <div className="space-y-6 text-slate-700 dark:text-slate-300 leading-loose">
+        <p>
+          In our society, a pervasive stigma often suggests that therapy is a "last resort" reserved only for those who have "hit rock bottom" or are battling severe mental illnesses. This misconception prevents countless individuals from accessing a vital resource for personal growth. In reality, <strong>psychotherapy</strong> is a proactive tool for mental hygiene, much like going to the gym is for physical health. It provides a structured, scientific environment to analyze thoughts, regulate emotions, and improve interpersonal relationships before small stressors become overwhelming crises.
         </p>
-
-        <div className="bg-violet-50 dark:bg-violet-900/20 p-6 rounded-xl border border-violet-100 dark:border-white/10">
-          <h3 className="text-xl font-bold mb-4 text-violet-700 dark:text-violet-300">Common Myths vs. Facts</h3>
+        <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">The Science of Change: Neuroplasticity</h3>
+        <p>
+          Therapy is not just "venting." It is a biological intervention. Research in neuroscience shows that consistent talk therapy can alter the neural pathways in the brain—a concept known as <strong>neuroplasticity</strong>. By identifying and challenging negative thought patterns (Cognitive Behavioral Therapy), we physically weaken the neural connections associated with anxiety and strengthen those associated with calm and logic. A psychologist in Jamnagar or anywhere else acts as a guide in this rewiring process.
+        </p>
+        <div className="bg-violet-50 dark:bg-violet-900/20 p-6 rounded-xl border border-violet-100 dark:border-white/10 my-6">
+          <h3 className="text-xl font-bold mb-4 text-violet-700 dark:text-violet-300">Common Myths vs. Clinical Facts</h3>
           <ul className="space-y-4">
             <li>
-              <p className="font-semibold text-slate-800 dark:text-white">Myth: "Therapy is only for people with severe mental illness."</p>
-              <p className="text-slate-600 dark:text-slate-400 mt-1"><strong>Fact:</strong> While psychologists treat clinical disorders, a large portion of practice involves helping healthy individuals navigate life transitions, grief, relationship issues, and career stress.</p>
+              <p className="font-semibold text-slate-800 dark:text-white">Myth: "Therapy is only for 'crazy' people."</p>
+              <p className="mt-1"><strong>Fact:</strong> While clinical psychologists treat disorders, a massive portion of practice involves helping healthy individuals navigate life transitions, grief, relationship conflicts, and career burnout. It is for anyone seeking clarity.</p>
             </li>
             <li>
-              <p className="font-semibold text-slate-800 dark:text-white">Myth: "The therapist will just tell me what to do."</p>
-              <p className="text-slate-600 dark:text-slate-400 mt-1"><strong>Fact:</strong> A psychologist's role is not to give advice, but to facilitate <em>insight</em>. We help you uncover patterns in your behavior and equip you with the tools to make your own empowered decisions.</p>
-            </li>
-             <li>
-              <p className="font-semibold text-slate-800 dark:text-white">Myth: "Talking to friends is the same as therapy."</p>
-              <p className="text-slate-600 dark:text-slate-400 mt-1"><strong>Fact:</strong> While social support is crucial, a therapist provides an objective, non-judgmental perspective backed by scientific training in human behavior. It is a one-way relationship focused entirely on <em>your</em> growth.</p>
+              <p className="font-semibold text-slate-800 dark:text-white">Myth: "The therapist will tell me what to do."</p>
+              <p className="mt-1"><strong>Fact:</strong> A psychologist's role is not to give advice, but to facilitate <em>insight</em>. We act as a mirror, helping you see blind spots in your behavior and equipping you with coping mechanisms to make your own empowered decisions.</p>
             </li>
           </ul>
         </div>
-
         <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">The Therapeutic Alliance</h3>
         <p>
-          Research consistently shows that the strongest predictor of successful therapy is not the specific technique used (like CBT or Psychoanalysis), but the quality of the relationship between the client and the therapist. This is known as the <strong>Therapeutic Alliance</strong>. It is a collaborative partnership based on trust, empathy, and shared goals.
-        </p>
-
-        <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">Confidentiality & Ethics</h3>
-        <p>
-          As mental health professionals registered with the Rehabilitation Council of India (RCI), we adhere to strict ethical codes. 
-          <strong>Confidentiality</strong> is paramount. This creates a safe container where you can explore your deepest vulnerabilities without fear of judgment or exposure.
+          Research consistently indicates that the strongest predictor of successful therapy is the <strong>Therapeutic Alliance</strong>—the trust and rapport between client and therapist. At Lilac Minds, we prioritize creating a safe, non-judgmental space where you feel heard and understood.
         </p>
       </div>
     )
   },
   {
     id: 102,
-    title: "Exam Anxiety: A Neuro-Psychological View",
-    desc: "Why does the mind go blank during exams? Understanding the 'Fight or Flight' response and how to ground yourself.",
+    title: "Mastering Exam Anxiety: A Neuro-Psychological View",
+    desc: "Why does the mind go blank during exams? Understanding the 'Fight or Flight' response and learning scientifically proven grounding techniques.",
     tag: "Student Mentorship",
-    readTime: "7 min",
+    readTime: "9 min",
     content: (
-      <div className="space-y-6">
-        <p className="text-lg leading-relaxed">
-          It is a common phenomenon: you study for weeks, memorize every formula, but the moment you sit in the exam hall, your mind goes blank. This isn't a sign of low intelligence or poor preparation; it is a physiological hijack.
+      <div className="space-y-6 text-slate-700 dark:text-slate-300 leading-loose">
+        <p>
+          It is a frustratingly common phenomenon: you study effectively for weeks, memorize every formula and concept, but the moment you sit in the exam hall and flip over the paper, your mind goes blank. This is not necessarily a sign of low intelligence, poor preparation, or "bad luck." It is often a physiological hijack known as the <strong>Fight or Flight</strong> response.
         </p>
-        
         <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">The Biology of "Blanking Out"</h3>
         <p>
-          When you perceive the exam as a "threat," your brain's amygdala (the fear center) activates the <strong>Fight or Flight</strong> response. This floods your system with cortisol and adrenaline. While useful for running from a tiger, these hormones inhibit the <strong>Prefrontal Cortex</strong>—the part of the brain responsible for logic, memory retrieval, and problem-solving.
+          When your brain perceives the exam as a "threat" (similar to a predator), the <strong>Amygdala</strong> (the brain's fear center) activates. This floods your system with stress hormones like cortisol and adrenaline. While these hormones are excellent for running away from a tiger, they have a detrimental effect on the <strong>Prefrontal Cortex</strong>—the area of the brain responsible for higher-order logic, reasoning, and memory retrieval. Essentially, your survival instinct shuts down your thinking brain to save energy for physical escape.
         </p>
-
         <div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-100 dark:border-white/10 my-8">
-           <h3 className="text-xl font-bold mb-4 text-blue-700 dark:text-blue-300">Immediate Grounding Techniques</h3>
-           <p className="mb-4">If you feel panic rising during an exam, use these techniques to bring your Prefrontal Cortex back online:</p>
-           
-           <div className="space-y-4">
+           <h3 className="text-xl font-bold mb-4 text-blue-700 dark:text-blue-300">Scientific Grounding Techniques</h3>
+           <p className="mb-4">To reverse this hijack, you must biologically convince your nervous system that you are safe. Here are two techniques to practice:</p>
+           <div className="space-y-6">
              <div>
-               <h4 className="font-bold text-slate-800 dark:text-white">1. The 4-7-8 Breathing Method</h4>
-               <p className="text-slate-600 dark:text-slate-400 text-sm">Inhale quietly through the nose for 4 seconds. Hold the breath for 7 seconds. Exhale forcefully through the mouth for 8 seconds. This rhythm stimulates the Vagus nerve, physically forcing your body to relax.</p>
+               <h4 className="font-bold text-slate-900 dark:text-white text-lg">1. The 4-7-8 Breathing Method</h4>
+               <p className="mt-1">Inhale quietly through the nose for <strong>4 seconds</strong>. Hold the breath for <strong>7 seconds</strong>. Exhale forcefully through the mouth for <strong>8 seconds</strong>. This specific rhythm stimulates the Vagus nerve, activating the Parasympathetic Nervous System (rest and digest mode), physically forcing your heart rate to drop.</p>
              </div>
              <div>
-               <h4 className="font-bold text-slate-800 dark:text-white">2. The 5-4-3-2-1 Sensory Check</h4>
-               <p className="text-slate-600 dark:text-slate-400 text-sm">Acknowledge 5 things you see, 4 you can touch (desk texture, pen grip), 3 you hear, 2 you can smell, and 1 you can taste. This pulls your focus from internal panic to external reality.</p>
+               <h4 className="font-bold text-slate-900 dark:text-white text-lg">2. The 5-4-3-2-1 Sensory Check</h4>
+               <p className="mt-1">When panic spirals internally, focus externally. Acknowledge <strong>5</strong> things you see, <strong>4</strong> you can touch (desk texture, pen grip), <strong>3</strong> you hear, <strong>2</strong> you can smell, and <strong>1</strong> you can taste. This sensory data forces the Prefrontal Cortex to come back online to process the information.</p>
              </div>
            </div>
         </div>
-
-        <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">Cognitive Reframing</h3>
-        <p>
-          Anxiety often stems from catastrophic thinking ("If I fail this, my life is over"). We work on <strong>Cognitive Restructuring</strong>—challenging these irrational thoughts.
-        </p>
-        <ul className="list-disc pl-5 space-y-2 mt-2 marker:text-violet-500">
-          <li><strong>Identify the thought:</strong> "I am going to fail."</li>
-          <li><strong>Challenge the evidence:</strong> "I have studied 80% of the syllabus. I have passed previous tests."</li>
-          <li><strong>Reframe:</strong> "I am prepared for most of this exam. I will do my best on what I know."</li>
-        </ul>
-        <p className="mt-4">Recognizing that anxiety is a biological response, not a personal failure, is the first step toward managing it.</p>
       </div>
     )
   },
   {
     id: 103,
-    title: "Building Emotional Resilience",
-    desc: "Resilience is not a trait that people either have or do not have. It involves behaviors, thoughts, and actions that can be learned.",
+    title: "Building Emotional Resilience: The Art of Bouncing Back",
+    desc: "Resilience isn't a trait you're born with; it's a muscle you build. Learn the 'Three C's' and practical strategies for psychological strength.",
     tag: "Wellness",
     readTime: "8 min",
     content: (
-      <div className="space-y-6">
-        <p className="text-lg leading-relaxed">
-          Resilience is defined by the American Psychological Association (APA) as the process of adapting well in the face of adversity, trauma, tragedy, threats, or significant sources of stress. It means "bouncing back" from difficult experiences.
+      <div className="space-y-6 text-slate-700 dark:text-slate-300 leading-loose">
+        <p>
+          Resilience is often misunderstood as "toughness" or the absence of emotion. However, the American Psychological Association (APA) defines resilience as the process of adapting well in the face of adversity, trauma, tragedy, threats, or significant sources of stress. It is not about never falling down; it is about the capacity to "bounce back" and often grow stronger from the experience. It involves behaviors, thoughts, and actions that can be learned and developed by anyone.
         </p>
-
         <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">The "Three C's" of Resilience</h3>
-        <p>Psychologist Suzanne Kobasa identified three key elements that resilient people share:</p>
+        <p>Psychologist Suzanne Kobasa's research identified three key personality traits that resilient people share, known as the Three C's:</p>
         <div className="grid md:grid-cols-3 gap-4 my-6">
-           <div className="bg-slate-50 dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+           <div className="bg-slate-50 dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700">
              <h4 className="font-bold text-violet-600 dark:text-violet-400 mb-2">1. Challenge</h4>
-             <p className="text-sm text-slate-600 dark:text-slate-400">Viewing a difficulty as a challenge to overcome rather than a paralyzing threat.</p>
+             <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Viewing a difficulty as a challenge to overcome rather than a paralyzing threat.</p>
            </div>
-           <div className="bg-slate-50 dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+           <div className="bg-slate-50 dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700">
              <h4 className="font-bold text-violet-600 dark:text-violet-400 mb-2">2. Commitment</h4>
-             <p className="text-sm text-slate-600 dark:text-slate-400">Being committed to your goals, relationships, and values, giving you a reason to push through.</p>
+             <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Being committed to your goals, relationships, and values. This provides a "North Star."</p>
            </div>
-           <div className="bg-slate-50 dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+           <div className="bg-slate-50 dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700">
              <h4 className="font-bold text-violet-600 dark:text-violet-400 mb-2">3. Control</h4>
-             <p className="text-sm text-slate-600 dark:text-slate-400">Focusing your energy on what you <em>can</em> change, rather than worrying about what you cannot.</p>
-           </div>
-        </div>
-
-        <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">Practical Strategies for Growth</h3>
-        <ul className="list-disc pl-5 space-y-4 marker:text-violet-500">
-          <li>
-            <strong>Cultivate a Growth Mindset:</strong> Understand that setbacks are feedback, not failure. Ask yourself, "What can I learn from this?" rather than "Why is this happening to me?"
-          </li>
-          <li>
-            <strong>Prioritize Social Connection:</strong> Isolation breeds despair. Resilient people actively seek support. Sharing your burden with a trusted friend or therapist validates your feelings.
-          </li>
-          <li>
-            <strong>Practice Self-Compassion:</strong> Treat yourself with the same kindness you would offer a friend. Self-criticism activates the threat system, while self-compassion activates the self-soothing system, releasing oxytocin.
-          </li>
-        </ul>
-        
-        <div className="mt-8 p-6 bg-green-50 dark:bg-green-900/20 rounded-xl border border-green-100 dark:border-white/10 flex items-start gap-4">
-           <CheckCircle className="text-green-600 dark:text-green-400 shrink-0 mt-1" />
-           <div>
-             <h4 className="font-bold text-green-800 dark:text-green-300">Try This: The "Three Good Things" Exercise</h4>
-             <p className="text-green-700 dark:text-green-400 text-sm mt-1">Every night for one week, write down three things that went well that day and <em>why</em> they went well. This rewires the brain to scan for positives (neuroplasticity), gradually building a buffer against stress.</p>
+             <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Focusing your energy on what you <em>can</em> change (your reaction, your effort), rather than external events.</p>
            </div>
         </div>
       </div>
@@ -263,55 +219,41 @@ const BLOGS_DATA = [
   },
   {
     id: 104,
-    title: "Career Confusion: Choosing the Right Path",
-    desc: "Confused between passion and practicality? How Aptitude Testing and counselling help align your skills with the market.",
+    title: "Navigating Career Confusion: Science Over Guesswork",
+    desc: "Confused between passion and practicality? Understand how Psychometric Aptitude Testing and counselling align your skills with market reality.",
     tag: "Career Counselling",
-    readTime: "5 min",
+    readTime: "7 min",
     content: (
-      <div className="space-y-6">
-        <p className="text-lg leading-relaxed">
-          In a world with thousands of career options, "analysis paralysis" is real. Students and professionals often feel torn between what they <em>love</em> to do, what they are <em>good</em> at, and what pays the bills. This intersection is what the Japanese call <strong>Ikigai</strong>.
-        </p>
-        
-        <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">The Science of Aptitude</h3>
+      <div className="space-y-6 text-slate-700 dark:text-slate-300 leading-loose">
         <p>
-          Career choices should not be based on trends or parental pressure alone. A scientific approach involves assessing three distinct pillars:
+          In a rapidly evolving world with thousands of career options, "analysis paralysis" is real. Students and professionals often feel torn between what they <em>love</em> to do, what they are <em>good</em> at, and what pays the bills. This intersection is often referred to in Japanese culture as <strong>Ikigai</strong>. However, finding it requires more than just introspection; it requires data.
         </p>
-        
-        <div className="space-y-4 my-6">
-           <div className="flex items-start gap-3">
-             <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center text-indigo-600 font-bold shrink-0">1</div>
+        <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">The Science of Aptitude Testing</h3>
+        <p>
+          Career choices should not be based solely on current trends, parental pressure, or a "gut feeling." A scientific approach involves assessing three distinct pillars of an individual's profile:
+        </p>
+        <div className="space-y-6 my-8">
+           <div className="flex items-start gap-4">
+             <div className="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center text-indigo-600 font-bold shrink-0 text-lg">1</div>
              <div>
-                <h4 className="font-bold text-slate-900 dark:text-white">Aptitude (Potential)</h4>
-                <p className="text-slate-600 dark:text-slate-400 text-sm">Your innate ability to learn specific skills (e.g., Numerical, Verbal, Spatial, Mechanical). You might love music, but do you have the aptitude for composition?</p>
+                <h4 className="font-bold text-slate-900 dark:text-white text-lg">Aptitude (Innate Potential)</h4>
+                <p className="text-slate-600 dark:text-slate-400 mt-1">This refers to your natural ability to learn specific skills. Tests measure Numerical, Verbal, Spatial, Mechanical, and Abstract reasoning.</p>
              </div>
            </div>
-           <div className="flex items-start gap-3">
-             <div className="w-8 h-8 rounded-full bg-pink-100 dark:bg-pink-900/50 flex items-center justify-center text-pink-600 font-bold shrink-0">2</div>
+           <div className="flex items-start gap-4">
+             <div className="w-10 h-10 rounded-full bg-pink-100 dark:bg-pink-900/50 flex items-center justify-center text-pink-600 font-bold shrink-0 text-lg">2</div>
              <div>
-                <h4 className="font-bold text-slate-900 dark:text-white">Personality (Behavior)</h4>
-                <p className="text-slate-600 dark:text-slate-400 text-sm">Are you introverted or extroverted? Do you prefer structure or chaos? A creative personality might struggle in a rigid audit role.</p>
-             </div>
-           </div>
-           <div className="flex items-start gap-3">
-             <div className="w-8 h-8 rounded-full bg-teal-100 dark:bg-teal-900/50 flex items-center justify-center text-teal-600 font-bold shrink-0">3</div>
-             <div>
-                <h4 className="font-bold text-slate-900 dark:text-white">Interest (Passion)</h4>
-                <p className="text-slate-600 dark:text-slate-400 text-sm">What topics naturally engage you for hours? Interest fuels the motivation needed to master a domain.</p>
+                <h4 className="font-bold text-slate-900 dark:text-white text-lg">Personality (Behavioral Style)</h4>
+                <p className="text-slate-600 dark:text-slate-400 mt-1">Who are you at your core? Are you introverted or extroverted? Do you prefer structure or chaos?</p>
              </div>
            </div>
         </div>
-
-        <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">The Role of Counselling</h3>
-        <p>
-          Psychometric testing provides the data, but counselling provides the <em>context</em>. A career counsellor helps you interpret these results within the reality of the job market, your family situation, and your long-term life goals. It transforms raw data into a roadmap.
-        </p>
       </div>
     )
   }
 ];
 
-// --- PSYCHOMETRIC TEST DATA (RESTORED & EXPANDED) ---
+// --- ASSESSMENT DATA ---
 const ASSESSMENT_DATA = {
   anxiety: {
     id: 'anxiety',
@@ -344,15 +286,15 @@ const ASSESSMENT_DATA = {
       } else if (score <= 9) {
         level = "Mild Anxiety";
         text = "You may be experiencing mild anxiety. It is common to feel this way during stressful periods.";
-        recommendations = ["Try deep breathing exercises", "Limit caffeine and alcohol", "Establish a regular sleep schedule", "Consider journaling your worries"];
+        recommendations = ["Try deep breathing exercises", "Limit caffeine", "Establish a regular sleep schedule"];
       } else if (score <= 14) {
         level = "Moderate Anxiety";
         text = "Your symptoms suggest moderate anxiety. It might be affecting your daily life and focus.";
-        recommendations = ["Schedule a consultation with a counselor", "Practice progressive muscle relaxation", "Break big tasks into small steps", "Physical activity can help reduce tension"];
+        recommendations = ["Schedule a consultation", "Practice progressive muscle relaxation", "Break big tasks into small steps"];
       } else {
         level = "Severe Anxiety";
         text = "Your score indicates severe anxiety symptoms that likely impact your quality of life significantly.";
-        recommendations = ["We strongly recommend speaking to a professional immediately", "Do not hesitate to ask for help", "Focus on immediate grounding techniques", "Prioritize your mental health today"];
+        recommendations = ["We strongly recommend speaking to a professional immediately", "Focus on immediate grounding techniques", "Prioritize your mental health today"];
       }
       return { level, text, recommendations };
     }
@@ -390,19 +332,15 @@ const ASSESSMENT_DATA = {
       } else if (score <= 9) {
         level = "Mild Depression";
         text = "You may be experiencing mild depressive symptoms. It's important to monitor how you feel.";
-        recommendations = ["Stick to a routine", "Get some sunlight and light exercise", "Reach out to a trusted friend", "Practice self-compassion"];
+        recommendations = ["Stick to a routine", "Get some sunlight and light exercise", "Practice self-compassion"];
       } else if (score <= 14) {
         level = "Moderate Depression";
         text = "Your symptoms indicate moderate depression. Professional support can provide you with effective coping strategies.";
-        recommendations = ["Consider booking a therapy session", "Challenge negative thought patterns", "Avoid isolation", "Focus on small, achievable goals"];
-      } else if (score <= 19) {
-        level = "Moderately Severe Depression";
-        text = "These scores suggest moderately severe depression. It is highly advisable to seek professional help.";
-        recommendations = ["Please consult a mental health professional", "Discuss treatment options", "Ensure you have a support system around you", "Be gentle with yourself"];
+        recommendations = ["Consider booking a therapy session", "Challenge negative thought patterns", "Avoid isolation"];
       } else {
         level = "Severe Depression";
         text = "Your score indicates severe depression. Immediate professional intervention is recommended.";
-        recommendations = ["Seek immediate professional help", "Contact a crisis helpline if needed", "Do not face this alone", "Remember that help is available and effective"];
+        recommendations = ["Seek immediate professional help", "Contact a crisis helpline if needed", "Remember that help is available and effective"];
       }
       return { level, text, recommendations };
     }
@@ -440,11 +378,11 @@ const ASSESSMENT_DATA = {
       } else if (score <= 20) {
         level = "Moderate Burnout Risk";
         text = "You are showing some signs of exhaustion. It's time to pause and reassess.";
-        recommendations = ["Take a short vacation or mental health day", "Re-evaluate your workload", "Prioritize sleep and nutrition", "Learn to say 'no' to extra tasks"];
+        recommendations = ["Take a short vacation or mental health day", "Re-evaluate your workload", "Prioritize sleep and nutrition"];
       } else {
         level = "High Burnout Risk";
         text = "You appear to be experiencing significant burnout. Prioritizing recovery is essential.";
-        recommendations = ["Seek professional support immediately", "Discuss workload with supervisors/teachers", "Dedicate time to complete rest", "Disconnect from digital devices outside work hours"];
+        recommendations = ["Seek professional support immediately", "Discuss workload with supervisors", "Dedicate time to complete rest"];
       }
       return { level, text, recommendations };
     }
@@ -481,11 +419,11 @@ const ASSESSMENT_DATA = {
       } else if (score <= 10) {
         level = "Mild Sleep Difficulties";
         text = "You may be facing some sleep disturbances.";
-        recommendations = ["Create a relaxing bedtime routine", "Avoid caffeine after 2 PM", "Limit naps during the day", "Try reading before bed"];
+        recommendations = ["Create a relaxing bedtime routine", "Avoid caffeine after 2 PM", "Try reading before bed"];
       } else {
         level = "Significant Insomnia Symptoms";
         text = "Your score suggests possible insomnia. Consulting a specialist is recommended.";
-        recommendations = ["Consult a professional", "Cognitive Behavioral Therapy for Insomnia (CBT-I)", "Strict sleep hygiene protocols", "Review lifestyle factors impacting sleep"];
+        recommendations = ["Consult a professional", "Cognitive Behavioral Therapy for Insomnia (CBT-I)", "Strict sleep hygiene protocols"];
       }
       return { level, text, recommendations };
     }
@@ -506,9 +444,9 @@ const ASSESSMENT_DATA = {
       "I enjoy working with machines, tools, or physical objects."
     ],
     options: [
-      { label: "Disagree", score: 0, type: "" },
-      { label: "Neutral", score: 1, type: "" },
-      { label: "Agree", score: 2, type: "" }
+      { label: "Disagree", score: 0 },
+      { label: "Neutral", score: 1 },
+      { label: "Agree", score: 2 }
     ],
     getResult: (score) => {
       return { 
@@ -634,65 +572,55 @@ const DoodlePattern = () => (
   </svg>
 );
 
-const SplashScreen = () => {
-  return (
-    <motion.div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-50 dark:bg-slate-950 overflow-hidden"
-      initial={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.8, ease: "easeInOut" }}
-    >
-      <motion.div 
-        animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.8, 0.5] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-violet-200/60 dark:bg-violet-900/30 rounded-full blur-[80px] md:blur-[100px]"
+// --- COMPONENT DEFINITIONS ---
+
+const SplashScreen = () => (
+  <motion.div
+    className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-50 dark:bg-slate-950 overflow-hidden"
+    initial={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    transition={{ duration: 0.8, ease: "easeInOut" }}
+  >
+    <motion.div 
+      animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.8, 0.5] }}
+      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+      className="absolute w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-violet-200/60 dark:bg-violet-900/30 rounded-full blur-[80px] md:blur-[100px]"
+    />
+    <div className="relative z-10 flex flex-col items-center px-4">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+        className="mb-8"
+      >
+         <img src={IMAGES.logo} alt="Lilac Minds Logo" className="w-40 h-40 object-contain drop-shadow-sm" width="160" height="160" />
+      </motion.div>
+      <motion.h1
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
+        className="text-5xl md:text-7xl font-bold text-slate-800 dark:text-white tracking-tight text-center"
+        style={{ fontFamily: "'Playfair Display', serif" }}
+      >
+        Lilac Minds
+      </motion.h1>
+      <motion.div
+        initial={{ width: 0 }}
+        animate={{ width: "60px" }}
+        transition={{ delay: 1.0, duration: 0.8, ease: "easeOut" }}
+        className="h-1 bg-violet-500 mt-6 rounded-full"
       />
-
-      <div className="relative z-10 flex flex-col items-center px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-          className="mb-8"
-        >
-           <img 
-             src={IMAGES.logo} 
-             alt="Lilac Minds Logo" 
-             className="w-40 h-40 object-contain drop-shadow-sm" 
-             width="160" 
-             height="160"
-           />
-        </motion.div>
-
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
-          className="text-5xl md:text-7xl font-bold text-slate-800 dark:text-white tracking-tight text-center"
-          style={{ fontFamily: "'Playfair Display', serif" }}
-        >
-          Lilac Minds
-        </motion.h1>
-        
-        <motion.div
-          initial={{ width: 0 }}
-          animate={{ width: "60px" }}
-          transition={{ delay: 1.0, duration: 0.8, ease: "easeOut" }}
-          className="h-1 bg-violet-500 mt-6 rounded-full"
-        />
-        
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 0.8 }}
-          className="text-slate-400 dark:text-slate-500 text-xs md:text-sm mt-6 font-medium tracking-[0.3em] uppercase text-center"
-        >
-          Psychology & Career Guidance
-        </motion.p>
-      </div>
-    </motion.div>
-  );
-};
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5, duration: 0.8 }}
+        className="text-slate-600 dark:text-slate-500 text-xs md:text-sm mt-6 font-medium tracking-[0.3em] uppercase text-center"
+      >
+        Psychology & Career Guidance
+      </motion.p>
+    </div>
+  </motion.div>
+);
 
 const Navbar = ({ currentView, onNavigate, isDarkMode, toggleTheme }) => {
   const [scrolled, setScrolled] = useState(false);
@@ -902,7 +830,7 @@ const ResourcesView = ({ onNavigate }) => {
         {step === 'menu' && (
           <div className="text-center mb-16">
             <h1 className="text-4xl md:text-6xl font-bold text-slate-900 dark:text-white mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>Resources</h1>
-            <p className="text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">
+            <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
               Curated tools, assessments, and helplines to support your mental wellness journey.
             </p>
           </div>
@@ -927,7 +855,7 @@ const ResourcesView = ({ onNavigate }) => {
                           </div>
                           <div className="flex-1">
                             <h4 className="font-bold text-slate-900 dark:text-white mb-1 group-hover:text-violet-700 dark:group-hover:text-violet-400 transition-colors">{test.title}</h4>
-                            <p className="text-sm text-slate-500 dark:text-slate-400 mb-3">{test.desc}</p>
+                            <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">{test.desc}</p>
                             <span className="text-xs font-semibold text-violet-500 dark:text-violet-400 uppercase tracking-wider flex items-center gap-1">
                               Start Assessment <ArrowRight size={14} />
                             </span>
@@ -951,7 +879,7 @@ const ResourcesView = ({ onNavigate }) => {
                       <div key={i} className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-white/5 last:border-0 last:pb-0">
                         <div>
                           <div className="font-bold text-slate-900 dark:text-white">{line.name}</div>
-                          <div className="text-sm text-slate-500 dark:text-slate-400">{line.desc}</div>
+                          <div className="text-sm text-slate-600 dark:text-slate-400">{line.desc}</div>
                         </div>
                         <a href={`tel:${line.number.replace(/\s/g, '')}`} className="bg-slate-50 dark:bg-slate-800 px-4 py-2 rounded-full text-sm font-bold text-slate-700 dark:text-slate-200 shadow-sm hover:bg-violet-600 dark:hover:bg-violet-600 hover:text-white transition-colors">
                           Call
@@ -979,7 +907,7 @@ const ResourcesView = ({ onNavigate }) => {
                              <span className="text-[10px] text-slate-400 flex items-center gap-1"><Coffee size={10} /> {blog.readTime}</span>
                           </div>
                           <h4 className="font-bold text-lg text-slate-900 dark:text-white mb-2 group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors leading-tight">{blog.title}</h4>
-                          <p className="text-sm text-slate-500 dark:text-slate-400 mb-4 flex-grow leading-relaxed">{blog.desc}</p>
+                          <p className="text-sm text-slate-600 dark:text-slate-400 mb-4 flex-grow leading-relaxed">{blog.desc}</p>
                           <div className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-300 group-hover:gap-3 transition-all pt-4 border-t border-slate-50 dark:border-slate-800">
                              Read Article <ArrowRight size={14} />
                           </div>
@@ -1037,7 +965,7 @@ const ResourcesView = ({ onNavigate }) => {
               <ArrowRight className="rotate-180" size={16} /> Back to Resources
             </button>
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">{activeTest.title}</h2>
-            <p className="text-slate-500 dark:text-slate-400 mb-8">Please provide your details to start the assessment.</p>
+            <p className="text-slate-600 dark:text-slate-400 mb-8">Please provide your details to start the assessment.</p>
             
             <form onSubmit={handleFormSubmit} className="space-y-5">
               <div>
@@ -1178,6 +1106,501 @@ const ResourcesView = ({ onNavigate }) => {
   );
 };
 
+const Hero = ({ onNavigate }) => (
+  <section id="hero" className="min-h-[90vh] flex items-center justify-center relative pt-24 pb-12 overflow-hidden bg-gradient-to-b from-purple-50 to-white dark:from-slate-950 dark:to-slate-900 transition-colors duration-300">
+    <ParallaxBackground />
+    <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-10 md:gap-16 items-center relative z-10">
+      <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
+        <div className="inline-block px-3 py-1 bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm border border-slate-200 dark:border-slate-700 rounded-full text-violet-700 dark:text-violet-300 text-xs font-bold uppercase tracking-wider mb-6 shadow-sm">Based in Jamnagar</div>
+        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-slate-900 dark:text-white leading-tight mb-6">
+          Healing starts with a <span className="text-violet-600 dark:text-violet-400">Lilac</span> state of mind.
+        </h1>
+        <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-8 leading-relaxed max-w-lg">
+          A safe, warm place for therapy and career guidance. Founded by Prarthana Thaker, we're here to help you get through the tough times.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-3">
+          <button 
+            onClick={() => onNavigate('contact', 'scroll')}
+            className="bg-violet-600 text-white px-8 py-3.5 rounded-full text-base font-semibold hover:bg-violet-700 transition-all shadow-lg flex items-center justify-center gap-2 hover:-translate-y-1"
+          >
+            Start Your Journey <ArrowRight size={18} />
+          </button>
+          <button 
+            onClick={() => onNavigate('services', 'scroll')}
+            className="bg-white dark:bg-slate-800 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 px-8 py-3.5 rounded-full text-base font-semibold hover:bg-slate-50 dark:hover:bg-slate-700 transition-all flex items-center justify-center hover:-translate-y-1 hover:shadow-md"
+          >
+            How we help
+          </button>
+        </div>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1, delay: 0.2 }}
+        className="relative hidden lg:block"
+      >
+        <Hero3DObject />
+      </motion.div>
+    </div>
+  </section>
+);
+
+const StatsSection = () => (
+  <section className="py-12 bg-violet-900 dark:bg-slate-900 text-white relative overflow-hidden border-t border-white/5">
+    <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+    <motion.div 
+      animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }}
+      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-full blur-[100px] pointer-events-none"
+    />
+  </section>
+);
+
+const Founder = () => (
+  <section id="about" className="py-20 md:py-32 relative bg-white dark:bg-slate-950 overflow-hidden transition-colors duration-300">
+    <DoodlePattern />
+    <div className="max-w-5xl mx-auto px-6 relative z-10">
+      <div className="text-center mb-16">
+         <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <div className="flex items-center justify-center gap-2 text-violet-600 dark:text-violet-400 font-bold mb-4">
+              <Sparkles size={18} />
+              <span className="uppercase tracking-widest text-xs">Our Story</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
+              Rooted in Empathy, <br/> Guided by Science.
+            </h2>
+          </motion.div>
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-12 mb-16">
+           <div className="bg-violet-50/50 dark:bg-slate-900/50 p-8 rounded-3xl border border-violet-100 dark:border-white/10 backdrop-blur-sm">
+              <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-4">The Vision</h3>
+              <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+                Lilac Minds was founded by Prarthana Thaker with a singular mission: to bridge the gap between clinical psychology and human connection. We believe that mental health care shouldn't feel clinical or cold—it should feel like coming home to yourself.
+              </p>
+              <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+                 Whether navigating academic pressure as a student or seeking clarity in a complex career path, our approach combines evidence-based therapy with genuine, non-judgmental support.
+              </p>
+           </div>
+           <div className="space-y-6">
+              <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-100 dark:border-white/10 shadow-sm flex gap-4">
+                 <div className="bg-violet-100 dark:bg-violet-900/30 p-3 h-12 w-12 rounded-full text-violet-600 dark:text-violet-300 flex items-center justify-center shrink-0"><BookOpen size={24} /></div>
+                 <div>
+                    <h4 className="font-bold text-slate-900 dark:text-white mb-1">Educational Guidance</h4>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">We don't just treat symptoms; we educate. Understanding the 'why' behind your feelings is the first step to mastering them.</p>
+                 </div>
+              </div>
+              <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-100 dark:border-white/10 shadow-sm flex gap-4">
+                 <div className="bg-pink-100 dark:bg-pink-900/30 p-3 h-12 w-12 rounded-full text-pink-600 dark:text-pink-300 flex items-center justify-center shrink-0"><Heart size={24} /></div>
+                 <div>
+                    <h4 className="font-bold text-slate-900 dark:text-white mb-1">Compassionate Care</h4>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">A judgement-free zone where every emotion is valid, and every story matters. Your mental safety is our priority.</p>
+                 </div>
+              </div>
+              <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-100 dark:border-white/10 shadow-sm flex gap-4">
+                 <div className="bg-blue-100 dark:bg-blue-900/30 p-3 h-12 w-12 rounded-full text-blue-600 dark:text-blue-300 flex items-center justify-center shrink-0"><Compass size={24} /></div>
+                 <div>
+                    <h4 className="font-bold text-slate-900 dark:text-white mb-1">Future Focused</h4>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">Beyond therapy, we offer robust career counselling to help align your professional life with your personal values.</p>
+                 </div>
+              </div>
+           </div>
+      </div>
+
+      <div className="bg-slate-900 dark:bg-slate-800 rounded-[3rem] p-12 text-center relative overflow-hidden shadow-2xl">
+          <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+          <Quote className="text-violet-500 w-12 h-12 mx-auto mb-6 opacity-50" />
+          <p className="text-xl md:text-2xl text-violet-100 font-medium italic leading-relaxed max-w-2xl mx-auto relative z-10">
+            "Mental health is not just about fixing what's broken, but about nurturing the incredible potential within every human mind."
+          </p>
+          <div className="mt-6 font-bold text-white">— Prarthana Thaker, Founder</div>
+      </div>
+    </div>
+  </section>
+);
+
+const Services = () => {
+  const services = [
+    { title: "Personal Counselling", desc: "Navigating anxiety, stress, relationships, and emotional well-being. Available online & offline.", icon: <Brain size={24}/>, color: "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300" },
+    { title: "Career Counselling", desc: "Scientific aptitude testing and personalized guidance to find your true path.", icon: <MapPin size={24}/>, color: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300" },
+    { title: "Student Mentorship", desc: "Supporting students with exam stress, focus, and academic pressure.", icon: <BookOpen size={24}/>, color: "bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-300" },
+    { title: "Psychometric Assessments", desc: "Standardized assessments for personality, IQ, and career suitability.", icon: <FileText size={24}/>, color: "bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300" },
+  ];
+
+  return (
+    <section id="services" className="py-20 md:py-32 bg-slate-50 dark:bg-slate-900 relative transition-colors duration-300">
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <div className="text-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">How we help.</h2>
+            <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Simple, effective support for whatever you're facing. We tailor our approach to your unique needs using Clinical Psychotherapy and Aptitude Testing.</p>
+          </motion.div>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {services.map((s, i) => (
+            <Tilt3D key={i} className="bg-white dark:bg-slate-800 p-8 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-700 group cursor-default">
+              <div className={`w-14 h-14 ${s.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                {s.icon}
+              </div>
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">{s.title}</h3>
+              <p className="text-slate-600 dark:text-slate-400 leading-relaxed">{s.desc}</p>
+            </Tilt3D>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const TestimonialsSection = () => {
+  return (
+    <section className="py-20 bg-white dark:bg-slate-950 transition-colors duration-300">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">Kind Words</h2>
+          <p className="text-lg text-slate-600 dark:text-slate-400">Stories of growth and healing from our community.</p>
+        </div>
+        
+        <div className="grid md:grid-cols-3 gap-8">
+          {TESTIMONIAL_DATA.map((t, i) => (
+            <Tilt3D key={i} className="bg-slate-50 dark:bg-slate-900 p-8 rounded-[2rem] relative border border-slate-100 dark:border-white/5">
+              <Quote className="text-violet-200 dark:text-violet-900 mb-4 h-8 w-8" />
+              <p className="text-slate-700 dark:text-slate-300 italic mb-6 leading-relaxed">"{t.text}"</p>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-violet-200 dark:bg-violet-900/50 rounded-full flex items-center justify-center text-violet-700 dark:text-violet-300 font-bold">
+                  {t.name[0]}
+                </div>
+                <div>
+                  <div className="font-bold text-slate-900 dark:text-white">{t.name}</div>
+                  <div className="text-xs text-slate-500 dark:text-slate-400">{t.type}</div>
+                </div>
+              </div>
+            </Tilt3D>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const BreathWidget = () => {
+  const [text, setText] = useState("Inhale");
+  const [scale, setScale] = useState(1);
+  
+  useEffect(() => {
+    const loop = async () => {
+      setText("Inhale"); setScale(1.3);
+      await new Promise(r => setTimeout(r, 4000));
+      setText("Hold");
+      await new Promise(r => setTimeout(r, 4000));
+      setText("Exhale"); setScale(1);
+      await new Promise(r => setTimeout(r, 4000));
+      loop();
+    };
+    loop();
+  }, []);
+
+  return (
+    <div className="bg-slate-900 dark:bg-slate-800 text-white p-8 rounded-[2rem] flex flex-col items-center justify-center text-center shadow-2xl relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-32 h-32 bg-violet-600 rounded-full blur-[50px] opacity-30 animate-pulse"></div>
+      <h3 className="text-xl font-bold mb-6 relative z-10">Breathe with us</h3>
+      <motion.div 
+        animate={{ scale }} 
+        transition={{ duration: 4, ease: "easeInOut" }}
+        className="w-32 h-32 rounded-full border border-white/20 flex items-center justify-center text-xl font-light tracking-widest bg-white/5 relative z-10"
+      >
+        {text}
+      </motion.div>
+      <p className="mt-6 text-slate-400 text-xs relative z-10">Box Breathing Technique</p>
+    </div>
+  );
+};
+
+const ClinicSection = () => {
+  return (
+    <section id="clinic" className="py-20 md:py-32 bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
+      <div className="max-w-7xl mx-auto px-6">
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-center mb-12">
+          <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">Our Space in Jamnagar</h2>
+          <div className="h-1 w-20 bg-violet-500 mx-auto rounded-full"></div>
+        </motion.div>
+        
+        {/* Gallery Grid */}
+        <div className="mb-12">
+          <div className="grid gap-6">
+             {/* Main Image (Top) - Full Width */}
+             <div className="w-full h-[400px] md:h-[500px] rounded-[2rem] overflow-hidden shadow-lg group relative">
+                <img 
+                  src={CLINIC_IMAGES[0]} 
+                  alt="Clinic Main View" 
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                   <p className="text-white text-2xl font-bold">A Welcoming Atmosphere</p>
+                </div>
+             </div>
+             
+             {/* Sub Images (Bottom Row) - 3 Columns */}
+             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {CLINIC_IMAGES.slice(1).map((src, i) => (
+                  <div key={i} className="h-64 rounded-[2rem] overflow-hidden shadow-lg group relative">
+                    <img 
+                      src={src} 
+                      alt={`Clinic View ${i+1}`} 
+                      className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" 
+                    />
+                  </div>
+                ))}
+             </div>
+          </div>
+        </div>
+
+        {/* Features & Breath Widget */}
+        <div className="grid md:grid-cols-2 gap-8 items-center">
+            <motion.div 
+              initial={{ opacity: 0, x: -20 }} 
+              whileInView={{ opacity: 1, x: 0 }} 
+              viewport={{ once: true }} 
+              className="bg-white dark:bg-slate-800 p-8 rounded-[2.5rem] border border-slate-100 dark:border-white/10 shadow-sm"
+            >
+              <div className="space-y-6">
+                <div className="flex items-center gap-4 text-slate-800 dark:text-white font-semibold">
+                  <div className="p-3 bg-yellow-50 dark:bg-yellow-900/30 rounded-full text-yellow-600 dark:text-yellow-400"><Star size={20} fill="currentColor"/></div>
+                  <div><div className="text-lg">Private & Confidential</div><div className="text-xs text-slate-500 dark:text-slate-400 font-normal">Your privacy is our priority</div></div>
+                </div>
+                <div className="flex items-center gap-4 text-slate-800 dark:text-white font-semibold">
+                  <div className="p-3 bg-blue-50 dark:bg-blue-900/30 rounded-full text-blue-600 dark:text-blue-400"><Award size={20}/></div>
+                  <div><div className="text-lg">Certified Expert</div><div className="text-xs text-slate-500 dark:text-slate-400 font-normal">Professional guidance</div></div>
+                </div>
+                <div className="flex items-center gap-4 text-slate-800 dark:text-white font-semibold">
+                  <div className="p-3 bg-purple-50 dark:bg-purple-900/30 rounded-full text-purple-600 dark:text-purple-400"><Coffee size={20}/></div>
+                  <div><div className="text-lg">Warm & Welcoming</div><div className="text-xs text-slate-500 dark:text-slate-400 font-normal">Judgment-free zone</div></div>
+                </div>
+              </div>
+            </motion.div>
+            
+            <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+              <BreathWidget />
+            </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const FAQ = () => {
+  const [openIndex, setOpenIndex] = useState(null);
+
+  return (
+    <section className="py-20 bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
+      <div className="max-w-3xl mx-auto px-6">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">Common Questions</h2>
+          <p className="text-lg text-slate-600 dark:text-slate-400">Everything you need to know before your visit.</p>
+        </div>
+
+        <div className="space-y-4">
+          {FAQS.map((faq, i) => (
+            <div key={i} className="border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden bg-white dark:bg-slate-800">
+              <button
+                onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                className="w-full p-6 text-left flex justify-between items-center bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+              >
+                <span className="font-bold text-slate-800 dark:text-white text-lg">{faq.question}</span>
+                {openIndex === i ? <ChevronUp className="text-violet-600 dark:text-violet-400" /> : <ChevronDown className="text-slate-400" />}
+              </button>
+              <AnimatePresence>
+                {openIndex === i && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    className="bg-white dark:bg-slate-800 border-t border-slate-100 dark:border-slate-700"
+                  >
+                    <div className="p-6 pt-0 text-slate-600 dark:text-slate-300 leading-relaxed mt-4">
+                      {faq.answer}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const Booking = () => {
+  const [appointmentType, setAppointmentType] = useState('in-person');
+
+  return (
+    <section id="contact" className="py-20 md:py-32 bg-white dark:bg-slate-950 relative overflow-hidden transition-colors duration-300">
+      {/* Decorative Circles */}
+      <div className="absolute top-0 right-0 w-64 h-64 bg-violet-100 dark:bg-violet-900/20 rounded-full translate-x-1/2 -translate-y-1/2"></div>
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-pink-50 dark:bg-pink-900/10 rounded-full -translate-x-1/2 translate-y-1/2"></div>
+
+      <div className="max-w-2xl mx-auto px-6 relative z-10">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="bg-white dark:bg-slate-900 rounded-[2.5rem] shadow-xl overflow-hidden border border-slate-100 dark:border-white/10"
+        >
+          <div className="p-10 bg-violet-700 text-white text-center relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+            <h2 className="text-3xl md:text-4xl font-bold mb-3 relative z-10">Let's Talk</h2>
+            <p className="text-violet-100 text-lg relative z-10">Schedule a visit with Lilac Minds.</p>
+          </div>
+          
+          <div className="p-8 md:p-12">
+            <div className="flex bg-slate-100 dark:bg-slate-800 p-1.5 rounded-2xl mb-8">
+              <button 
+                type="button"
+                onClick={() => setAppointmentType('in-person')}
+                className={`flex-1 py-3 rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all ${appointmentType === 'in-person' ? 'bg-white dark:bg-slate-700 text-violet-700 dark:text-white shadow-md' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'}`}
+              >
+                <MapPin size={18} /> In-Clinic Visit
+              </button>
+              <button 
+                type="button"
+                onClick={() => setAppointmentType('online')}
+                className={`flex-1 py-3 rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all ${appointmentType === 'online' ? 'bg-white dark:bg-slate-700 text-violet-700 dark:text-white shadow-md' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'}`}
+              >
+                <Video size={18} /> Online Call
+              </button>
+            </div>
+
+            <form 
+              action="https://formspree.io/f/xeoylwwl" 
+              method="POST" 
+              className="space-y-5"
+              name="booking"
+            >
+              <input type="hidden" name="appointmentType" value={appointmentType} />
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase ml-1">Name</label>
+                  <input required name="name" type="text" placeholder="Your Name" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all" />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase ml-1">Phone</label>
+                  <input required name="phone" type="tel" placeholder="Phone Number" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all" />
+                </div>
+              </div>
+              
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase ml-1">Email</label>
+                <input required name="email" type="email" placeholder="your@email.com" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all" />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase ml-1">Service</label>
+                <select 
+                  name="service" 
+                  defaultValue=""
+                  className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 text-slate-600 dark:text-slate-300 focus:bg-white dark:focus:bg-slate-800 transition-all"
+                >
+                  <option value="" disabled>What do you need help with?</option>
+                  <option>Personal Counselling</option>
+                  <option>Career Counselling</option>
+                  <option>Student Mentorship</option>
+                  <option>Psychometric Assessment</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase ml-1">Message</label>
+                <textarea name="message" rows="3" placeholder="Anything else you'd like to share?" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all"></textarea>
+              </div>
+              
+              <button type="submit" className="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold py-4 rounded-xl hover:bg-violet-600 dark:hover:bg-violet-300 transition-colors shadow-lg mt-2 text-lg">
+                Request {appointmentType === 'online' ? 'Online' : 'In-Clinic'} Appointment
+              </button>
+            </form>
+            
+            <div className="mt-6 text-center">
+              <p className="text-slate-600 dark:text-slate-400 text-sm">
+                Prefer a quick chat? <a href="https://wa.me/918200711499" target="_blank" rel="noopener noreferrer" className="text-violet-600 dark:text-violet-400 font-bold hover:underline">Message us on WhatsApp</a>
+              </p>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+const Footer = () => (
+  <footer className="bg-slate-900 text-slate-400 py-16 text-sm border-t border-white/5">
+    <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
+      <div>
+        <div className="flex items-center justify-center md:justify-start gap-2 mb-6">
+          <img 
+            src={IMAGES.logo} 
+            alt="Lilac Minds Logo" 
+            loading="lazy"
+            className="h-24 w-auto object-contain" 
+          />
+        </div>
+        <p className="text-slate-400 leading-relaxed max-w-xs mx-auto md:mx-0">
+          Helping you find your way with compassion, clarity, and professional care.
+        </p>
+      </div>
+      <div>
+        <h4 className="text-white font-bold mb-6 text-lg">Visit Us</h4>
+        <div className="space-y-3">
+          <p className="leading-relaxed">
+            Sarvoday Society, 9, Krishna Nagar Main Rd,<br />
+            opp. Bardai Brahmin Boarding, Kamdar Colony,<br />
+            Jamnagar, Gujarat 361006
+          </p>
+          <p className="text-violet-400 hover:text-white transition-colors cursor-pointer">hello@lilacminds.com</p>
+        </div>
+      </div>
+      <div>
+        <h4 className="text-white font-bold mb-6 text-lg">Connect</h4>
+        <div className="flex gap-6 justify-center md:justify-start">
+          <a 
+            href="https://www.instagram.com/lilacmindsofficial/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="p-3 bg-slate-800 rounded-full hover:bg-violet-600 text-white transition-all cursor-pointer"
+          >
+            <Instagram size={20} />
+          </a>
+          <div className="p-3 bg-slate-800 rounded-full hover:bg-violet-600 text-white transition-all cursor-pointer">
+            <Mail size={20} />
+          </div>
+           <a 
+            href="https://wa.me/918200711499"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-3 bg-slate-800 rounded-full hover:bg-violet-600 text-white transition-all cursor-pointer"
+          >
+            <MessageCircle size={20} />
+          </a>
+        </div>
+      </div>
+    </div>
+    <div className="text-center mt-16 pt-8 border-t border-slate-800 text-slate-600">
+      © {new Date().getFullYear()} Lilac Minds.
+    </div>
+  </footer>
+);
+
 // --- HERO 3D INTERACTIVE OBJECT (Digital Sunflower) ---
 const Hero3DObject = () => {
   const { scrollY } = useScroll();
@@ -1272,563 +1695,11 @@ const Hero3DObject = () => {
   )
 }
 
-const FloatingIcon = ({ Icon, x, y, delay, color, size = 32 }) => (
-  <motion.div
-    animate={{ 
-      y: [0, -15, 0],
-      rotate: [0, 10, -10, 0],
-      scale: [1, 1.1, 1],
-      opacity: [0.3, 0.6, 0.3]
-    }}
-    transition={{ duration: 6, repeat: Infinity, delay: delay, ease: "easeInOut" }}
-    className={`absolute ${x} ${y} ${color} hidden md:block pointer-events-none`}
-  >
-    <Icon size={size} />
-  </motion.div>
-);
 
-const Hero = ({ onNavigate }) => {
-  return (
-    <section id="hero" className="min-h-[90vh] flex items-center justify-center relative pt-24 pb-12 overflow-hidden bg-gradient-to-b from-purple-50 to-white dark:from-slate-950 dark:to-slate-900 transition-colors duration-300">
-      <ParallaxBackground />
-      <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-10 md:gap-16 items-center relative z-10">
-        <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <div className="inline-block px-3 py-1 bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm border border-slate-200 dark:border-slate-700 rounded-full text-violet-700 dark:text-violet-300 text-xs font-bold uppercase tracking-wider mb-6 shadow-sm">
-            Based in Jamnagar
-          </div>
-          
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-slate-900 dark:text-white leading-tight mb-6">
-            Healing starts with a <span className="text-violet-600 dark:text-violet-400">Lilac</span> state of mind.
-          </h1>
-          
-          <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-8 leading-relaxed max-w-lg">
-            A safe, warm place for therapy and career guidance. Founded by Prarthana Thaker, we're here to help you get through the tough times.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-3">
-            <button 
-              onClick={() => onNavigate('contact', 'scroll')}
-              className="bg-violet-600 text-white px-8 py-3.5 rounded-full text-base font-semibold hover:bg-violet-700 transition-all shadow-lg flex items-center justify-center gap-2 hover:-translate-y-1"
-            >
-              Start Your Journey <ArrowRight size={18} />
-            </button>
-            <button 
-              onClick={() => onNavigate('services', 'scroll')}
-              className="bg-white dark:bg-slate-800 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 px-8 py-3.5 rounded-full text-base font-semibold hover:bg-slate-50 dark:hover:bg-slate-700 transition-all flex items-center justify-center hover:-translate-y-1 hover:shadow-md"
-            >
-              How we help
-            </button>
-          </div>
-        </motion.div>
+// ==========================================
+// 5. MAIN APP COMPONENT
+// ==========================================
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.2 }}
-          className="relative hidden lg:block"
-        >
-          <Hero3DObject />
-        </motion.div>
-      </div>
-    </section>
-  );
-};
-
-const StatsSection = () => {
-  return (
-    <section className="py-12 bg-violet-900 dark:bg-slate-900 text-white relative overflow-hidden border-t border-white/5">
-      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-      
-      {/* 3D Breathing Orb Background for Stats */}
-      <motion.div 
-        animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-full blur-[100px] pointer-events-none"
-      />
-    </section>
-  );
-};
-
-const Founder = () => {
-  return (
-    <section id="about" className="py-20 md:py-32 relative bg-white dark:bg-slate-950 overflow-hidden transition-colors duration-300">
-      <DoodlePattern />
-      <div className="max-w-5xl mx-auto px-6 relative z-10">
-        <div className="text-center mb-16">
-           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <div className="flex items-center justify-center gap-2 text-violet-600 dark:text-violet-400 font-bold mb-4">
-              <Sparkles size={18} />
-              <span className="uppercase tracking-widest text-xs">Our Story</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
-              Rooted in Empathy, <br/> Guided by Science.
-            </h2>
-          </motion.div>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-12 mb-16">
-             <div className="bg-violet-50/50 dark:bg-slate-900/50 p-8 rounded-3xl border border-violet-100 dark:border-white/10 backdrop-blur-sm">
-                <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-4">The Vision</h3>
-                <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
-                  Lilac Minds was founded by Prarthana Thaker with a singular mission: to bridge the gap between clinical psychology and human connection. We believe that mental health care shouldn't feel clinical or cold—it should feel like coming home to yourself.
-                </p>
-                <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
-                   Whether navigating academic pressure as a student or seeking clarity in a complex career path, our approach combines evidence-based therapy with genuine, non-judgmental support.
-                </p>
-             </div>
-             <div className="space-y-6">
-                <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-100 dark:border-white/10 shadow-sm flex gap-4">
-                   <div className="bg-violet-100 dark:bg-violet-900/30 p-3 h-12 w-12 rounded-full text-violet-600 dark:text-violet-300 flex items-center justify-center shrink-0"><BookOpen size={24} /></div>
-                   <div>
-                      <h4 className="font-bold text-slate-900 dark:text-white mb-1">Educational Guidance</h4>
-                      <p className="text-sm text-slate-500 dark:text-slate-400">We don't just treat symptoms; we educate. Understanding the 'why' behind your feelings is the first step to mastering them.</p>
-                   </div>
-                </div>
-                <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-100 dark:border-white/10 shadow-sm flex gap-4">
-                   <div className="bg-pink-100 dark:bg-pink-900/30 p-3 h-12 w-12 rounded-full text-pink-600 dark:text-pink-300 flex items-center justify-center shrink-0"><Heart size={24} /></div>
-                   <div>
-                      <h4 className="font-bold text-slate-900 dark:text-white mb-1">Compassionate Care</h4>
-                      <p className="text-sm text-slate-500 dark:text-slate-400">A judgement-free zone where every emotion is valid, and every story matters. Your mental safety is our priority.</p>
-                   </div>
-                </div>
-                <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-100 dark:border-white/10 shadow-sm flex gap-4">
-                   <div className="bg-blue-100 dark:bg-blue-900/30 p-3 h-12 w-12 rounded-full text-blue-600 dark:text-blue-300 flex items-center justify-center shrink-0"><Compass size={24} /></div>
-                   <div>
-                      <h4 className="font-bold text-slate-900 dark:text-white mb-1">Future Focused</h4>
-                      <p className="text-sm text-slate-500 dark:text-slate-400">Beyond therapy, we offer robust career counselling to help align your professional life with your personal values.</p>
-                   </div>
-                </div>
-             </div>
-        </div>
-
-        <div className="bg-slate-900 dark:bg-slate-800 rounded-[3rem] p-12 text-center relative overflow-hidden shadow-2xl">
-            <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-            <Quote className="text-violet-500 w-12 h-12 mx-auto mb-6 opacity-50" />
-            <p className="text-xl md:text-2xl text-violet-100 font-medium italic leading-relaxed max-w-2xl mx-auto relative z-10">
-              "Mental health is not just about fixing what's broken, but about nurturing the incredible potential within every human mind."
-            </p>
-            <div className="mt-6 font-bold text-white">— Prarthana Thaker, Founder</div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-const Services = () => {
-  const services = [
-    { title: "Personal Counselling", desc: "Navigating anxiety, stress, relationships, and emotional well-being. Available online & offline.", icon: <Brain size={24}/>, color: "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300" },
-    { title: "Career Counselling", desc: "Scientific aptitude testing and personalized guidance to find your true path.", icon: <MapPin size={24}/>, color: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300" },
-    { title: "Student Mentorship", desc: "Supporting students with exam stress, focus, and academic pressure.", icon: <BookOpen size={24}/>, color: "bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-300" },
-    { title: "Psychometric Assessments", desc: "Standardized assessments for personality, IQ, and career suitability.", icon: <FileText size={24}/>, color: "bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300" },
-  ];
-
-  return (
-    <section id="services" className="py-20 md:py-32 bg-slate-50 dark:bg-slate-900 relative transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="text-center mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">How we help.</h2>
-            <p className="text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">Simple, effective support for whatever you're facing. We tailor our approach to your unique needs using Clinical Psychotherapy and Aptitude Testing.</p>
-          </motion.div>
-        </div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {services.map((s, i) => (
-            <Tilt3D key={i} className="bg-white dark:bg-slate-800 p-8 rounded-[2rem] shadow-sm border border-slate-100 dark:border-white/5 group cursor-default">
-              <div className={`w-14 h-14 ${s.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                {s.icon}
-              </div>
-              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">{s.title}</h3>
-              <p className="text-slate-500 dark:text-slate-400 leading-relaxed">{s.desc}</p>
-            </Tilt3D>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-const TestimonialsSection = () => {
-  return (
-    <section className="py-20 bg-white dark:bg-slate-950 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">Kind Words</h2>
-          <p className="text-lg text-slate-500 dark:text-slate-400">Stories of growth and healing from our community.</p>
-        </div>
-        
-        <div className="grid md:grid-cols-3 gap-8">
-          {TESTIMONIAL_DATA.map((t, i) => (
-            <Tilt3D key={i} className="bg-slate-50 dark:bg-slate-900 p-8 rounded-[2rem] relative border border-slate-100 dark:border-white/5">
-              <Quote className="text-violet-200 dark:text-violet-900 mb-4 h-8 w-8" />
-              <p className="text-slate-700 dark:text-slate-300 italic mb-6 leading-relaxed">"{t.text}"</p>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-violet-200 dark:bg-violet-900/50 rounded-full flex items-center justify-center text-violet-700 dark:text-violet-300 font-bold">
-                  {t.name[0]}
-                </div>
-                <div>
-                  <div className="font-bold text-slate-900 dark:text-white">{t.name}</div>
-                  <div className="text-xs text-slate-500 dark:text-slate-400">{t.type}</div>
-                </div>
-              </div>
-            </Tilt3D>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-const BreathWidget = () => {
-  const [text, setText] = useState("Inhale");
-  const [scale, setScale] = useState(1);
-  
-  useEffect(() => {
-    const loop = async () => {
-      setText("Inhale"); setScale(1.3);
-      await new Promise(r => setTimeout(r, 4000));
-      setText("Hold");
-      await new Promise(r => setTimeout(r, 4000));
-      setText("Exhale"); setScale(1);
-      await new Promise(r => setTimeout(r, 4000));
-      loop();
-    };
-    loop();
-  }, []);
-
-  return (
-    <div className="bg-slate-900 dark:bg-slate-800 text-white p-8 rounded-[2rem] flex flex-col items-center justify-center text-center shadow-2xl relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-32 h-32 bg-violet-600 rounded-full blur-[50px] opacity-30 animate-pulse"></div>
-      <h3 className="text-xl font-bold mb-6 relative z-10">Breathe with us</h3>
-      <motion.div 
-        animate={{ scale }} 
-        transition={{ duration: 4, ease: "easeInOut" }}
-        className="w-32 h-32 rounded-full border border-white/20 flex items-center justify-center text-xl font-light tracking-widest bg-white/5 relative z-10"
-      >
-        {text}
-      </motion.div>
-      <p className="mt-6 text-slate-400 text-xs relative z-10">Box Breathing Technique</p>
-    </div>
-  );
-};
-
-const ClinicSection = () => {
-  return (
-    <section id="clinic" className="py-20 md:py-32 bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-6">
-        <motion.div 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">Our Space in Jamnagar</h2>
-          <div className="h-1 w-20 bg-violet-500 mx-auto rounded-full"></div>
-        </motion.div>
-        
-        <div className="grid lg:grid-cols-3 gap-8 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="lg:col-span-2"
-          >
-            <div className="grid grid-cols-2 gap-4">
-              {IMAGES.clinic.map((image, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className={`relative overflow-hidden rounded-[2rem] shadow-xl group ${
-                    index === 0 ? 'col-span-2 h-[350px] md:h-[400px]' : 'h-[250px] md:h-[300px]'
-                  }`}
-                >
-                  <img
-                    src={image}
-                    alt={`Lilac Minds Clinic Space ${index + 1}`}
-                    loading="lazy"
-                    width="800"
-                    height="600"
-                    className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
-                  />
-                  {index === 0 && (
-                    <div className="absolute inset-0 bg-gradient-to-t from-violet-900/90 via-violet-900/10 to-transparent flex flex-col justify-end p-8 md:p-12 text-left">
-                      <h3 className="text-2xl md:text-4xl font-bold text-white mb-3">A Safe Haven.</h3>
-                      <p className="text-violet-100 text-base md:text-lg max-w-lg leading-relaxed">
-                        We designed our clinic to feel like a living room, not a hospital.
-                        Soft colors, comfy seats, and a place where you can just be you.
-                      </p>
-                    </div>
-                  )}
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
-          <div className="flex flex-col gap-6">
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="bg-white dark:bg-slate-800 p-8 rounded-[2.5rem] flex-1 flex flex-col justify-center border border-slate-100 dark:border-white/10 shadow-sm"
-            >
-              <div className="flex items-center gap-4 mb-6 text-slate-800 dark:text-white font-semibold">
-                <div className="p-3 bg-yellow-50 dark:bg-yellow-900/30 rounded-full text-yellow-600 dark:text-yellow-400"><Star size={20} fill="currentColor"/></div>
-                <div>
-                  <div className="text-lg">Private & Confidential</div>
-                  <div className="text-xs text-slate-500 dark:text-slate-400 font-normal">Your privacy is our priority</div>
-                </div>
-              </div>
-              <div className="flex items-center gap-4 text-slate-800 dark:text-white font-semibold mb-6">
-                <div className="p-3 bg-blue-50 dark:bg-blue-900/30 rounded-full text-blue-600 dark:text-blue-400"><Award size={20}/></div>
-                <div>
-                  <div className="text-lg">Certified Expert</div>
-                  <div className="text-xs text-slate-500 dark:text-slate-400 font-normal">Professional guidance</div>
-                </div>
-              </div>
-              <div className="flex items-center gap-4 text-slate-800 dark:text-white font-semibold">
-                <div className="p-3 bg-purple-50 dark:bg-purple-900/30 rounded-full text-purple-600 dark:text-purple-400"><Coffee size={20}/></div>
-                <div>
-                  <div className="text-lg">Warm & Welcoming</div>
-                  <div className="text-xs text-slate-500 dark:text-slate-400 font-normal">Judgment-free zone</div>
-                </div>
-              </div>
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-            >
-              <BreathWidget />
-            </motion.div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-const FAQ = () => {
-  const [openIndex, setOpenIndex] = useState(null);
-
-  return (
-    <section className="py-20 bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
-      <div className="max-w-3xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">Common Questions</h2>
-          <p className="text-lg text-slate-500 dark:text-slate-400">Everything you need to know before your visit.</p>
-        </div>
-
-        <div className="space-y-4">
-          {FAQS.map((faq, i) => (
-            <div key={i} className="border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden bg-white dark:bg-slate-800">
-              <button
-                onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                className="w-full p-6 text-left flex justify-between items-center bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
-              >
-                <span className="font-bold text-slate-800 dark:text-white text-lg">{faq.question}</span>
-                {openIndex === i ? <ChevronUp className="text-violet-600 dark:text-violet-400" /> : <ChevronDown className="text-slate-400" />}
-              </button>
-              <AnimatePresence>
-                {openIndex === i && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    className="bg-white dark:bg-slate-800 border-t border-slate-100 dark:border-slate-700"
-                  >
-                    <div className="p-6 pt-0 text-slate-600 dark:text-slate-300 leading-relaxed mt-4">
-                      {faq.answer}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-const Booking = () => {
-  const [appointmentType, setAppointmentType] = useState('in-person');
-
-  return (
-    <section id="contact" className="py-20 md:py-32 bg-white dark:bg-slate-950 relative overflow-hidden transition-colors duration-300">
-      {/* Decorative Circles */}
-      <div className="absolute top-0 right-0 w-64 h-64 bg-violet-100 dark:bg-violet-900/20 rounded-full translate-x-1/2 -translate-y-1/2"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-pink-50 dark:bg-pink-900/10 rounded-full -translate-x-1/2 translate-y-1/2"></div>
-
-      <div className="max-w-2xl mx-auto px-6 relative z-10">
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="bg-white dark:bg-slate-900 rounded-[2.5rem] shadow-xl overflow-hidden border border-slate-100 dark:border-white/10"
-        >
-          <div className="p-10 bg-violet-700 text-white text-center relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-3 relative z-10">Let's Talk</h2>
-            <p className="text-violet-100 text-lg relative z-10">Schedule a visit with Lilac Minds.</p>
-          </div>
-          
-          <div className="p-8 md:p-12">
-            <div className="flex bg-slate-100 dark:bg-slate-800 p-1.5 rounded-2xl mb-8">
-              <button 
-                type="button"
-                onClick={() => setAppointmentType('in-person')}
-                className={`flex-1 py-3 rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all ${appointmentType === 'in-person' ? 'bg-white dark:bg-slate-700 text-violet-700 dark:text-white shadow-md' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'}`}
-              >
-                <MapPin size={18} /> In-Clinic Visit
-              </button>
-              <button 
-                type="button"
-                onClick={() => setAppointmentType('online')}
-                className={`flex-1 py-3 rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all ${appointmentType === 'online' ? 'bg-white dark:bg-slate-700 text-violet-700 dark:text-white shadow-md' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'}`}
-              >
-                <Video size={18} /> Online Call
-              </button>
-            </div>
-
-            <form 
-              action="https://formspree.io/f/xeoylwwl" 
-              method="POST" 
-              className="space-y-5"
-              name="booking"
-            >
-              <input type="hidden" name="appointmentType" value={appointmentType} />
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase ml-1">Name</label>
-                  <input required name="name" type="text" placeholder="Your Name" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all" />
-                </div>
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase ml-1">Phone</label>
-                  <input required name="phone" type="tel" placeholder="Phone Number" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all" />
-                </div>
-              </div>
-              
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase ml-1">Email</label>
-                <input required name="email" type="email" placeholder="your@email.com" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all" />
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase ml-1">Service</label>
-                <select 
-                  name="service" 
-                  defaultValue=""
-                  className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 text-slate-600 dark:text-slate-300 focus:bg-white dark:focus:bg-slate-800 transition-all"
-                >
-                  <option value="" disabled>What do you need help with?</option>
-                  <option>Personal Counselling</option>
-                  <option>Career Counselling</option>
-                  <option>Student Mentorship</option>
-                  <option>Psychometric Assessment</option>
-                  <option>Other</option>
-                </select>
-              </div>
-              
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase ml-1">Message</label>
-                <textarea name="message" rows="3" placeholder="Anything else you'd like to share?" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all"></textarea>
-              </div>
-              
-              <button type="submit" className="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold py-4 rounded-xl hover:bg-violet-600 dark:hover:bg-violet-300 transition-colors shadow-lg mt-2 text-lg">
-                Request {appointmentType === 'online' ? 'Online' : 'In-Clinic'} Appointment
-              </button>
-            </form>
-            
-            <div className="mt-6 text-center">
-              <p className="text-slate-500 dark:text-slate-400 text-sm">
-                Prefer a quick chat? <a href="https://wa.me/918200711499" target="_blank" rel="noopener noreferrer" className="text-violet-600 dark:text-violet-400 font-bold hover:underline">Message us on WhatsApp</a>
-              </p>
-            </div>
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  );
-};
-
-const Footer = () => (
-  <footer className="bg-slate-900 text-slate-400 py-16 text-sm border-t border-white/5">
-    <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
-      <div>
-        <div className="flex items-center justify-center md:justify-start gap-2 mb-6">
-          <img 
-            src={IMAGES.logo} 
-            alt="Lilac Minds Logo" 
-            loading="lazy"
-            className="h-24 w-auto object-contain" 
-          />
-        </div>
-        <p className="text-slate-400 leading-relaxed max-w-xs mx-auto md:mx-0">
-          Helping you find your way with compassion, clarity, and professional care.
-        </p>
-      </div>
-      <div>
-        <h4 className="text-white font-bold mb-6 text-lg">Visit Us</h4>
-        <div className="space-y-3">
-          <p className="leading-relaxed">
-            Sarvoday Society, 9, Krishna Nagar Main Rd,<br />
-            opp. Bardai Brahmin Boarding, Kamdar Colony,<br />
-            Jamnagar, Gujarat 361006
-          </p>
-          <p className="text-violet-400 hover:text-white transition-colors cursor-pointer">hello@lilacminds.com</p>
-        </div>
-      </div>
-      <div>
-        <h4 className="text-white font-bold mb-6 text-lg">Connect</h4>
-        <div className="flex gap-6 justify-center md:justify-start">
-          <a 
-            href="https://www.instagram.com/lilacmindsofficial/" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="p-3 bg-slate-800 rounded-full hover:bg-violet-600 text-white transition-all cursor-pointer"
-          >
-            <Instagram size={20} />
-          </a>
-          <div className="p-3 bg-slate-800 rounded-full hover:bg-violet-600 text-white transition-all cursor-pointer">
-            <Mail size={20} />
-          </div>
-           <a 
-            href="https://wa.me/918200711499"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-3 bg-slate-800 rounded-full hover:bg-violet-600 text-white transition-all cursor-pointer"
-          >
-            <MessageCircle size={20} />
-          </a>
-        </div>
-      </div>
-    </div>
-    <div className="text-center mt-16 pt-8 border-t border-slate-800 text-slate-600">
-      © {new Date().getFullYear()} Lilac Minds.
-    </div>
-  </footer>
-);
-
-// --- VIEW MANAGER ---
 const MainContent = ({ onNavigate }) => (
   <>
     <Hero onNavigate={onNavigate} />
@@ -1844,8 +1715,8 @@ const MainContent = ({ onNavigate }) => (
 
 export default function App() {
   const [loading, setLoading] = useState(true);
-  const [view, setView] = useState('home'); // 'home' or 'resources'
-  const [isDarkMode, setIsDarkMode] = useState(true); // Default to Dark Mode
+  const [view, setView] = useState('home'); 
+  const [isDarkMode, setIsDarkMode] = useState(true);
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
@@ -1857,10 +1728,7 @@ export default function App() {
   };
 
   useEffect(() => {
-    // 1. Set Title & Meta Tags
     document.title = SEO_DATA.title;
-    
-    // Inject Meta Description
     let metaDesc = document.querySelector("meta[name='description']");
     if (!metaDesc) {
       metaDesc = document.createElement("meta");
@@ -1868,8 +1736,7 @@ export default function App() {
       document.head.appendChild(metaDesc);
     }
     metaDesc.content = SEO_DATA.description;
-
-    // Inject Keywords
+    
     let metaKeywords = document.querySelector("meta[name='keywords']");
     if (!metaKeywords) {
       metaKeywords = document.createElement("meta");
@@ -1878,7 +1745,6 @@ export default function App() {
     }
     metaKeywords.content = SEO_DATA.keywords;
 
-    // Inject Schema Markup
     let scriptSchema = document.querySelector("#schema-json");
     if (!scriptSchema) {
       scriptSchema = document.createElement("script");
@@ -1887,31 +1753,27 @@ export default function App() {
       scriptSchema.text = JSON.stringify(SEO_DATA.schema);
       document.head.appendChild(scriptSchema);
     }
-
-    // 2. Set Favicon
+    
     const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
     link.type = 'image/png';
     link.rel = 'icon';
     link.href = IMAGES.logo;
     document.getElementsByTagName('head')[0].appendChild(link);
-
-    // 3. Inject Font for Splash Screen
+    
     const style = document.createElement('style');
     style.innerHTML = `
       @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
     `;
     document.head.appendChild(style);
 
-    // 4. Timer for Splash Screen (Reduced for speed)
     const timer = setTimeout(() => {
       setLoading(false);
     }, 2500);
     
-    // Ensure dark mode is applied on mount if default is true
     if (document.documentElement.classList.contains('dark')) {
       setIsDarkMode(true);
     }
-
+    
     return () => clearTimeout(timer);
   }, []);
 
