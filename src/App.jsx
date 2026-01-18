@@ -49,8 +49,13 @@ const optimize = (url, width) =>
 
 const IMAGES = {
   // Founder image removed from UI but kept in config if needed later
-  // founder: optimize("https://i.ibb.co/B5jNNF7j/IMG-8342.jpg", 800), 
-  clinic: optimize("https://i.ibb.co/mC1dMsgP/IMG-8337.jpg", 1200),
+  // founder: optimize("https://i.ibb.co/B5jNNF7j/IMG-8342.jpg", 800),
+  clinic: [
+    optimize("https://i.ibb.co/XkYptFZF/Whats-App-Image-2026-01-13-at-16-03-31-1.jpg", 1200),
+    optimize("https://i.ibb.co/KjwdjyN2/Whats-App-Image-2026-01-13-at-16-03-32.jpg", 1200),
+    optimize("https://i.ibb.co/WvWwT1jN/Whats-App-Image-2026-01-13-at-16-03-33-1.jpg", 1200),
+    optimize("https://i.ibb.co/JFqf1Ts1/Whats-App-Image-2026-01-13-at-16-03-33.jpg", 1200)
+  ],
   logo: optimize("https://i.ibb.co/XZG4XH4N/Untitled-design.png", 400)
 };
 
@@ -1534,26 +1539,43 @@ const ClinicSection = () => {
         </motion.div>
         
         <div className="grid lg:grid-cols-3 gap-8 items-center">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="lg:col-span-2 relative h-[500px] md:h-[600px] rounded-[2.5rem] overflow-hidden shadow-2xl group"
+            className="lg:col-span-2"
           >
-            <img 
-              src={IMAGES.clinic} 
-              alt="Clinic Interior" 
-              loading="lazy"
-              width="800"
-              height="600"
-              className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" 
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-violet-900/90 via-violet-900/10 to-transparent flex flex-col justify-end p-8 md:p-16 text-left">
-              <h3 className="text-2xl md:text-4xl font-bold text-white mb-4">A Safe Haven.</h3>
-              <p className="text-violet-100 text-base md:text-lg max-w-lg leading-relaxed">
-                We designed our clinic to feel like a living room, not a hospital. 
-                Soft colors, comfy seats, and a place where you can just be you.
-              </p>
+            <div className="grid grid-cols-2 gap-4">
+              {IMAGES.clinic.map((image, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className={`relative overflow-hidden rounded-[2rem] shadow-xl group ${
+                    index === 0 ? 'col-span-2 h-[350px] md:h-[400px]' : 'h-[250px] md:h-[300px]'
+                  }`}
+                >
+                  <img
+                    src={image}
+                    alt={`Lilac Minds Clinic Space ${index + 1}`}
+                    loading="lazy"
+                    width="800"
+                    height="600"
+                    className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                  />
+                  {index === 0 && (
+                    <div className="absolute inset-0 bg-gradient-to-t from-violet-900/90 via-violet-900/10 to-transparent flex flex-col justify-end p-8 md:p-12 text-left">
+                      <h3 className="text-2xl md:text-4xl font-bold text-white mb-3">A Safe Haven.</h3>
+                      <p className="text-violet-100 text-base md:text-lg max-w-lg leading-relaxed">
+                        We designed our clinic to feel like a living room, not a hospital.
+                        Soft colors, comfy seats, and a place where you can just be you.
+                      </p>
+                    </div>
+                  )}
+                </motion.div>
+              ))}
             </div>
           </motion.div>
 
