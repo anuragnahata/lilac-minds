@@ -54,7 +54,8 @@ const IMAGES = {
     optimize("https://i.ibb.co/XkYptFZF/Whats-App-Image-2026-01-13-at-16-03-31-1.jpg", 1200),
     optimize("https://i.ibb.co/KjwdjyN2/Whats-App-Image-2026-01-13-at-16-03-32.jpg", 1200),
     optimize("https://i.ibb.co/WvWwT1jN/Whats-App-Image-2026-01-13-at-16-03-33-1.jpg", 1200),
-    optimize("https://i.ibb.co/JFqf1Ts1/Whats-App-Image-2026-01-13-at-16-03-33.jpg", 1200)
+    optimize("https://i.ibb.co/JFqf1Ts1/Whats-App-Image-2026-01-13-at-16-03-33.jpg", 1200),
+    optimize("https://i.ibb.co/9mjnqvkt/Whats-App-Image-2026-01-13-at-16-03-31-1.jpg", 1200)
   ],
   logo: optimize("https://i.ibb.co/XZG4XH4N/Untitled-design.png", 400)
 };
@@ -1555,7 +1556,7 @@ const ClinicSection = () => {
                   transition={{ delay: index * 0.1 }}
                   className={`relative overflow-hidden rounded-[2rem] shadow-xl group ${
                     index === 0 ? 'col-span-2 h-[350px] md:h-[400px]' : 'h-[250px] md:h-[300px]'
-                  }`}
+                  } ${index === 4 ? 'col-span-2' : ''}`}
                 >
                   <img
                     src={image}
