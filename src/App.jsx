@@ -1181,10 +1181,10 @@ const Founder = () => (
            <div className="bg-violet-50/50 dark:bg-slate-900/50 p-8 rounded-3xl border border-violet-100 dark:border-white/10 backdrop-blur-sm">
               <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-4">The Vision</h3>
               <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
-                Lilac Minds was founded by Prarthana Thaker with a singular mission: to bridge the gap between clinical psychology and human connection. We believe that mental health care shouldn't feel clinical or cold—it should feel like coming home to yourself.
+              Lilac Minds was born from a simple yet powerful belief, to make counselling and career guidance feel approachable, warm, and truly accessible. Founded by Prarthana Thaker, the vision was to create a space where people don’t feel judged or rushed, but gently understood. A place where conversations are honest, support feels genuine, and empathy is not just a value but the way we show up every single day.
               </p>
               <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
-                 Whether navigating academic pressure as a student or seeking clarity in a complex career path, our approach combines evidence-based therapy with genuine, non-judgmental support.
+              At Lilac Minds, we imagine a world where asking for help feels safe and normal, and mental health is cared for with the same respect as physical health. Our vision is to be a calm, welcoming space where anyone who walks in feels seen, heard, and supported, leaving with a little more clarity, strength, and confidence to move forward in their own way.
               </p>
            </div>
            <div className="space-y-6">
