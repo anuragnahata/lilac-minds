@@ -258,18 +258,18 @@ const ASSESSMENT_DATA = {
   anxiety: {
     id: 'anxiety',
     title: "Anxiety Screening (GAD-7)",
-    desc: "A standardized 7-item scale to measure the severity of Generalized Anxiety Disorder symptoms.",
+    desc: "A standardized clinical screening tool to measure the severity of Generalized Anxiety Disorder symptoms over the last 2 weeks.",
     icon: Wind,
     color: "text-blue-600 dark:text-blue-400",
     bg: "bg-blue-50 dark:bg-blue-900/20",
     questions: [
-      "Feeling nervous, anxious, or on edge",
-      "Not being able to stop or control worrying",
-      "Worrying too much about different things",
-      "Trouble relaxing",
-      "Being so restless that it is hard to sit still",
-      "Becoming easily annoyed or irritable",
-      "Feeling afraid as if something awful might happen"
+      "Feeling nervous, anxious, or on edge?",
+      "Not being able to stop or control worrying?",
+      "Worrying too much about different things?",
+      "Trouble relaxing?",
+      "Being so restless that it is hard to sit still?",
+      "Becoming easily annoyed or irritable?",
+      "Feeling afraid, as if something awful might happen?"
     ],
     options: [
       { label: "Not at all", score: 0 },
@@ -280,21 +280,21 @@ const ASSESSMENT_DATA = {
     getResult: (score) => {
       let level, text, recommendations;
       if (score <= 4) {
-        level = "Minimal Anxiety";
-        text = "Your score indicates minimal anxiety. This is a healthy range.";
-        recommendations = ["Continue your current routine", "Practice daily mindfulness", "Maintain healthy sleep habits"];
+        level = "Minimal Anxiety (0-4)";
+        text = "Your score falls within the range of minimal anxiety. This suggests you are currently coping well with daily stressors. It is normal to feel occasional nerves, but they do not seem to be interfering with your life significantly.";
+        recommendations = ["Continue your current self-care routine.", "Practice daily mindfulness to maintain this balance.", "Ensure you are getting adequate sleep and exercise."];
       } else if (score <= 9) {
-        level = "Mild Anxiety";
-        text = "You may be experiencing mild anxiety. It is common to feel this way during stressful periods.";
-        recommendations = ["Try deep breathing exercises", "Limit caffeine", "Establish a regular sleep schedule"];
+        level = "Mild Anxiety (5-9)";
+        text = "Your score indicates mild anxiety. You may be feeling stressed or worried more than usual, but it is likely manageable. This is a common response to life transitions or pressure.";
+        recommendations = ["Monitor your triggers; write down what makes you anxious.", "Try 'Box Breathing' (4-4-4-4) when you feel tension rising.", "Limit caffeine and screen time before bed.", "Consider talking to a friend about your stressors."];
       } else if (score <= 14) {
-        level = "Moderate Anxiety";
-        text = "Your symptoms suggest moderate anxiety. It might be affecting your daily life and focus.";
-        recommendations = ["Schedule a consultation", "Practice progressive muscle relaxation", "Break big tasks into small steps"];
+        level = "Moderate Anxiety (10-14)";
+        text = "Your symptoms suggest moderate anxiety. Worrying may be starting to interfere with your ability to focus, sleep, or relax. This level of anxiety deserves attention and care.";
+        recommendations = ["We highly recommend booking a consultation with a counselor.", "Practice Progressive Muscle Relaxation (PMR) daily.", "Break large tasks into smaller, manageable steps to reduce overwhelm.", "Physical activity is clinically proven to metabolize stress hormones."];
       } else {
-        level = "Severe Anxiety";
-        text = "Your score indicates severe anxiety symptoms that likely impact your quality of life significantly.";
-        recommendations = ["We strongly recommend speaking to a professional immediately", "Focus on immediate grounding techniques", "Prioritize your mental health today"];
+        level = "Severe Anxiety (15-21)";
+        text = "Your score indicates severe anxiety symptoms. It is likely that anxiety is significantly impacting your daily life, relationships, and physical well-being. Please know that this is highly treatable with professional support.";
+        recommendations = ["Please seek professional help immediately.", "Do not face this alone; lean on your support system.", "Focus on 'grounding techniques' to manage acute panic.", "Remember: Anxiety is a condition, not a character flaw, and you can feel better."];
       }
       return { level, text, recommendations };
     }
@@ -302,20 +302,20 @@ const ASSESSMENT_DATA = {
   depression: {
     id: 'depression',
     title: "Depression Check (PHQ-9)",
-    desc: "The Patient Health Questionnaire (PHQ-9) is used to monitor the severity of depression.",
+    desc: "The Patient Health Questionnaire (PHQ-9) is a multipurpose instrument for screening, diagnosing, monitoring and measuring the severity of depression.",
     icon: Cloud,
     color: "text-gray-600 dark:text-gray-400",
     bg: "bg-gray-50 dark:bg-gray-800/50",
     questions: [
-      "Little interest or pleasure in doing things",
-      "Feeling down, depressed, or hopeless",
-      "Trouble falling or staying asleep, or sleeping too much",
-      "Feeling tired or having little energy",
-      "Poor appetite or overeating",
-      "Feeling bad about yourself - or that you are a failure",
-      "Trouble concentrating on things, such as reading or TV",
-      "Moving or speaking so slowly that other people could have noticed",
-      "Thoughts that you would be better off dead, or of hurting yourself"
+      "Little interest or pleasure in doing things?",
+      "Feeling down, depressed, or hopeless?",
+      "Trouble falling or staying asleep, or sleeping too much?",
+      "Feeling tired or having little energy?",
+      "Poor appetite or overeating?",
+      "Feeling bad about yourself — or that you are a failure or have let yourself or your family down?",
+      "Trouble concentrating on things, such as reading the newspaper or watching television?",
+      "Moving or speaking so slowly that other people could have noticed? Or the opposite — being so fidgety or restless?",
+      "Thoughts that you would be better off dead, or of hurting yourself in some way?"
     ],
     options: [
       { label: "Not at all", score: 0 },
@@ -326,41 +326,45 @@ const ASSESSMENT_DATA = {
     getResult: (score) => {
       let level, text, recommendations;
       if (score <= 4) {
-        level = "Minimal Depression";
-        text = "Your score suggests minimal or no depressive symptoms.";
-        recommendations = ["Keep up your positive habits", "Stay connected with friends and family", "Prioritize hobbies you enjoy"];
+        level = "Minimal Depression (0-4)";
+        text = "Your score suggests minimal or no depressive symptoms. You seem to be maintaining a healthy emotional baseline.";
+        recommendations = ["Keep engaging in hobbies you enjoy.", "Maintain social connections.", "Prioritize a consistent sleep schedule."];
       } else if (score <= 9) {
-        level = "Mild Depression";
-        text = "You may be experiencing mild depressive symptoms. It's important to monitor how you feel.";
-        recommendations = ["Stick to a routine", "Get some sunlight and light exercise", "Practice self-compassion"];
+        level = "Mild Depression (5-9)";
+        text = "You may be experiencing mild depressive symptoms. You might feel 'stuck' or 'low' periodically. While this may not restrict your functioning, it can rob you of joy.";
+        recommendations = ["Establish a gentle daily routine.", "Get 15-20 minutes of sunlight daily.", "Practice 'Behavioral Activation'—doing things even if you don't feel like it, to jumpstart motivation.", "Reach out to a trusted friend."];
       } else if (score <= 14) {
-        level = "Moderate Depression";
-        text = "Your symptoms indicate moderate depression. Professional support can provide you with effective coping strategies.";
-        recommendations = ["Consider booking a therapy session", "Challenge negative thought patterns", "Avoid isolation"];
+        level = "Moderate Depression (10-14)";
+        text = "Your symptoms indicate moderate depression. You may be struggling with motivation, sleep, or self-worth. Professional therapy (CBT) is very effective at this stage.";
+        recommendations = ["Consider booking a therapy session to explore underlying causes.", "Challenge negative thought patterns (e.g., 'I am useless').", "Avoid isolation; force small social interactions.", "Focus on small, achievable goals (e.g., 'Make bed', 'Brush teeth')."];
+      } else if (score <= 19) {
+        level = "Moderately Severe Depression (15-19)";
+        text = "These scores suggest moderately severe depression. It is highly advisable to seek professional help, as these symptoms can be debilitating without support.";
+        recommendations = ["Please consult a mental health professional.", "Discuss treatment options (therapy/medication) with an expert.", "Ensure you have a support system around you.", "Be gentle with yourself; this is a health issue, not a weakness."];
       } else {
-        level = "Severe Depression";
-        text = "Your score indicates severe depression. Immediate professional intervention is recommended.";
-        recommendations = ["Seek immediate professional help", "Contact a crisis helpline if needed", "Remember that help is available and effective"];
+        level = "Severe Depression (20-27)";
+        text = "Your score indicates severe depression. Immediate professional intervention is strongly recommended to ensure your safety and recovery.";
+        recommendations = ["Seek immediate professional help.", "If you have thoughts of self-harm, contact a helpline immediately.", "Do not isolate yourself.", "Remember that depression is treatable, and recovery is possible."];
       }
       return { level, text, recommendations };
     }
   },
   burnout: {
     id: 'burnout',
-    title: "Burnout Assessment",
-    desc: "Check for signs of emotional exhaustion and professional burnout.",
+    title: "Burnout & Exhaustion Scale",
+    desc: "Assess your level of physical and emotional exhaustion related to work or study commitments.",
     icon: Battery,
     color: "text-orange-600 dark:text-orange-400",
     bg: "bg-orange-50 dark:bg-orange-900/20",
     questions: [
-      "I feel emotionally drained from my work/studies",
-      "I feel used up at the end of the day",
-      "I feel tired when I get up in the morning and have to face another day",
-      "I feel energetic and enthusiastic (Reverse)", 
-      "I can effectively solve problems that arise", 
-      "I feel burned out from my work",
-      "I feel I am working too hard on my job",
-      "I feel like I'm at the end of my rope"
+      "Do you feel emotionally drained from your work/studies?",
+      "Do you feel used up at the end of the day?",
+      "Do you feel tired when you get up in the morning and have to face another day?",
+      "Do you feel like your energy reserves are constantly empty?", 
+      "Do you feel frustrated or cynical about your tasks?", 
+      "Do you feel like you are achieving less despite working harder?",
+      "Do you feel that every task requires a huge effort?",
+      "Do you feel like you are at the end of your rope?"
     ],
     options: [
       { label: "Never", score: 0 },
@@ -373,16 +377,16 @@ const ASSESSMENT_DATA = {
       let level, text, recommendations;
       if (score <= 10) {
         level = "Low Burnout Risk";
-        text = "You seem to be balancing your energy well.";
-        recommendations = ["Maintain your work-life boundaries", "Continue engaging in hobbies", "Take regular breaks"];
+        text = "You seem to be balancing your energy well. You have healthy boundaries between work/study and rest.";
+        recommendations = ["Maintain your current work-life boundaries.", "Continue engaging in non-work hobbies.", "Take regular micro-breaks to sustain this momentum."];
       } else if (score <= 20) {
         level = "Moderate Burnout Risk";
-        text = "You are showing some signs of exhaustion. It's time to pause and reassess.";
-        recommendations = ["Take a short vacation or mental health day", "Re-evaluate your workload", "Prioritize sleep and nutrition"];
+        text = "You are showing clear signs of exhaustion. You are likely running on adrenaline and caffeine. It is time to pause before you hit a wall.";
+        recommendations = ["Take a short vacation or mental health day immediately.", "Re-evaluate your workload; delegate or delay non-essential tasks.", "Prioritize sleep and nutrition over deadlines for a week.", "Learn to say 'no' to new commitments."];
       } else {
         level = "High Burnout Risk";
-        text = "You appear to be experiencing significant burnout. Prioritizing recovery is essential.";
-        recommendations = ["Seek professional support immediately", "Discuss workload with supervisors", "Dedicate time to complete rest"];
+        text = "You appear to be experiencing significant burnout. This is a state of vital exhaustion that requires serious intervention. Pushing through will only cause damage.";
+        recommendations = ["Seek professional support to help restructure your life.", "Discuss workload with supervisors or teachers.", "Dedicate time to 'radical rest' (complete disconnection).", "Disconnect from digital devices outside work hours."];
       }
       return { level, text, recommendations };
     }
@@ -395,14 +399,14 @@ const ASSESSMENT_DATA = {
     color: "text-indigo-600 dark:text-indigo-400",
     bg: "bg-indigo-50 dark:bg-indigo-900/20",
     questions: [
-      "Difficulty falling asleep",
-      "Awakening during the night",
-      "Early morning awakening",
-      "Total sleep duration",
-      "Overall quality of sleep",
-      "Sense of well-being during the day",
-      "Functioning (physical and mental) during the day",
-      "Sleepiness during the day"
+      "Difficulty falling asleep (Sleep induction)?",
+      "Awakening during the night?",
+      "Waking up earlier than desired?",
+      "Total sleep duration is insufficient?",
+      "Overall quality of sleep is poor?",
+      "Sense of well-being during the day is low?",
+      "Functioning (physical/mental) during the day is impaired?",
+      "Sleepiness during the day?"
     ],
     options: [
       { label: "No problem", score: 0 },
@@ -414,46 +418,56 @@ const ASSESSMENT_DATA = {
       let level, text, recommendations;
       if (score < 6) {
         level = "Good Sleep Quality";
-        text = "Your sleep patterns appear healthy.";
-        recommendations = ["Maintain your sleep schedule", "Avoid screens before bed", "Keep your bedroom cool and dark"];
+        text = "Your sleep patterns appear healthy. You are likely getting restorative rest.";
+        recommendations = ["Maintain your consistent sleep schedule.", "Avoid screens 1 hour before bed.", "Keep your bedroom cool and dark."];
       } else if (score <= 10) {
         level = "Mild Sleep Difficulties";
-        text = "You may be facing some sleep disturbances.";
-        recommendations = ["Create a relaxing bedtime routine", "Avoid caffeine after 2 PM", "Try reading before bed"];
+        text = "You may be facing some sleep disturbances that are affecting your energy. This is often due to lifestyle factors or stress.";
+        recommendations = ["Create a relaxing 'wind-down' routine.", "Avoid caffeine after 2 PM.", "Don't force sleep; if awake, read a book until tired.", "Limit naps to 20 minutes."];
       } else {
         level = "Significant Insomnia Symptoms";
-        text = "Your score suggests possible insomnia. Consulting a specialist is recommended.";
-        recommendations = ["Consult a professional", "Cognitive Behavioral Therapy for Insomnia (CBT-I)", "Strict sleep hygiene protocols"];
+        text = "Your score suggests possible insomnia. Your sleep quality is likely affecting your mood, focus, and health.";
+        recommendations = ["Consult a professional for Cognitive Behavioral Therapy for Insomnia (CBT-I).", "Strict sleep hygiene protocols are needed.", "Review medications or lifestyle factors.", "Use the bed only for sleep (stimulus control)."];
       }
       return { level, text, recommendations };
     }
   },
   career: {
     id: 'career',
-    title: "Career Aptitude",
-    desc: "A brief check to see where your professional interests might lie.",
+    title: "Career Clarity & Readiness Check",
+    desc: "Evaluate how clear, confident, and prepared you feel about your future career path.",
     icon: Compass,
     color: "text-violet-600 dark:text-violet-400",
     bg: "bg-violet-50 dark:bg-violet-900/20",
     questions: [
-      "I enjoy solving complex problems and puzzles.",
-      "I like helping others learn or grow.",
-      "I enjoy creative activities like art, writing, or design.",
-      "I prefer structured environments with clear rules.",
-      "I like leading teams and persuading others.",
-      "I enjoy working with machines, tools, or physical objects."
+      "I have a clear understanding of my strengths and weaknesses.",
+      "I know exactly which career paths align with my personality.",
+      "I am aware of the educational requirements for my desired career.",
+      "I feel confident making decisions about my future stream/college.",
+      "I have a backup plan if my primary career choice doesn't work out.",
+      "I feel supported and guided in my career journey."
     ],
     options: [
       { label: "Disagree", score: 0 },
-      { label: "Neutral", score: 1 },
-      { label: "Agree", score: 2 }
+      { label: "Neutral / Unsure", score: 1 },
+      { label: "Strongly Agree", score: 2 }
     ],
     getResult: (score) => {
-      return { 
-        level: "Exploration Needed", 
-        text: "Your interests seem varied. A comprehensive career counselling session with aptitude testing is recommended to pinpoint your perfect path.",
-        recommendations: ["Book a career counselling session", "Explore different fields online", "Talk to professionals in fields of interest"]
-      };
+      let level, text, recommendations;
+      if (score <= 4) {
+        level = "Low Clarity (Needs Exploration)";
+        text = "You seem to be feeling uncertain or confused about your path. This is completely normal! It just means you need to gather more data about yourself and the market.";
+        recommendations = ["Book a comprehensive Career Counselling session.", "Take a full Psychometric Aptitude Test.", "Focus on self-discovery: What activities make you lose track of time?", "Don't rush the decision."];
+      } else if (score <= 8) {
+        level = "Moderate Clarity (Developing)";
+        text = "You have some ideas, but you might lack the specific details or confidence to commit. You are on the right track but need to fine-tune your plan.";
+        recommendations = ["Research specific colleges and courses for your top 2 interests.", "Talk to professionals working in fields you are interested in.", "Identify the specific gap: Is it lack of information or fear of failure?", "A mentorship session could clarify the final steps."];
+      } else {
+        level = "High Clarity (Ready to Launch)";
+        text = "You have a strong sense of direction and self-awareness. You are ready to execute your plan.";
+        recommendations = ["Focus on execution: Entrance exam prep, applications, etc.", "Build a timeline/roadmap for the next 2 years.", "Find a mentor in your specific field to accelerate growth.", "Stay flexible; plans can evolve as you grow."];
+      }
+      return { level, text, recommendations };
     }
   }
 };
