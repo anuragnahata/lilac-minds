@@ -297,19 +297,22 @@ const BLOGS_DATA = [
 const ASSESSMENT_DATA = {
   anxiety: {
     id: 'anxiety',
-    title: "Anxiety Screening (GAD-7)",
-    desc: "A standardized clinical screening tool to measure the severity of Generalized Anxiety Disorder symptoms over the last 2 weeks.",
+    title: "Comprehensive Anxiety Assessment",
+    desc: "An in-depth screening tool to evaluate the severity and impact of anxiety symptoms across physical, emotional, and behavioral dimensions over the past 2 weeks.",
     icon: Wind,
     color: "text-blue-600 dark:text-blue-400",
     bg: "bg-blue-50 dark:bg-blue-900/20",
     questions: [
-      "Feeling nervous, anxious, or on edge?",
-      "Not being able to stop or control worrying?",
-      "Worrying too much about different things?",
-      "Trouble relaxing?",
-      "Being so restless that it is hard to sit still?",
-      "Becoming easily annoyed or irritable?",
-      "Feeling afraid, as if something awful might happen?"
+      "Over the past 2 weeks, how often have you felt nervous, anxious, or on edge without a clear reason?",
+      "How often have you found yourself unable to stop or control worrying, even when you tried?",
+      "How frequently have you worried excessively about multiple different things (work, health, family, future)?",
+      "How often have you experienced difficulty relaxing, even during leisure time or weekends?",
+      "How often have you felt so restless that it was hard to sit still or focus on one task?",
+      "How frequently have you become easily annoyed, irritable, or short-tempered with others?",
+      "How often have you felt a sense of dread or fear, as if something awful might happen?",
+      "How often have you experienced physical symptoms like racing heart, sweating, trembling, or shortness of breath due to anxiety?",
+      "How frequently has anxiety interfered with your ability to concentrate at work, studies, or daily tasks?",
+      "How often have you avoided social situations, responsibilities, or activities due to anxiety or worry?"
     ],
     options: [
       { label: "Not at all", score: 0 },
@@ -318,44 +321,83 @@ const ASSESSMENT_DATA = {
       { label: "Nearly every day", score: 3 }
     ],
     getResult: (score) => {
-      let level, text, recommendations;
-      if (score <= 4) {
-        level = "Minimal Anxiety (0-4)";
-        text = "Your score falls within the range of minimal anxiety. This suggests you are currently coping well with daily stressors. It is normal to feel occasional nerves, but they do not seem to be interfering with your life significantly.";
-        recommendations = ["Continue your current self-care routine.", "Practice daily mindfulness to maintain this balance.", "Ensure you are getting adequate sleep and exercise."];
-      } else if (score <= 9) {
-        level = "Mild Anxiety (5-9)";
-        text = "Your score indicates mild anxiety. You may be feeling stressed or worried more than usual, but it is likely manageable. This is a common response to life transitions or pressure.";
-        recommendations = ["Monitor your triggers; write down what makes you anxious.", "Try 'Box Breathing' (4-4-4-4) when you feel tension rising.", "Limit caffeine and screen time before bed.", "Consider talking to a friend about your stressors."];
+      let level, text, recommendations, insights, affectedAreas;
+      if (score <= 7) {
+        level = "Minimal Anxiety";
+        text = "Your responses indicate minimal anxiety symptoms. You appear to be managing daily stressors effectively and maintaining emotional equilibrium. While occasional nervousness is a normal part of life, it does not seem to be significantly impacting your functioning or well-being.";
+        insights = "Your nervous system appears well-regulated. You likely have effective coping mechanisms in place and good stress tolerance. This baseline suggests healthy emotional resilience.";
+        affectedAreas = ["No significant areas of concern identified"];
+        recommendations = [
+          "Continue practicing your current self-care and stress management routines",
+          "Maintain regular physical exercise (at least 30 minutes, 3-4 times weekly) to support nervous system health",
+          "Practice preventive mindfulness or meditation (even 10 minutes daily) to strengthen emotional resilience",
+          "Ensure you maintain a consistent sleep schedule of 7-8 hours",
+          "Stay connected with your support network—social bonds are protective against anxiety"
+        ];
       } else if (score <= 14) {
-        level = "Moderate Anxiety (10-14)";
-        text = "Your symptoms suggest moderate anxiety. Worrying may be starting to interfere with your ability to focus, sleep, or relax. This level of anxiety deserves attention and care.";
-        recommendations = ["We highly recommend booking a consultation with a counselor.", "Practice Progressive Muscle Relaxation (PMR) daily.", "Break large tasks into smaller, manageable steps to reduce overwhelm.", "Physical activity is clinically proven to metabolize stress hormones."];
+        level = "Mild to Moderate Anxiety";
+        text = "Your score suggests you are experiencing mild to moderate anxiety symptoms. You may be feeling more stressed, worried, or on edge than usual. While you are likely still functioning, anxiety may be starting to affect your quality of life, concentration, or relationships.";
+        insights = "At this level, your body's stress response is activating more frequently than ideal. You may notice tension in your body, difficulty switching off your mind, or feeling drained by the end of the day. This is your mind signaling that it needs more support.";
+        affectedAreas = ["Concentration and focus", "Sleep quality", "Physical tension", "Emotional regulation"];
+        recommendations = [
+          "Begin monitoring your anxiety triggers—keep a brief daily log of situations that increase worry",
+          "Practice 'Box Breathing' technique: inhale 4 seconds, hold 4 seconds, exhale 4 seconds, hold 4 seconds—repeat 4 times",
+          "Reduce caffeine intake, especially after 12 PM, as it can amplify anxiety symptoms",
+          "Schedule daily 'worry time' (15 minutes) to contain anxious thoughts rather than letting them intrude all day",
+          "Consider booking a consultation to learn personalized anxiety management techniques",
+          "Engage in regular physical activity—it metabolizes stress hormones like cortisol and adrenaline"
+        ];
+      } else if (score <= 21) {
+        level = "Moderate to Severe Anxiety";
+        text = "Your responses indicate moderate to severe anxiety symptoms. Worry and nervousness are likely interfering significantly with your daily functioning, work performance, relationships, and overall well-being. You may be experiencing both psychological and physical manifestations of anxiety.";
+        insights = "At this level, your nervous system is in a heightened state of alertness. The 'fight or flight' response may be activating frequently, leading to exhaustion, difficulty concentrating, and physical symptoms. Your brain is perceiving threats even in non-threatening situations, which is exhausting and unsustainable.";
+        affectedAreas = ["Work/academic performance", "Relationships and social life", "Physical health (sleep, appetite, energy)", "Decision-making ability", "Overall quality of life"];
+        recommendations = [
+          "We strongly recommend scheduling a professional consultation—this level of anxiety responds very well to evidence-based therapy (CBT, ACT)",
+          "Practice Progressive Muscle Relaxation (PMR) daily—systematically tensing and releasing muscle groups to reduce physical tension",
+          "Break overwhelming tasks into very small, manageable steps to reduce the sense of being overwhelmed",
+          "Limit exposure to anxiety-provoking content (news, social media) especially before bedtime",
+          "Prioritize sleep hygiene: consistent bedtime, no screens 1 hour before bed, cool dark room",
+          "Lean on your support system—share your struggles with trusted people; isolation worsens anxiety",
+          "Consider whether workplace or life circumstances need to be addressed as contributing factors"
+        ];
       } else {
-        level = "Severe Anxiety (15-21)";
-        text = "Your score indicates severe anxiety symptoms. It is likely that anxiety is significantly impacting your daily life, relationships, and physical well-being. Please know that this is highly treatable with professional support.";
-        recommendations = ["Please seek professional help immediately.", "Do not face this alone; lean on your support system.", "Focus on 'grounding techniques' to manage acute panic.", "Remember: Anxiety is a condition, not a character flaw, and you can feel better."];
+        level = "Severe Anxiety";
+        text = "Your score indicates severe anxiety symptoms that are likely having a profound impact on your daily life, physical health, relationships, and ability to function. You may be experiencing panic symptoms, constant dread, or finding it very difficult to engage in normal activities. Please know that severe anxiety is highly treatable with proper professional support.";
+        insights = "At this severity level, your nervous system is in chronic overdrive. The constant activation of stress hormones can affect your physical health, immune system, and cognitive functioning. You may feel trapped in a cycle of worry and fear. This is not your fault—anxiety is a medical condition, not a character flaw—and with the right help, significant improvement is absolutely possible.";
+        affectedAreas = ["All areas of daily functioning", "Physical health and immune system", "Work/academic capability", "Personal relationships", "Self-esteem and confidence", "Ability to enjoy life"];
+        recommendations = [
+          "Please seek professional help as soon as possible—this is urgent but very treatable",
+          "If you experience panic attacks, remember they are temporary and will pass; focus on slow, deep breathing",
+          "Practice grounding techniques when overwhelmed: name 5 things you can see, 4 you can hear, 3 you can touch, 2 you can smell, 1 you can taste",
+          "Reach out to your support system—do not face this alone; isolation magnifies anxiety",
+          "Avoid making major life decisions while in this state; your judgment may be affected by anxiety",
+          "Be compassionate with yourself—anxiety is a health condition, and seeking help is a sign of strength",
+          "Consider whether a combination of therapy and medication might be appropriate (discuss with a professional)"
+        ];
       }
-      return { level, text, recommendations };
+      return { level, text, recommendations, insights, affectedAreas };
     }
   },
   depression: {
     id: 'depression',
-    title: "Depression Check (PHQ-9)",
-    desc: "The Patient Health Questionnaire (PHQ-9) is a multipurpose instrument for screening, diagnosing, monitoring and measuring the severity of depression.",
+    title: "Depression & Mood Assessment",
+    desc: "A comprehensive evaluation based on the PHQ-9 to assess the presence and severity of depressive symptoms, including emotional, cognitive, and physical indicators over the past 2 weeks.",
     icon: Cloud,
     color: "text-gray-600 dark:text-gray-400",
     bg: "bg-gray-50 dark:bg-gray-800/50",
     questions: [
-      "Little interest or pleasure in doing things?",
-      "Feeling down, depressed, or hopeless?",
-      "Trouble falling or staying asleep, or sleeping too much?",
-      "Feeling tired or having little energy?",
-      "Poor appetite or overeating?",
-      "Feeling bad about yourself — or that you are a failure or have let yourself or your family down?",
-      "Trouble concentrating on things, such as reading the newspaper or watching television?",
-      "Moving or speaking so slowly that other people could have noticed? Or the opposite — being so fidgety or restless?",
-      "Thoughts that you would be better off dead, or of hurting yourself in some way?"
+      "Over the past 2 weeks, how often have you had little interest or pleasure in doing things you usually enjoy?",
+      "How often have you felt down, depressed, hopeless, or emotionally numb?",
+      "How frequently have you had trouble falling asleep, staying asleep, or sleeping too much?",
+      "How often have you felt tired, fatigued, or had little energy even after rest?",
+      "How frequently have you experienced changes in appetite—either eating too little or overeating for comfort?",
+      "How often have you felt bad about yourself, felt like a failure, or felt you have let yourself or others down?",
+      "How frequently have you had trouble concentrating on things like reading, watching TV, or completing tasks?",
+      "How often have you noticed yourself moving or speaking more slowly than usual, or the opposite—feeling agitated and restless?",
+      "How often have you had thoughts that you would be better off dead, or thoughts of hurting yourself in some way?",
+      "How frequently have you felt disconnected from others or withdrawn from social activities?",
+      "How often have you felt like things will never get better or that your situation is hopeless?"
     ],
     options: [
       { label: "Not at all", score: 0 },
@@ -364,47 +406,101 @@ const ASSESSMENT_DATA = {
       { label: "Nearly every day", score: 3 }
     ],
     getResult: (score) => {
-      let level, text, recommendations;
-      if (score <= 4) {
-        level = "Minimal Depression (0-4)";
-        text = "Your score suggests minimal or no depressive symptoms. You seem to be maintaining a healthy emotional baseline.";
-        recommendations = ["Keep engaging in hobbies you enjoy.", "Maintain social connections.", "Prioritize a consistent sleep schedule."];
-      } else if (score <= 9) {
-        level = "Mild Depression (5-9)";
-        text = "You may be experiencing mild depressive symptoms. You might feel 'stuck' or 'low' periodically. While this may not restrict your functioning, it can rob you of joy.";
-        recommendations = ["Establish a gentle daily routine.", "Get 15-20 minutes of sunlight daily.", "Practice 'Behavioral Activation'—doing things even if you don't feel like it, to jumpstart motivation.", "Reach out to a trusted friend."];
-      } else if (score <= 14) {
-        level = "Moderate Depression (10-14)";
-        text = "Your symptoms indicate moderate depression. You may be struggling with motivation, sleep, or self-worth. Professional therapy (CBT) is very effective at this stage.";
-        recommendations = ["Consider booking a therapy session to explore underlying causes.", "Challenge negative thought patterns (e.g., 'I am useless').", "Avoid isolation; force small social interactions.", "Focus on small, achievable goals (e.g., 'Make bed', 'Brush teeth')."];
-      } else if (score <= 19) {
-        level = "Moderately Severe Depression (15-19)";
-        text = "These scores suggest moderately severe depression. It is highly advisable to seek professional help, as these symptoms can be debilitating without support.";
-        recommendations = ["Please consult a mental health professional.", "Discuss treatment options (therapy/medication) with an expert.", "Ensure you have a support system around you.", "Be gentle with yourself; this is a health issue, not a weakness."];
+      let level, text, recommendations, insights, affectedAreas;
+      if (score <= 5) {
+        level = "Minimal Depression";
+        text = "Your responses suggest minimal or no depressive symptoms. You appear to be maintaining a healthy emotional baseline with good energy, motivation, and engagement in life. While everyone has occasional low days, they do not seem to be affecting your overall functioning.";
+        insights = "Your emotional regulation appears stable. You are likely experiencing normal fluctuations in mood that do not persist or significantly impact your daily life. This suggests good psychological resilience and healthy coping mechanisms.";
+        affectedAreas = ["No significant areas of concern identified"];
+        recommendations = [
+          "Continue engaging in activities and hobbies that bring you joy and meaning",
+          "Maintain your social connections—relationships are protective against depression",
+          "Keep a consistent sleep schedule; sleep is foundational to emotional health",
+          "Regular physical exercise (even walking) helps maintain mood stability",
+          "Practice gratitude or journaling to reinforce positive thought patterns",
+          "Stay attuned to any changes in your mood and address them early"
+        ];
+      } else if (score <= 11) {
+        level = "Mild to Moderate Depression";
+        text = "Your score indicates mild to moderate depressive symptoms. You may be feeling persistently low, lacking motivation, or experiencing less joy than usual. While you may still be functioning, life might feel heavier, and tasks that once felt easy may now require more effort.";
+        insights = "At this level, your brain's reward and motivation systems may be underactive. You might notice a loss of interest in things you used to enjoy (anhedonia), difficulty getting started on tasks, or a persistent feeling of emptiness or sadness. This is not laziness—it's your brain chemistry signaling it needs support.";
+        affectedAreas = ["Motivation and drive", "Energy levels", "Sleep patterns", "Social engagement", "Self-esteem", "Concentration"];
+        recommendations = [
+          "Practice 'Behavioral Activation'—commit to doing small activities even when you don't feel like it; action often precedes motivation",
+          "Get 15-20 minutes of natural sunlight daily, preferably in the morning",
+          "Establish a gentle daily routine with small, achievable goals (make bed, take a shower, take a short walk)",
+          "Reach out to a trusted friend or family member—sharing your feelings can provide relief",
+          "Limit alcohol consumption, which is a depressant and worsens mood over time",
+          "Consider booking a therapy session to explore underlying causes and learn evidence-based techniques",
+          "Monitor your sleep—both too little and too much sleep can worsen depression"
+        ];
+      } else if (score <= 17) {
+        level = "Moderate Depression";
+        text = "Your responses indicate moderate depression. You are likely struggling with persistent low mood, reduced motivation, changes in sleep or appetite, difficulty concentrating, and possibly negative thoughts about yourself. These symptoms are probably affecting your work, relationships, and quality of life.";
+        insights = "At this level, depression is likely impacting multiple areas of your life. Your brain's neurotransmitter systems (serotonin, dopamine, norepinephrine) may be imbalanced, affecting mood, motivation, and cognitive function. Negative thought patterns may be reinforcing the depressive cycle. The good news is that moderate depression responds very well to professional treatment.";
+        affectedAreas = ["Work/academic performance", "Relationships", "Physical health", "Self-worth and confidence", "Decision-making", "Ability to experience pleasure", "Future outlook"];
+        recommendations = [
+          "Professional support is strongly recommended—Cognitive Behavioral Therapy (CBT) is highly effective for depression",
+          "Challenge negative automatic thoughts: when you think 'I'm worthless,' ask 'What evidence supports or contradicts this?'",
+          "Avoid isolation—force small social interactions even when you want to withdraw",
+          "Focus on small, achievable daily goals rather than overwhelming yourself with large tasks",
+          "Physical exercise has antidepressant effects—even a 20-minute walk can help",
+          "Practice self-compassion; speak to yourself as you would to a dear friend going through a hard time",
+          "Consider discussing your symptoms with a doctor to evaluate if medication might be helpful alongside therapy",
+          "Avoid making major life decisions while depressed; your thinking may be colored by the condition"
+        ];
+      } else if (score <= 23) {
+        level = "Moderately Severe Depression";
+        text = "Your score indicates moderately severe depression. You are likely experiencing significant impairment in your daily functioning, persistent feelings of hopelessness or worthlessness, and symptoms that feel overwhelming. Basic tasks may feel insurmountable, and you may be isolating from others.";
+        insights = "At this severity, depression has likely become a significant barrier to normal life. Your brain chemistry is substantially affected, making it hard to see hope or feel pleasure. Negative thinking patterns have likely become entrenched. This level of depression can feel all-consuming, but it is very treatable with proper professional intervention. Many people recover fully from depression at this level with the right support.";
+        affectedAreas = ["All major life domains", "Physical health and self-care", "Relationships and social life", "Work/academic capability", "Self-perception and identity", "Hope and future planning", "Basic daily functioning"];
+        recommendations = [
+          "Please prioritize seeking professional mental health support—this level requires expert intervention",
+          "Consider discussing treatment options with a psychiatrist; a combination of therapy and medication is often most effective at this level",
+          "Ensure you have a safety plan if thoughts of self-harm arise—share this with someone you trust",
+          "Focus on basic self-care: eating regular meals, maintaining hygiene, getting some daylight",
+          "Accept help from others—let people support you during this difficult time",
+          "Remember: depression lies. The hopelessness you feel is a symptom, not reality. Things can and do get better.",
+          "Be extremely gentle with yourself; you are fighting a serious health condition"
+        ];
       } else {
-        level = "Severe Depression (20-27)";
-        text = "Your score indicates severe depression. Immediate professional intervention is strongly recommended to ensure your safety and recovery.";
-        recommendations = ["Seek immediate professional help.", "If you have thoughts of self-harm, contact a helpline immediately.", "Do not isolate yourself.", "Remember that depression is treatable, and recovery is possible."];
+        level = "Severe Depression";
+        text = "Your score indicates severe depression requiring immediate professional attention. You are likely experiencing profound hopelessness, inability to function normally, and possibly thoughts of self-harm. Please know that even severe depression is treatable, and reaching out for help is the most important step you can take.";
+        insights = "At this level, depression has profoundly affected your brain's functioning, making everything feel impossible. The hopelessness and worthlessness you may feel are symptoms of the illness, not reality. Many people recover from severe depression with proper treatment. You are not broken—you are ill and need medical attention, just as you would for any serious physical condition.";
+        affectedAreas = ["Complete daily functioning", "Physical safety and well-being", "All relationships", "Ability to work or study", "Self-care", "Hope and will to continue", "Physical health"];
+        recommendations = [
+          "Please seek immediate professional help—contact a mental health professional, your doctor, or a crisis helpline today",
+          "If you have thoughts of harming yourself, please reach out to a crisis helpline immediately (listed on this page)",
+          "Do not isolate—stay connected with at least one trusted person who knows what you're going through",
+          "Remove access to any means of self-harm from your immediate environment",
+          "Focus only on getting through today—one hour, one moment at a time",
+          "Intensive treatment (therapy + medication) is typically recommended at this level and can bring significant relief",
+          "Remember: This feeling will not last forever. Depression is a liar. Recovery is possible and happens every day."
+        ];
       }
-      return { level, text, recommendations };
+      return { level, text, recommendations, insights, affectedAreas };
     }
   },
   burnout: {
     id: 'burnout',
-    title: "Burnout & Exhaustion Scale",
-    desc: "Assess your level of physical and emotional exhaustion related to work or study commitments.",
+    title: "Burnout & Exhaustion Assessment",
+    desc: "A comprehensive evaluation of physical, emotional, and mental exhaustion related to work, studies, or life demands, assessing all three dimensions of burnout.",
     icon: Battery,
     color: "text-orange-600 dark:text-orange-400",
     bg: "bg-orange-50 dark:bg-orange-900/20",
     questions: [
-      "Do you feel emotionally drained from your work/studies?",
-      "Do you feel used up at the end of the day?",
-      "Do you feel tired when you get up in the morning and have to face another day?",
-      "Do you feel like your energy reserves are constantly empty?", 
-      "Do you feel frustrated or cynical about your tasks?", 
-      "Do you feel like you are achieving less despite working harder?",
-      "Do you feel that every task requires a huge effort?",
-      "Do you feel like you are at the end of your rope?"
+      "How often do you feel emotionally drained and depleted by your work or responsibilities?",
+      "How frequently do you feel completely used up and exhausted at the end of a typical day?",
+      "How often do you dread getting up in the morning to face another day of work or study?",
+      "How frequently do you feel that your energy reserves are constantly empty, no matter how much you rest?",
+      "How often do you feel frustrated, cynical, or detached from your work or studies?",
+      "How frequently do you feel like you are achieving less despite putting in more effort?",
+      "How often does every task—even small ones—feel like it requires enormous effort?",
+      "How often do you feel like you are at the end of your rope or have nothing left to give?",
+      "How frequently do you find yourself unable to disconnect from work thoughts during personal time?",
+      "How often do you neglect your personal needs (meals, sleep, exercise, relationships) because of work demands?",
+      "How frequently do you feel that your work has lost meaning or purpose?",
+      "How often do you experience physical symptoms (headaches, muscle tension, stomach issues) that you attribute to stress?"
     ],
     options: [
       { label: "Never", score: 0 },
@@ -414,100 +510,203 @@ const ASSESSMENT_DATA = {
       { label: "Always", score: 4 }
     ],
     getResult: (score) => {
-      let level, text, recommendations;
-      if (score <= 10) {
+      let level, text, recommendations, insights, affectedAreas;
+      if (score <= 14) {
         level = "Low Burnout Risk";
-        text = "You seem to be balancing your energy well. You have healthy boundaries between work/study and rest.";
-        recommendations = ["Maintain your current work-life boundaries.", "Continue engaging in non-work hobbies.", "Take regular micro-breaks to sustain this momentum."];
-      } else if (score <= 20) {
+        text = "Your responses suggest you are managing your energy and work-life balance effectively. You appear to have healthy boundaries and are not currently showing significant signs of burnout. This is a protective state worth maintaining.";
+        insights = "You seem to have established good boundaries between work and personal life. Your energy expenditure and recovery are in healthy balance. This suggests effective stress management skills and an awareness of your own needs and limits.";
+        affectedAreas = ["No significant areas of concern identified"];
+        recommendations = [
+          "Continue maintaining your current work-life boundaries—they are serving you well",
+          "Keep engaging in restorative activities and hobbies outside of work",
+          "Take regular micro-breaks during work to sustain your energy throughout the day",
+          "Stay connected with supportive relationships that replenish rather than drain you",
+          "Periodically reassess your workload and adjust before stress accumulates",
+          "Maintain consistent sleep, exercise, and nutrition habits"
+        ];
+      } else if (score <= 28) {
         level = "Moderate Burnout Risk";
-        text = "You are showing clear signs of exhaustion. You are likely running on adrenaline and caffeine. It is time to pause before you hit a wall.";
-        recommendations = ["Take a short vacation or mental health day immediately.", "Re-evaluate your workload; delegate or delay non-essential tasks.", "Prioritize sleep and nutrition over deadlines for a week.", "Learn to say 'no' to new commitments."];
+        text = "Your score indicates moderate burnout risk. You are showing clear signs of exhaustion and may be running on depleted reserves. While you are still functioning, you are likely relying on willpower, caffeine, or adrenaline rather than genuine energy. This is a warning sign that demands attention.";
+        insights = "At this level, your body and mind are signaling that the current pace is unsustainable. You may be 'pushing through' but at a cost to your health, relationships, and long-term performance. Chronic stress hormones (cortisol) may be elevated, affecting your immune system, sleep quality, and emotional regulation. The longer this continues, the harder recovery becomes.";
+        affectedAreas = ["Physical energy and stamina", "Sleep quality", "Emotional resilience", "Work satisfaction", "Personal relationships", "Physical health", "Cognitive sharpness"];
+        recommendations = [
+          "Take a short break or mental health day as soon as possible—this is not optional but necessary",
+          "Re-evaluate your workload: identify tasks that can be delegated, delayed, or eliminated",
+          "Prioritize sleep and nutrition over deadlines for the next 1-2 weeks; you cannot perform from an empty tank",
+          "Practice saying 'no' to new commitments until your current load is manageable",
+          "Schedule non-negotiable recovery time: exercise, time with loved ones, hobbies",
+          "Consider whether systemic factors (unrealistic expectations, toxic culture) are contributing",
+          "Book a consultation to learn personalized stress management and boundary-setting strategies"
+        ];
       } else {
         level = "High Burnout Risk";
-        text = "You appear to be experiencing significant burnout. This is a state of vital exhaustion that requires serious intervention. Pushing through will only cause damage.";
-        recommendations = ["Seek professional support to help restructure your life.", "Discuss workload with supervisors or teachers.", "Dedicate time to 'radical rest' (complete disconnection).", "Disconnect from digital devices outside work hours."];
+        text = "Your responses indicate significant burnout. You are experiencing substantial physical, emotional, and mental exhaustion that is likely affecting all areas of your life. This is a state of vital depletion that requires immediate and serious intervention. Continuing to push through will cause lasting damage to your health and well-being.";
+        insights = "At this level, you have likely been running on empty for too long. Your body's stress response system may be dysregulated, leading to chronic fatigue, cognitive difficulties, emotional numbness or volatility, and physical health problems. Burnout at this level is associated with increased risk of cardiovascular disease, depression, and immune dysfunction. Recovery requires significant changes, not just a vacation.";
+        affectedAreas = ["Physical health and immunity", "Mental health (risk of depression/anxiety)", "Cognitive function and memory", "All relationships", "Job performance and satisfaction", "Personal identity and sense of purpose", "Overall quality of life"];
+        recommendations = [
+          "Please treat this as a health crisis—seek professional support from a therapist or counselor",
+          "Have an honest conversation with your supervisor, teacher, or family about reducing your load immediately",
+          "Consider whether medical leave or a significant break is necessary for recovery",
+          "Practice 'radical rest': complete disconnection from work, digital devices, and obligations for defined periods",
+          "Prioritize basic self-care: regular meals, adequate sleep, gentle movement, time outdoors",
+          "Examine whether your current work or life situation is sustainable long-term or requires fundamental change",
+          "Reconnect with your core values and what gives your life meaning beyond productivity",
+          "Be patient—recovery from severe burnout takes months, not days; rushing it will backfire"
+        ];
       }
-      return { level, text, recommendations };
+      return { level, text, recommendations, insights, affectedAreas };
     }
   },
   sleep: {
     id: 'sleep',
-    title: "Sleep Quality Check (AIS)",
-    desc: "Assess your sleep patterns based on the Athens Insomnia Scale criteria.",
+    title: "Sleep Quality & Insomnia Assessment",
+    desc: "A thorough evaluation of your sleep patterns, quality, and daytime functioning based on clinical insomnia criteria over the past month.",
     icon: Moon,
     color: "text-indigo-600 dark:text-indigo-400",
     bg: "bg-indigo-50 dark:bg-indigo-900/20",
     questions: [
-      "Difficulty falling asleep (Sleep induction)?",
-      "Awakening during the night?",
-      "Waking up earlier than desired?",
-      "Total sleep duration is insufficient?",
-      "Overall quality of sleep is poor?",
-      "Sense of well-being during the day is low?",
-      "Functioning (physical/mental) during the day is impaired?",
-      "Sleepiness during the day?"
+      "How much difficulty have you had falling asleep within 30 minutes of going to bed?",
+      "How often do you wake up during the night and have trouble falling back asleep?",
+      "How frequently do you wake up much earlier than you intended and cannot go back to sleep?",
+      "How often do you feel that your total sleep time is insufficient for your needs?",
+      "How would you rate your overall quality of sleep (restfulness, depth)?",
+      "How much has poor sleep affected your sense of well-being, mood, or energy during the day?",
+      "How much has poor sleep impaired your ability to function mentally (concentration, memory, decision-making)?",
+      "How often do you experience excessive sleepiness or fatigue during the day?",
+      "How frequently do you rely on sleep aids (medications, alcohol, supplements) to fall asleep?",
+      "How much anxiety or dread do you experience about going to bed or your ability to sleep?"
     ],
     options: [
       { label: "No problem", score: 0 },
       { label: "Minor problem", score: 1 },
-      { label: "Considerable problem", score: 2 },
+      { label: "Moderate problem", score: 2 },
       { label: "Serious problem", score: 3 }
     ],
     getResult: (score) => {
-      let level, text, recommendations;
-      if (score < 6) {
+      let level, text, recommendations, insights, affectedAreas;
+      if (score <= 7) {
         level = "Good Sleep Quality";
-        text = "Your sleep patterns appear healthy. You are likely getting restorative rest.";
-        recommendations = ["Maintain your consistent sleep schedule.", "Avoid screens 1 hour before bed.", "Keep your bedroom cool and dark."];
-      } else if (score <= 10) {
-        level = "Mild Sleep Difficulties";
-        text = "You may be facing some sleep disturbances that are affecting your energy. This is often due to lifestyle factors or stress.";
-        recommendations = ["Create a relaxing 'wind-down' routine.", "Avoid caffeine after 2 PM.", "Don't force sleep; if awake, read a book until tired.", "Limit naps to 20 minutes."];
+        text = "Your responses indicate healthy sleep patterns. You appear to be getting restorative sleep that supports your daytime functioning, mood, and overall health. Good sleep is foundational to mental and physical well-being, and you are on the right track.";
+        insights = "Your sleep architecture appears healthy. You are likely cycling through the appropriate sleep stages (light, deep, REM) effectively, allowing your brain and body to restore, consolidate memories, and regulate emotions. This is protective for both your mental and physical health.";
+        affectedAreas = ["No significant areas of concern identified"];
+        recommendations = [
+          "Maintain your consistent sleep schedule—going to bed and waking at the same time daily",
+          "Continue avoiding screens for at least 30-60 minutes before bed",
+          "Keep your bedroom environment optimized: cool (18-20°C), dark, and quiet",
+          "Limit caffeine intake, especially after early afternoon",
+          "Continue any relaxing bedtime routines that work for you",
+          "Stay physically active during the day to promote deeper sleep at night"
+        ];
+      } else if (score <= 14) {
+        level = "Mild to Moderate Sleep Difficulties";
+        text = "Your score suggests you are experiencing some sleep disturbances that are affecting your rest quality and daytime functioning. While you may still be getting some sleep, it is likely not as restorative as your body needs. This is often related to stress, lifestyle factors, or sleep habits that can be improved.";
+        insights = "At this level, your sleep quality is compromised, which affects your cognitive function, emotional regulation, and physical recovery during the day. You may notice difficulty concentrating, irritability, or increased stress sensitivity. Poor sleep can become a self-reinforcing cycle as worry about sleep further disrupts it.";
+        affectedAreas = ["Daytime energy and alertness", "Concentration and memory", "Mood stability", "Stress resilience", "Physical health", "Work/academic performance"];
+        recommendations = [
+          "Establish a consistent sleep-wake schedule, even on weekends (within 1 hour)",
+          "Create a relaxing 'wind-down' routine 30-60 minutes before bed (dim lights, calm activities)",
+          "Avoid caffeine after 12-2 PM and limit alcohol (it fragments sleep)",
+          "If you can't fall asleep within 20 minutes, get up and do something calm until sleepy—don't force it",
+          "Limit daytime naps to 20 minutes maximum, and not after 3 PM",
+          "Reduce screen exposure before bed; blue light suppresses melatonin",
+          "Get bright light exposure in the morning to regulate your circadian rhythm",
+          "Consider a consultation to explore whether anxiety, stress, or habits are underlying causes"
+        ];
       } else {
-        level = "Significant Insomnia Symptoms";
-        text = "Your score suggests possible insomnia. Your sleep quality is likely affecting your mood, focus, and health.";
-        recommendations = ["Consult a professional for Cognitive Behavioral Therapy for Insomnia (CBT-I).", "Strict sleep hygiene protocols are needed.", "Review medications or lifestyle factors.", "Use the bed only for sleep (stimulus control)."];
+        level = "Significant Sleep Problems";
+        text = "Your responses indicate significant sleep difficulties that are likely having a substantial impact on your daily functioning, mood, and health. You may be experiencing insomnia symptoms that require professional attention. Chronic sleep deprivation affects every system in your body and mind.";
+        insights = "At this severity, your sleep problems are likely chronic and affecting your physical health (immune function, cardiovascular risk, weight regulation), mental health (anxiety, depression risk), and cognitive abilities (memory consolidation, decision-making, reaction time). Sleep deprivation of this level is comparable to being cognitively impaired and significantly increases health risks.";
+        affectedAreas = ["All daytime functioning", "Mental health (anxiety, depression)", "Physical health and immunity", "Cognitive performance", "Emotional regulation", "Relationships", "Work/academic capability", "Quality of life"];
+        recommendations = [
+          "Consult a professional for Cognitive Behavioral Therapy for Insomnia (CBT-I)—it is the gold standard treatment and more effective long-term than medication",
+          "Get a medical evaluation to rule out underlying conditions (sleep apnea, restless leg syndrome, thyroid issues)",
+          "Implement strict sleep hygiene: consistent schedule, optimized environment, no screens before bed",
+          "Practice stimulus control: use the bed only for sleep (and intimacy), not for work, TV, or scrolling",
+          "Review all medications, supplements, and substances for sleep-interfering effects",
+          "Address any underlying anxiety or depression that may be contributing to insomnia",
+          "Avoid relying on alcohol or over-the-counter sleep aids, which worsen sleep quality long-term",
+          "Consider sleep restriction therapy under professional guidance to consolidate sleep"
+        ];
       }
-      return { level, text, recommendations };
+      return { level, text, recommendations, insights, affectedAreas };
     }
   },
   career: {
     id: 'career',
-    title: "Career Clarity & Readiness Check",
-    desc: "Evaluate how clear, confident, and prepared you feel about your future career path.",
+    title: "Career Clarity & Direction Assessment",
+    desc: "A comprehensive evaluation of your career readiness, self-awareness, decision-making confidence, and preparedness for your professional future.",
     icon: Compass,
     color: "text-violet-600 dark:text-violet-400",
     bg: "bg-violet-50 dark:bg-violet-900/20",
     questions: [
-      "I have a clear understanding of my strengths and weaknesses.",
-      "I know exactly which career paths align with my personality.",
-      "I am aware of the educational requirements for my desired career.",
-      "I feel confident making decisions about my future stream/college.",
-      "I have a backup plan if my primary career choice doesn't work out.",
-      "I feel supported and guided in my career journey."
+      "I have a clear understanding of my core strengths, natural abilities, and areas for growth.",
+      "I can identify my personal values and know what matters most to me in a career (e.g., creativity, stability, helping others, income).",
+      "I have a good understanding of my personality type and how it affects my work preferences and environment needs.",
+      "I know which specific career paths or fields genuinely interest me and align with my abilities.",
+      "I am aware of the educational qualifications, skills, and experience required for my desired career.",
+      "I feel confident in my ability to make important decisions about my academic stream, college, or career direction.",
+      "I have researched multiple career options and understand the pros and cons of each.",
+      "I have a backup plan or alternative options if my primary career choice doesn't work out.",
+      "I feel supported and guided in my career journey by family, mentors, or counselors.",
+      "I have a realistic understanding of the job market, industry trends, and future opportunities in my areas of interest.",
+      "I have set specific short-term and long-term career goals with actionable steps.",
+      "I feel emotionally ready and confident to take the next step in my career or educational path."
     ],
     options: [
-      { label: "Disagree", score: 0 },
-      { label: "Neutral / Unsure", score: 1 },
-      { label: "Strongly Agree", score: 2 }
+      { label: "Strongly Disagree", score: 0 },
+      { label: "Disagree", score: 1 },
+      { label: "Neutral / Unsure", score: 2 },
+      { label: "Agree", score: 3 },
+      { label: "Strongly Agree", score: 4 }
     ],
     getResult: (score) => {
-      let level, text, recommendations;
-      if (score <= 4) {
-        level = "Low Clarity (Needs Exploration)";
-        text = "You seem to be feeling uncertain or confused about your path. This is completely normal! It just means you need to gather more data about yourself and the market.";
-        recommendations = ["Book a comprehensive Career Counselling session.", "Take a full Psychometric Aptitude Test.", "Focus on self-discovery: What activities make you lose track of time?", "Don't rush the decision."];
-      } else if (score <= 8) {
-        level = "Moderate Clarity (Developing)";
-        text = "You have some ideas, but you might lack the specific details or confidence to commit. You are on the right track but need to fine-tune your plan.";
-        recommendations = ["Research specific colleges and courses for your top 2 interests.", "Talk to professionals working in fields you are interested in.", "Identify the specific gap: Is it lack of information or fear of failure?", "A mentorship session could clarify the final steps."];
+      let level, text, recommendations, insights, affectedAreas;
+      if (score <= 15) {
+        level = "Low Career Clarity";
+        text = "Your responses indicate that you are currently uncertain or confused about your career direction. This is completely normal, especially during transitions, and simply means you need more self-exploration and information gathering. The good news is that clarity can be developed systematically.";
+        insights = "Career confusion often stems from insufficient self-knowledge (not knowing your strengths, values, and interests deeply) or insufficient market knowledge (not knowing what options exist and what they entail). Sometimes it's also influenced by external pressure (family expectations, peer comparison) that conflicts with your authentic preferences. Clarity comes from structured exploration, not just waiting for inspiration.";
+        affectedAreas = ["Decision-making confidence", "Academic/career planning", "Stress and anxiety about the future", "Sense of direction and purpose", "Self-confidence"];
+        recommendations = [
+          "Book a comprehensive Career Counselling session to gain personalized guidance",
+          "Complete a full Psychometric Assessment (aptitude, personality, interest) to understand yourself scientifically",
+          "Engage in self-reflection: What activities make you lose track of time? What topics do you voluntarily read about?",
+          "Research at least 5-10 different career paths that might interest you—learn what they actually involve day-to-day",
+          "Talk to professionals in various fields to understand real-world job realities",
+          "Don't rush the decision—better to invest time now in clarity than to change direction later",
+          "Separate your own desires from external expectations—what do YOU want?",
+          "Keep a career exploration journal to track insights and ideas"
+        ];
+      } else if (score <= 30) {
+        level = "Moderate Career Clarity";
+        text = "Your score suggests you have some direction but may lack specific details, complete confidence, or a fully developed plan. You are on the right track but need to fine-tune your understanding and solidify your decisions.";
+        insights = "At this level, you likely have a general sense of your interests and some career ideas, but you may be lacking specific information about paths, requirements, or market realities. Alternatively, you may know what you want but feel uncertain about your ability to achieve it or have conflicting options. The gap might be informational, emotional (fear of failure or commitment), or practical (unclear next steps).";
+        affectedAreas = ["Commitment to a specific path", "Action planning", "Confidence in decisions", "Preparation for next steps"];
+        recommendations = [
+          "Narrow down your interests to your top 2-3 career options and research each in depth",
+          "Create a detailed comparison: requirements, lifestyle, income, growth prospects, alignment with your values",
+          "Conduct informational interviews with professionals in your fields of interest",
+          "Identify your specific gap: Is it lack of information, fear of commitment, or external conflict?",
+          "A focused career mentorship session could help clarify the final steps and build confidence",
+          "Start preparing for the practical requirements: entrance exams, skill-building, applications",
+          "Set 3-6 month goals related to career exploration and preparation",
+          "Build a network in your areas of interest through LinkedIn, events, or mentorship programs"
+        ];
       } else {
-        level = "High Clarity (Ready to Launch)";
-        text = "You have a strong sense of direction and self-awareness. You are ready to execute your plan.";
-        recommendations = ["Focus on execution: Entrance exam prep, applications, etc.", "Build a timeline/roadmap for the next 2 years.", "Find a mentor in your specific field to accelerate growth.", "Stay flexible; plans can evolve as you grow."];
+        level = "High Career Clarity";
+        text = "Excellent! Your responses indicate a strong sense of self-awareness, clear career direction, and readiness to take action. You have done the work of self-exploration and research, and you are well-positioned to move forward confidently.";
+        insights = "You have achieved a level of career clarity that many struggle to reach. You appear to understand your strengths, values, and interests, have identified paths that align with them, and have a realistic plan. This clarity will serve you well in making decisions, staying motivated, and navigating challenges. The next phase is about execution and continuous refinement as you grow.";
+        affectedAreas = ["No significant areas of concern identified"];
+        recommendations = [
+          "Focus on execution: entrance exam preparation, applications, skill development, and networking",
+          "Build a detailed 1-2 year roadmap with milestones and deadlines",
+          "Seek a mentor in your specific field to accelerate your growth and provide guidance",
+          "Start building relevant experience through internships, projects, or volunteer work",
+          "Stay flexible—career paths evolve, and you will continue to learn and grow",
+          "Help others who are struggling with career confusion; teaching reinforces your own clarity",
+          "Celebrate your progress—you have done significant work to reach this point of clarity"
+        ];
       }
-      return { level, text, recommendations };
+      return { level, text, recommendations, insights, affectedAreas };
     }
   }
 };
@@ -806,9 +1005,10 @@ const ResourcesView = ({ onNavigate }) => {
 
   const startTest = (testId) => {
     setActiveTest(ASSESSMENT_DATA[testId]);
-    setStep('form');
+    setStep('questions');
     setAnswers({});
     setResult(null);
+    setUser({ name: '', phone: '', email: '', city: '' });
   };
 
   const openArticle = (id) => {
@@ -818,23 +1018,10 @@ const ResourcesView = ({ onNavigate }) => {
     window.scrollTo(0, 0);
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    setStep('questions');
-  };
-
-  const handleAnswer = (questionIndex, score) => {
-    const newAnswers = { ...answers, [questionIndex]: score };
-    setAnswers(newAnswers);
-
-    if (Object.keys(newAnswers).length === activeTest.questions.length) {
-      calculateAndSendResult(newAnswers);
-    }
-  };
-
-  const calculateAndSendResult = async (finalAnswers) => {
     setIsSubmitting(true);
-    const totalScore = Object.values(finalAnswers).reduce((a, b) => a + b, 0);
+    const totalScore = Object.values(answers).reduce((a, b) => a + b, 0);
     const res = activeTest.getResult(totalScore);
     setResult({ ...res, score: totalScore });
 
@@ -859,6 +1046,15 @@ const ResourcesView = ({ onNavigate }) => {
     } finally {
       setIsSubmitting(false);
       setStep('result');
+    }
+  };
+
+  const handleAnswer = (questionIndex, score) => {
+    const newAnswers = { ...answers, [questionIndex]: score };
+    setAnswers(newAnswers);
+
+    if (Object.keys(newAnswers).length === activeTest.questions.length) {
+      setTimeout(() => setStep('form'), 500);
     }
   };
 
@@ -1008,50 +1204,59 @@ const ResourcesView = ({ onNavigate }) => {
           </motion.div>
         )}
 
-        {/* DETAILS FORM */}
+        {/* DETAILS FORM - Now shown after questions, before results */}
         {step === 'form' && (
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="bg-white dark:bg-slate-900 rounded-[2rem] p-8 md:p-12 shadow-xl border border-slate-100 dark:border-white/10 max-w-2xl mx-auto"
           >
-            <button onClick={reset} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 mb-6 flex items-center gap-2 text-sm font-bold">
-              <ArrowRight className="rotate-180" size={16} /> Back to Resources
-            </button>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">{activeTest.title}</h2>
-            <p className="text-slate-600 dark:text-slate-400 mb-8">Please provide your details to start the assessment.</p>
+            <div className="text-center mb-8">
+              <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4 text-green-600 dark:text-green-400">
+                <CheckCircle size={32} />
+              </div>
+              <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Assessment Completed!</h2>
+              <p className="text-slate-600 dark:text-slate-400">You answered all {activeTest.questions.length} questions. Please provide your details to view your personalized results and insights.</p>
+            </div>
             
-            <form onSubmit={handleFormSubmit} className="space-y-5">
-              <div>
-                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Full Name</label>
-                <input required type="text" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all" 
-                  value={user.name} onChange={e => setUser({...user, name: e.target.value})}
-                />
+            {isSubmitting ? (
+              <div className="flex flex-col items-center justify-center py-12">
+                <Loader2 className="animate-spin text-violet-600 w-12 h-12 mb-4" />
+                <p className="text-slate-600 dark:text-slate-400 font-medium">Analyzing your responses and generating detailed insights...</p>
               </div>
-              <div className="grid grid-cols-2 gap-4">
+            ) : (
+              <form onSubmit={handleFormSubmit} className="space-y-5">
                 <div>
-                  <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Mobile Number</label>
-                  <input required type="tel" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all" 
-                    value={user.phone} onChange={e => setUser({...user, phone: e.target.value})}
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">City</label>
+                  <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Full Name</label>
                   <input required type="text" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all" 
-                    value={user.city} onChange={e => setUser({...user, city: e.target.value})}
+                    value={user.name} onChange={e => setUser({...user, name: e.target.value})}
                   />
                 </div>
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Email Address</label>
-                <input required type="email" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all" 
-                  value={user.email} onChange={e => setUser({...user, email: e.target.value})}
-                />
-              </div>
-              <button type="submit" className="w-full bg-violet-600 text-white font-bold py-4 rounded-xl hover:bg-violet-700 transition-colors shadow-lg mt-4">
-                Start Assessment
-              </button>
-            </form>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Mobile Number</label>
+                    <input required type="tel" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all" 
+                      value={user.phone} onChange={e => setUser({...user, phone: e.target.value})}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">City</label>
+                    <input required type="text" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all" 
+                      value={user.city} onChange={e => setUser({...user, city: e.target.value})}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Email Address</label>
+                  <input required type="email" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all" 
+                    value={user.email} onChange={e => setUser({...user, email: e.target.value})}
+                  />
+                </div>
+                <button type="submit" className="w-full bg-violet-600 text-white font-bold py-4 rounded-xl hover:bg-violet-700 transition-colors shadow-lg mt-4">
+                  View My Results
+                </button>
+              </form>
+            )}
           </motion.div>
         )}
 
@@ -1108,50 +1313,90 @@ const ResourcesView = ({ onNavigate }) => {
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-8 md:p-12 shadow-2xl border border-slate-100 dark:border-white/10 max-w-2xl mx-auto text-center"
+            className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-8 md:p-12 shadow-2xl border border-slate-100 dark:border-white/10 max-w-3xl mx-auto"
           >
-            <div className="w-20 h-20 bg-violet-100 dark:bg-violet-900/30 rounded-full flex items-center justify-center mx-auto mb-6 text-violet-600 dark:text-violet-400">
-              <Award size={40} />
+            <div className="text-center mb-8">
+              <div className="w-20 h-20 bg-violet-100 dark:bg-violet-900/30 rounded-full flex items-center justify-center mx-auto mb-6 text-violet-600 dark:text-violet-400">
+                <Award size={40} />
+              </div>
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Your Personalized Report</h2>
+              <p className="text-slate-500 dark:text-slate-400">Thank you, {user.name}. Here is your detailed assessment analysis:</p>
             </div>
-            <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Assessment Complete</h2>
-            <p className="text-slate-500 dark:text-slate-400 mb-8">Thank you, {user.name}. Here are your results:</p>
             
-            <div className="bg-slate-50 dark:bg-slate-800 p-8 rounded-2xl mb-8 border border-slate-200 dark:border-slate-700 text-left">
-              <div className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-2">Result Indicator</div>
+            {/* Result Level */}
+            <div className="bg-gradient-to-r from-violet-50 to-fuchsia-50 dark:from-violet-900/20 dark:to-fuchsia-900/20 p-6 rounded-2xl mb-6 border border-violet-100 dark:border-violet-800/30 text-left">
+              <div className="flex items-center justify-between flex-wrap gap-2 mb-3">
+                <div className="text-sm font-bold text-violet-600 dark:text-violet-400 uppercase tracking-widest">Result Indicator</div>
+                <div className="text-sm font-medium text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-800 px-3 py-1 rounded-full">Score: {result.score}/{activeTest.questions.length * Math.max(...activeTest.options.map(o => o.score))}</div>
+              </div>
               <div className="text-2xl font-bold text-violet-700 dark:text-violet-400 mb-3">{result.level}</div>
-              <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-6">{result.text}</p>
-              
-              {result.recommendations && (
-                <div>
-                   <div className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-3">Recommendations</div>
-                   <ul className="space-y-3">
-                     {result.recommendations.map((rec, i) => (
-                       <li key={i} className="flex items-start gap-3 text-slate-700 dark:text-slate-300">
-                         <CheckCircle size={18} className="text-violet-500 shrink-0 mt-0.5" />
-                         <span>{rec}</span>
-                       </li>
-                     ))}
-                   </ul>
-                </div>
-              )}
+              <p className="text-slate-700 dark:text-slate-300 leading-relaxed">{result.text}</p>
             </div>
+
+            {/* Clinical Insights */}
+            {result.insights && (
+              <div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-2xl mb-6 border border-blue-100 dark:border-blue-800/30 text-left">
+                <div className="text-sm font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+                  What This Means
+                </div>
+                <p className="text-slate-700 dark:text-slate-300 leading-relaxed">{result.insights}</p>
+              </div>
+            )}
+
+            {/* Affected Areas */}
+            {result.affectedAreas && result.affectedAreas.length > 0 && (
+              <div className="bg-orange-50 dark:bg-orange-900/20 p-6 rounded-2xl mb-6 border border-orange-100 dark:border-orange-800/30 text-left">
+                <div className="text-sm font-bold text-orange-600 dark:text-orange-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                  Areas That May Be Affected
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {result.affectedAreas.map((area, i) => (
+                    <span key={i} className="px-3 py-1.5 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm rounded-full border border-orange-200 dark:border-orange-800/50">
+                      {area}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Recommendations */}
+            {result.recommendations && (
+              <div className="bg-green-50 dark:bg-green-900/20 p-6 rounded-2xl mb-6 border border-green-100 dark:border-green-800/30 text-left">
+                <div className="text-sm font-bold text-green-600 dark:text-green-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+                  <CheckCircle size={16} />
+                  Personalized Recommendations
+                </div>
+                <ul className="space-y-3">
+                  {result.recommendations.map((rec, i) => (
+                    <li key={i} className="flex items-start gap-3 text-slate-700 dark:text-slate-300">
+                      <span className="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/50 text-green-600 dark:text-green-400 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">{i + 1}</span>
+                      <span className="leading-relaxed">{rec}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-100 dark:border-yellow-900/40 p-4 rounded-xl flex items-start gap-3 text-left mb-8">
-              <CheckCircle className="text-yellow-600 dark:text-yellow-400 shrink-0 mt-0.5" size={20} />
-              <p className="text-sm text-yellow-800 dark:text-yellow-200">
-                <strong>Note:</strong> This is a screening tool, not a medical diagnosis. The results are based on your responses and should be discussed with a professional.
-              </p>
+              <svg className="w-5 h-5 text-yellow-600 dark:text-yellow-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+              <div className="text-sm text-yellow-800 dark:text-yellow-200">
+                <strong>Important Disclaimer:</strong> This is a screening tool designed for self-reflection and awareness, not a clinical diagnosis. Results are based solely on your self-reported responses and should be interpreted as preliminary insights. For accurate assessment and personalized treatment, please consult a qualified mental health professional.
+              </div>
             </div>
 
-            <button 
-              onClick={() => onNavigate('contact', 'scroll')}
-              className="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold py-4 rounded-xl hover:bg-violet-600 dark:hover:bg-violet-200 transition-colors shadow-lg flex items-center justify-center gap-2"
-            >
-              Book a Consultation to Discuss <ArrowRight size={18} />
-            </button>
-            <button onClick={reset} className="mt-6 text-slate-400 text-sm hover:text-slate-600 dark:hover:text-slate-200 underline">
-              Take another test
-            </button>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <button 
+                onClick={() => onNavigate('contact', 'scroll')}
+                className="flex-1 bg-violet-600 text-white font-bold py-4 rounded-xl hover:bg-violet-700 transition-colors shadow-lg flex items-center justify-center gap-2"
+              >
+                Book a Consultation <ArrowRight size={18} />
+              </button>
+              <button onClick={reset} className="flex-1 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold py-4 rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors flex items-center justify-center gap-2">
+                Take Another Assessment
+              </button>
+            </div>
           </motion.div>
         )}
 
