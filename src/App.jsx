@@ -56,7 +56,8 @@ const CLINIC_IMAGES = [
 ].map(url => optimize(url, 1200));
 
 const IMAGES = {
-  logo: optimize("https://i.ibb.co/XZG4XH4N/Untitled-design.png", 400)
+  logo: optimize("https://i.ibb.co/XZG4XH4N/Untitled-design.png", 200),
+  logoLarge: optimize("https://i.ibb.co/XZG4XH4N/Untitled-design.png", 400)
 };
 
 // --- DATA CONSTANTS ---
@@ -1089,14 +1090,16 @@ const Navbar = ({ currentView, onNavigate, isDarkMode, toggleTheme }) => {
           {/* Dark Mode Toggle */}
           <button 
             onClick={toggleTheme}
-            className="p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+            className="p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2"
           >
             {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
           </button>
 
           <button 
             onClick={() => onNavigate('contact', 'scroll')}
-            className="bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-5 py-2 rounded-full text-sm font-bold hover:bg-violet-600 dark:hover:bg-violet-300 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 active:scale-95"
+            aria-label="Book an appointment"
+            className="bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-5 py-2 rounded-full text-sm font-bold hover:bg-violet-600 dark:hover:bg-violet-300 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 active:scale-95 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2"
           >
             Book Now
           </button>
@@ -1106,13 +1109,16 @@ const Navbar = ({ currentView, onNavigate, isDarkMode, toggleTheme }) => {
         <div className="flex items-center gap-4 md:hidden">
           <button 
             onClick={toggleTheme}
-            className="p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+            className="p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none focus:ring-2 focus:ring-violet-500"
           >
             {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
           </button>
           <button 
-            className="text-slate-800 dark:text-white p-1 z-50"
+            className="text-slate-800 dark:text-white p-1 z-50 focus:outline-none focus:ring-2 focus:ring-violet-500 rounded-md"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={mobileMenuOpen}
           >
             {mobileMenuOpen ? <X /> : <Menu />}
           </button>
@@ -1814,8 +1820,11 @@ const ClinicSection = () => {
              <div className="w-full h-[400px] md:h-[500px] rounded-[2rem] overflow-hidden shadow-lg group relative">
                 <img 
                   src={CLINIC_IMAGES[0]} 
-                  alt="Clinic Main View" 
+                  alt="Lilac Minds Clinic Main View - Mental Health Clinic in Jamnagar" 
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" 
+                  width="1200"
+                  height="500"
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                    <p className="text-white text-2xl font-bold">A Welcoming Atmosphere</p>
@@ -1828,8 +1837,11 @@ const ClinicSection = () => {
                   <div key={i} className="h-64 rounded-[2rem] overflow-hidden shadow-lg group relative">
                     <img 
                       src={src} 
-                      alt={`Clinic View ${i+1}`} 
+                      alt={`Lilac Minds Clinic Interior View ${i+2} - Psychology Clinic Jamnagar`} 
                       className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" 
+                      width="400"
+                      height="256"
+                      loading="lazy"
                     />
                   </div>
                 ))}
@@ -1977,47 +1989,49 @@ const Booking = () => {
               method="POST" 
               className="space-y-5"
               name="booking"
+              aria-label="Appointment booking form"
             >
               <input type="hidden" name="appointmentType" value={appointmentType} />
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase ml-1">Name</label>
-                  <input required name="name" type="text" placeholder="Your Name" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all" />
+                  <label htmlFor="contact-name" className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase ml-1">Name</label>
+                  <input required id="contact-name" name="name" type="text" placeholder="Your Name" autoComplete="name" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all" />
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase ml-1">Phone</label>
-                  <input required name="phone" type="tel" placeholder="Phone Number" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all" />
+                  <label htmlFor="contact-phone" className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase ml-1">Phone</label>
+                  <input required id="contact-phone" name="phone" type="tel" placeholder="Phone Number" autoComplete="tel" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all" />
                 </div>
               </div>
               
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase ml-1">Email</label>
-                <input required name="email" type="email" placeholder="your@email.com" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all" />
+                <label htmlFor="contact-email" className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase ml-1">Email</label>
+                <input required id="contact-email" name="email" type="email" placeholder="your@email.com" autoComplete="email" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all" />
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase ml-1">Service</label>
+                <label htmlFor="contact-service" className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase ml-1">Service</label>
                 <select 
+                  id="contact-service"
                   name="service" 
                   defaultValue=""
                   className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 text-slate-600 dark:text-slate-300 focus:bg-white dark:focus:bg-slate-800 transition-all"
                 >
                   <option value="" disabled>What do you need help with?</option>
-                  <option>Personal Counselling</option>
-                  <option>Career Counselling</option>
-                  <option>Student Mentorship</option>
-                  <option>Psychometric Assessment</option>
-                  <option>Other</option>
+                  <option value="personal">Personal Counselling</option>
+                  <option value="career">Career Counselling</option>
+                  <option value="student">Student Mentorship</option>
+                  <option value="assessment">Psychometric Assessment</option>
+                  <option value="other">Other</option>
                 </select>
               </div>
               
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase ml-1">Message</label>
-                <textarea name="message" rows="3" placeholder="Anything else you'd like to share?" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all"></textarea>
+                <label htmlFor="contact-message" className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase ml-1">Message</label>
+                <textarea id="contact-message" name="message" rows="3" placeholder="Anything else you'd like to share?" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all"></textarea>
               </div>
               
-              <button type="submit" className="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold py-4 rounded-xl hover:bg-violet-600 dark:hover:bg-violet-300 transition-colors shadow-lg mt-2 text-lg">
+              <button type="submit" className="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold py-4 rounded-xl hover:bg-violet-600 dark:hover:bg-violet-300 transition-colors shadow-lg mt-2 text-lg focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2">
                 Request {appointmentType === 'online' ? 'Online' : 'In-Clinic'} Appointment
               </button>
             </form>
@@ -2043,7 +2057,9 @@ const Footer = () => (
             src={IMAGES.logo} 
             alt="Lilac Minds Logo" 
             loading="lazy"
-            className="h-24 w-auto object-contain" 
+            className="h-24 w-24 object-contain" 
+            width="96"
+            height="96"
           />
         </div>
         <p className="text-slate-400 leading-relaxed max-w-xs mx-auto md:mx-0">
@@ -2322,11 +2338,13 @@ export default function App() {
           >
             <Navbar currentView={view} onNavigate={handleNavigation} isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
             <FloatingShapes />
-            {view === 'home' ? (
-              <MainContent key="home" onNavigate={handleNavigation} />
-            ) : (
-              <ResourcesView key="resources" onNavigate={handleNavigation} />
-            )}
+            <main id="main-content" role="main">
+              {view === 'home' ? (
+                <MainContent key="home" onNavigate={handleNavigation} />
+              ) : (
+                <ResourcesView key="resources" onNavigate={handleNavigation} />
+              )}
+            </main>
             <FloatingWhatsApp />
             <Footer />
           </motion.div>
