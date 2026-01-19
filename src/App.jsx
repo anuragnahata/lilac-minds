@@ -973,40 +973,33 @@ const SplashScreen = () => {
       className="fixed inset-0 z-[100] flex items-center justify-center bg-gradient-to-b from-slate-950 to-slate-900 overflow-hidden"
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.8, ease: "easeInOut" }}
+      transition={{ duration: 0.5, ease: "easeInOut" }}
     >
-      <motion.div 
-        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-violet-500/20 rounded-full blur-[100px]"
-      />
+      <div className="absolute w-[250px] md:w-[500px] h-[250px] md:h-[500px] bg-violet-500/20 rounded-full blur-[50px] md:blur-[100px]" />
 
       <div className="relative z-10 flex flex-col items-center px-4">
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
           className="relative mb-8"
         >
-          <motion.div 
-            className="w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-600 shadow-[0_0_60px_rgba(167,139,250,0.6)] overflow-hidden border-4 border-white/20"
-            animate={{ boxShadow: ["0 0 50px rgba(167,139,250,0.5)", "0 0 80px rgba(167,139,250,0.7)", "0 0 50px rgba(167,139,250,0.5)"] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          >
+          <div className="w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-600 shadow-[0_0_60px_rgba(167,139,250,0.6)] overflow-hidden border-4 border-white/20">
             <img 
               src={IMAGES.logo} 
               alt="Lilac Minds Logo" 
               className="w-full h-full object-cover" 
               width="160" 
-              height="160" 
+              height="160"
+              fetchpriority="high"
             />
-          </motion.div>
+          </div>
         </motion.div>
 
         <motion.h1
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.8, ease: "easeOut" }}
+          transition={{ delay: 0.3, duration: 0.5, ease: "easeOut" }}
           className="text-5xl md:text-7xl font-bold text-white tracking-tight text-center"
           style={{ fontFamily: "'Playfair Display', serif" }}
         >
@@ -1016,14 +1009,14 @@ const SplashScreen = () => {
         <motion.div
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
-          transition={{ delay: 1.2, duration: 0.8, ease: "easeOut" }}
+          transition={{ delay: 0.6, duration: 0.5, ease: "easeOut" }}
           className="h-1 w-16 bg-gradient-to-r from-violet-500 to-fuchsia-500 mt-6 rounded-full origin-center"
         />
         
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.6, duration: 0.8 }}
+          transition={{ delay: 0.8, duration: 0.4 }}
           className="text-slate-400 text-xs md:text-sm mt-6 font-medium tracking-[0.3em] uppercase text-center"
         >
           Psychology & Career Guidance
@@ -2294,7 +2287,7 @@ export default function App() {
 
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 2500);
+    }, 1500);
     
     if (document.documentElement.classList.contains('dark')) {
       setIsDarkMode(true);
