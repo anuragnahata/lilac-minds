@@ -102,19 +102,59 @@ const TESTIMONIAL_DATA = [
 const FAQS = [
   {
     question: "Is my conversation 100% confidential?",
-    answer: "Absolutely. We adhere to strict ethical guidelines regarding client confidentiality. What you share in the therapy room stays in the therapy room."
+    answer: "Absolutely. We adhere to strict ethical guidelines set by the Rehabilitation Council of India (RCI) regarding client confidentiality. What you share in the therapy room stays in the therapy room. Your records, notes, and personal information are stored securely and are never shared with anyone—including family members—without your explicit written consent. The only exceptions are rare situations involving imminent risk to yourself or others, or legal mandates, which we would discuss with you transparently."
   },
   {
     question: "How do I know if I need therapy?",
-    answer: "If you're feeling overwhelmed, stuck, or just need a neutral perspective to navigate life's challenges, therapy can be beneficial. You don't need to be in a crisis to seek support."
+    answer: "You don't need to be in a crisis to seek support. Therapy can be beneficial if you're feeling overwhelmed, stuck, experiencing persistent sadness or anxiety, facing relationship difficulties, going through major life transitions (such as career changes, marriage, or loss), struggling with self-esteem, or simply wanting a neutral perspective to navigate life's challenges. If emotional distress is affecting your daily functioning, sleep, appetite, work, or relationships, it's a good time to reach out. Think of therapy as mental hygiene—just like you visit a doctor for physical health, consulting a psychologist helps maintain emotional well-being."
   },
   {
     question: "Do you offer online sessions?",
-    answer: "Yes, we offer secure video consultations for clients across India and abroad. The quality of care remains exactly the same as in-person visits."
+    answer: "Yes, we offer secure video consultations for clients across India and abroad using encrypted, HIPAA-compliant platforms to ensure your privacy. Online therapy is equally effective for most concerns including anxiety, depression, stress management, relationship issues, and career counselling. The quality of care remains exactly the same as in-person visits. We provide clear instructions before your first online session to ensure a smooth experience. All you need is a stable internet connection, a private space, and a device with a camera."
   },
   {
     question: "What is the duration of a typical session?",
-    answer: "Standard sessions typically last between 45 to 60 minutes, giving us enough time to deep dive into your concerns."
+    answer: "Standard individual therapy sessions typically last between 45 to 60 minutes, giving us enough time to deep dive into your concerns while maintaining focus and effectiveness. The first session (intake session) may extend up to 75-90 minutes as we gather comprehensive background information and understand your concerns in detail. Couple or family therapy sessions usually last 60-90 minutes. We always aim to end sessions on time to respect your schedule while ensuring meaningful progress."
+  },
+  {
+    question: "What can I expect in my first session?",
+    answer: "Your first session is all about getting to know you. We'll discuss your reasons for seeking therapy, your personal history, family background, and current life circumstances. This helps us understand your unique situation and tailor our approach accordingly. There's no pressure to share everything at once—we move at your pace. By the end of the first session, we'll collaboratively set initial goals and outline a tentative treatment plan. You'll leave with a clear understanding of how we'll work together moving forward."
+  },
+  {
+    question: "How many sessions will I need?",
+    answer: "The number of sessions varies based on your unique concerns, goals, and the complexity of the issues. Some clients find relief and clarity within 6-8 sessions (short-term therapy), while others may benefit from longer-term support spanning several months. For career counselling, typically 3-5 sessions are sufficient to gain clarity and direction. We regularly review progress together and adjust the treatment plan as needed. Our goal is to help you become your own therapist—not to create dependency."
+  },
+  {
+    question: "What types of issues do you help with?",
+    answer: "We provide support for a wide range of mental health and life concerns including anxiety and panic disorders, depression, stress and burnout, relationship and marital difficulties, self-esteem and confidence issues, grief and loss, anger management, academic stress and exam anxiety, career confusion and transitions, work-life balance challenges, parenting concerns, and life adjustment issues. We also offer specialized services for students including study skills training, stream selection guidance, and competitive exam preparation mentorship."
+  },
+  {
+    question: "What is the difference between a psychologist and a psychiatrist?",
+    answer: "A psychologist holds a Master's or Doctoral degree in Psychology and is trained in psychological assessment, counselling, and psychotherapy (talk therapy). We help you understand your thoughts, emotions, and behaviors, and teach coping strategies through evidence-based therapeutic techniques. A psychiatrist is a medical doctor (MBBS + MD Psychiatry) who specializes in mental health and can prescribe medications. For many concerns, therapy alone is highly effective. However, in cases requiring medication (such as severe depression or bipolar disorder), we collaborate with trusted psychiatrists to provide integrated care."
+  },
+  {
+    question: "Do you prescribe medication?",
+    answer: "No, as clinical psychologists, we do not prescribe medication. Our expertise lies in psychotherapy, counselling, and behavioral interventions. However, if your condition requires medication support (such as in cases of severe anxiety, depression, or other clinical disorders), we work closely with experienced psychiatrists and can provide a referral. Many clients benefit from a combination of therapy and medication, and we ensure seamless coordination between both treatment approaches for your holistic well-being."
+  },
+  {
+    question: "How should I prepare for my first session?",
+    answer: "There's no special preparation required—just come as you are. However, it can be helpful to reflect on what you'd like to address in therapy and any specific goals you have in mind. If you have previous medical or psychological reports, bringing them can be useful. Arrive a few minutes early to complete any intake paperwork. Most importantly, come with an open mind. It's completely normal to feel nervous before your first session, but remember that the therapy room is a safe, non-judgmental space designed for your comfort."
+  },
+  {
+    question: "Can I bring a family member to my sessions?",
+    answer: "Individual therapy sessions are typically one-on-one to create a safe, private space for you to express yourself freely. However, with your consent, family members can be involved in specific sessions when it's therapeutically beneficial—such as in family therapy, couples counselling, or when addressing family dynamics. For child and adolescent clients, parent involvement is often an important component of treatment. We discuss and plan any family involvement collaboratively with you beforehand."
+  },
+  {
+    question: "What is career counselling and who is it for?",
+    answer: "Career counselling is a specialized service that helps individuals make informed decisions about their educational and professional paths. It involves understanding your interests, aptitudes, personality traits, values, and strengths through scientific assessments and in-depth discussions. Career counselling is beneficial for students choosing streams after 10th or 12th, college students unsure about their specialization, professionals considering career changes or feeling stuck, individuals returning to work after a break, and anyone seeking clarity about their professional direction. It's about aligning your career with who you truly are."
+  },
+  {
+    question: "What happens if I need to cancel or reschedule?",
+    answer: "We understand that life can be unpredictable. We request at least 24 hours' notice for cancellations or rescheduling to allow us to offer the slot to another client in need. Cancellations made with less than 24 hours' notice may be subject to a cancellation fee. Repeated no-shows or last-minute cancellations may affect your booking priority. We value your time and commitment to your mental health journey and appreciate the same respect for our scheduling."
+  },
+  {
+    question: "Is therapy only for adults?",
+    answer: "Not at all. We provide specialized services for children (play therapy, behavioral concerns), adolescents (academic stress, identity issues, peer pressure), young adults, adults, and elderly clients. Our approach is tailored to each age group's developmental needs and communication styles. For minors, we maintain appropriate confidentiality while keeping parents informed about general progress and involving them as therapeutic partners when beneficial."
   }
 ];
 
