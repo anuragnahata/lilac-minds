@@ -825,55 +825,217 @@ const DoodlePattern = () => (
   </svg>
 );
 
-// --- COMPONENT DEFINITIONS ---
+// --- MENTAL HEALTH ILLUSTRATIONS ---
+let illustrationCounter = 0;
+const getUniqueId = (prefix) => `${prefix}_${++illustrationCounter}`;
 
-const SplashScreen = () => (
-  <motion.div
-    className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-50 dark:bg-slate-950 overflow-hidden"
-    initial={{ opacity: 1 }}
-    exit={{ opacity: 0 }}
-    transition={{ duration: 0.8, ease: "easeInOut" }}
-  >
-    <motion.div 
-      animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.8, 0.5] }}
-      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-      className="absolute w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-violet-200/60 dark:bg-violet-900/30 rounded-full blur-[80px] md:blur-[100px]"
-    />
-    <div className="relative z-10 flex flex-col items-center px-4">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-        className="mb-8"
-      >
-         <img src={IMAGES.logo} alt="Lilac Minds Logo" className="w-40 h-40 object-contain drop-shadow-sm" width="160" height="160" />
+const MindfulnessIllustration = ({ className = "" }) => {
+  const id = React.useMemo(() => getUniqueId('mind'), []);
+  return (
+    <svg viewBox="0 0 200 200" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id={id} x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#a78bfa" />
+          <stop offset="100%" stopColor="#c4b5fd" />
+        </linearGradient>
+      </defs>
+      <circle cx="100" cy="100" r="80" stroke={`url(#${id})`} strokeWidth="2" strokeDasharray="8 4" opacity="0.3" />
+      <circle cx="100" cy="100" r="60" stroke={`url(#${id})`} strokeWidth="2" opacity="0.5" />
+      <circle cx="100" cy="100" r="40" fill={`url(#${id})`} opacity="0.2" />
+      <path d="M100 50 C120 70 120 90 100 100 C80 90 80 70 100 50Z" fill={`url(#${id})`} opacity="0.6" />
+      <path d="M100 150 C80 130 80 110 100 100 C120 110 120 130 100 150Z" fill={`url(#${id})`} opacity="0.6" />
+      <path d="M50 100 C70 80 90 80 100 100 C90 120 70 120 50 100Z" fill={`url(#${id})`} opacity="0.6" />
+      <path d="M150 100 C130 120 110 120 100 100 C110 80 130 80 150 100Z" fill={`url(#${id})`} opacity="0.6" />
+      <circle cx="100" cy="100" r="15" fill={`url(#${id})`} />
+    </svg>
+  );
+};
+
+const GrowthPlantIllustration = ({ className = "" }) => {
+  const plantId = React.useMemo(() => getUniqueId('plant'), []);
+  const potId = React.useMemo(() => getUniqueId('pot'), []);
+  return (
+    <svg viewBox="0 0 120 160" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id={plantId} x1="0%" y1="100%" x2="0%" y2="0%">
+          <stop offset="0%" stopColor="#7c3aed" />
+          <stop offset="100%" stopColor="#a78bfa" />
+        </linearGradient>
+        <linearGradient id={potId} x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#c4b5fd" />
+          <stop offset="100%" stopColor="#8b5cf6" />
+        </linearGradient>
+      </defs>
+      <path d="M35 130 L40 155 L80 155 L85 130 Z" fill={`url(#${potId})`} opacity="0.8" />
+      <ellipse cx="60" cy="130" rx="28" ry="8" fill={`url(#${potId})`} />
+      <path d="M60 125 C60 100 60 80 60 60" stroke={`url(#${plantId})`} strokeWidth="4" strokeLinecap="round" />
+      <path d="M60 90 C45 85 35 70 40 55 C50 60 55 75 60 90" fill={`url(#${plantId})`} opacity="0.7" />
+      <path d="M60 75 C75 70 85 55 80 40 C70 45 65 60 60 75" fill={`url(#${plantId})`} opacity="0.7" />
+      <path d="M60 60 C45 55 40 40 50 30 C58 38 58 50 60 60" fill={`url(#${plantId})`} opacity="0.7" />
+      <circle cx="60" cy="25" r="8" fill={`url(#${plantId})`} opacity="0.5" />
+      <circle cx="60" cy="25" r="4" fill="#a78bfa" />
+    </svg>
+  );
+};
+
+const BrainWellnessIllustration = ({ className = "" }) => {
+  const id = React.useMemo(() => getUniqueId('brain'), []);
+  return (
+    <svg viewBox="0 0 180 160" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id={id} x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#a78bfa" />
+          <stop offset="50%" stopColor="#8b5cf6" />
+          <stop offset="100%" stopColor="#7c3aed" />
+        </linearGradient>
+      </defs>
+      <path d="M90 140 C60 140 40 120 40 90 C40 70 50 55 65 50 C60 40 70 25 85 25 C95 15 110 15 120 30 C135 35 145 50 145 70 C155 80 155 100 145 115 C135 135 110 140 90 140Z" 
+            stroke={`url(#${id})`} strokeWidth="3" fill={`url(#${id})`} fillOpacity="0.1" />
+      <path d="M75 50 C75 70 85 80 90 95" stroke={`url(#${id})`} strokeWidth="2" strokeLinecap="round" opacity="0.5" />
+      <path d="M105 45 C110 65 105 80 100 95" stroke={`url(#${id})`} strokeWidth="2" strokeLinecap="round" opacity="0.5" />
+      <circle cx="70" cy="70" r="6" fill={`url(#${id})`} opacity="0.6" />
+      <circle cx="110" cy="65" r="6" fill={`url(#${id})`} opacity="0.6" />
+      <circle cx="90" cy="85" r="8" fill={`url(#${id})`} opacity="0.8" />
+      <path d="M55 75 L45 70 M55 90 L42 92 M130 70 L142 65 M130 90 L145 95" stroke={`url(#${id})`} strokeWidth="2" strokeLinecap="round" opacity="0.4" />
+      <circle cx="42" cy="68" r="3" fill="#a78bfa" opacity="0.5" />
+      <circle cx="38" cy="93" r="3" fill="#a78bfa" opacity="0.5" />
+      <circle cx="148" cy="62" r="3" fill="#a78bfa" opacity="0.5" />
+      <circle cx="150" cy="97" r="3" fill="#a78bfa" opacity="0.5" />
+    </svg>
+  );
+};
+
+const HeartMindIllustration = ({ className = "" }) => {
+  const id = React.useMemo(() => getUniqueId('heart'), []);
+  return (
+    <svg viewBox="0 0 140 140" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id={id} x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#c4b5fd" />
+          <stop offset="100%" stopColor="#8b5cf6" />
+        </linearGradient>
+      </defs>
+      <path d="M70 120 C30 85 15 55 40 35 C55 25 70 35 70 50 C70 35 85 25 100 35 C125 55 110 85 70 120Z" 
+            fill={`url(#${id})`} fillOpacity="0.2" stroke={`url(#${id})`} strokeWidth="2" />
+      <circle cx="70" cy="65" r="20" stroke={`url(#${id})`} strokeWidth="2" fill="none" />
+      <circle cx="70" cy="65" r="12" stroke={`url(#${id})`} strokeWidth="1.5" strokeDasharray="4 2" fill="none" opacity="0.6" />
+      <circle cx="70" cy="65" r="5" fill={`url(#${id})`} />
+      <path d="M70 45 L70 35 M70 85 L70 95 M50 65 L40 65 M90 65 L100 65" stroke={`url(#${id})`} strokeWidth="1.5" opacity="0.4" />
+    </svg>
+  );
+};
+
+const FloatingShapes = () => {
+  const { scrollY } = useScroll();
+  const y1 = useTransform(scrollY, [0, 2000], [0, -200]);
+  const y2 = useTransform(scrollY, [0, 2000], [0, 150]);
+  const y3 = useTransform(scrollY, [0, 2000], [0, -100]);
+  const rotate1 = useTransform(scrollY, [0, 2000], [0, 180]);
+  const rotate2 = useTransform(scrollY, [0, 2000], [0, -90]);
+
+  return (
+    <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+      <motion.div style={{ y: y1, rotate: rotate1 }} className="absolute top-[10%] right-[5%] opacity-20 dark:opacity-10">
+        <MindfulnessIllustration className="w-32 h-32 md:w-48 md:h-48" />
       </motion.div>
-      <motion.h1
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
-        className="text-5xl md:text-7xl font-bold text-slate-800 dark:text-white tracking-tight text-center"
-        style={{ fontFamily: "'Playfair Display', serif" }}
-      >
-        Lilac Minds
-      </motion.h1>
-      <motion.div
-        initial={{ width: 0 }}
-        animate={{ width: "60px" }}
-        transition={{ delay: 1.0, duration: 0.8, ease: "easeOut" }}
-        className="h-1 bg-violet-500 mt-6 rounded-full"
+      <motion.div style={{ y: y2, rotate: rotate2 }} className="absolute top-[40%] left-[3%] opacity-15 dark:opacity-10">
+        <GrowthPlantIllustration className="w-24 h-32 md:w-32 md:h-44" />
+      </motion.div>
+      <motion.div style={{ y: y3 }} className="absolute bottom-[15%] right-[8%] opacity-20 dark:opacity-10">
+        <HeartMindIllustration className="w-28 h-28 md:w-40 md:h-40" />
+      </motion.div>
+      <motion.div 
+        style={{ y: y1 }}
+        className="absolute top-[60%] left-[10%] w-4 h-4 bg-violet-400/30 dark:bg-violet-400/20 rounded-full"
       />
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 0.8 }}
-        className="text-slate-600 dark:text-slate-500 text-xs md:text-sm mt-6 font-medium tracking-[0.3em] uppercase text-center"
-      >
-        Psychology & Career Guidance
-      </motion.p>
+      <motion.div 
+        style={{ y: y2 }}
+        className="absolute top-[25%] left-[20%] w-3 h-3 bg-fuchsia-400/30 dark:bg-fuchsia-400/20 rounded-full"
+      />
+      <motion.div 
+        style={{ y: y3 }}
+        className="absolute top-[75%] right-[25%] w-5 h-5 bg-violet-300/30 dark:bg-violet-300/20 rounded-full"
+      />
     </div>
+  );
+};
+
+const GlassCard = ({ children, className = "", ...props }) => (
+  <motion.div 
+    className={`backdrop-blur-xl bg-white/70 dark:bg-slate-900/70 border border-white/20 dark:border-white/10 shadow-xl shadow-violet-500/5 ${className}`}
+    {...props}
+  >
+    {children}
   </motion.div>
 );
+
+// --- COMPONENT DEFINITIONS ---
+
+const SplashScreen = () => {
+  return (
+    <motion.div
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-gradient-to-b from-slate-950 to-slate-900 overflow-hidden"
+      initial={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.8, ease: "easeInOut" }}
+    >
+      <motion.div 
+        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-violet-500/20 rounded-full blur-[100px]"
+      />
+
+      <div className="relative z-10 flex flex-col items-center px-4">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
+          className="relative mb-8"
+        >
+          <motion.div 
+            className="w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-600 shadow-[0_0_60px_rgba(167,139,250,0.6)] overflow-hidden border-4 border-white/20"
+            animate={{ boxShadow: ["0 0 50px rgba(167,139,250,0.5)", "0 0 80px rgba(167,139,250,0.7)", "0 0 50px rgba(167,139,250,0.5)"] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <img 
+              src={IMAGES.logo} 
+              alt="Lilac Minds Logo" 
+              className="w-full h-full object-cover" 
+              width="160" 
+              height="160" 
+            />
+          </motion.div>
+        </motion.div>
+
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.8, ease: "easeOut" }}
+          className="text-5xl md:text-7xl font-bold text-white tracking-tight text-center"
+          style={{ fontFamily: "'Playfair Display', serif" }}
+        >
+          <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-violet-400 bg-clip-text text-transparent">Lilac</span> Minds
+        </motion.h1>
+        
+        <motion.div
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ delay: 1.2, duration: 0.8, ease: "easeOut" }}
+          className="h-1 w-16 bg-gradient-to-r from-violet-500 to-fuchsia-500 mt-6 rounded-full origin-center"
+        />
+        
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.6, duration: 0.8 }}
+          className="text-slate-400 text-xs md:text-sm mt-6 font-medium tracking-[0.3em] uppercase text-center"
+        >
+          Psychology & Career Guidance
+        </motion.p>
+      </div>
+    </motion.div>
+  );
+};
 
 const Navbar = ({ currentView, onNavigate, isDarkMode, toggleTheme }) => {
   const [scrolled, setScrolled] = useState(false);
@@ -1073,8 +1235,14 @@ const ResourcesView = ({ onNavigate }) => {
   ];
 
   return (
-    <div className="pt-24 min-h-screen bg-slate-50 dark:bg-slate-950 relative overflow-hidden transition-colors duration-300">
+    <div className="pt-24 min-h-screen bg-gradient-to-b from-slate-50 via-violet-50/30 to-slate-50 dark:from-slate-950 dark:via-violet-950/20 dark:to-slate-950 relative overflow-hidden transition-colors duration-300">
       <ParallaxBackground />
+      <div className="absolute top-32 right-10 opacity-15 dark:opacity-10">
+        <BrainWellnessIllustration className="w-48 h-48 md:w-64 md:h-64" />
+      </div>
+      <div className="absolute bottom-40 left-10 opacity-15 dark:opacity-10">
+        <GrowthPlantIllustration className="w-32 h-44 md:w-40 md:h-56" />
+      </div>
       <div className="max-w-4xl mx-auto px-6 py-12 md:py-20 relative z-10">
         
         {step === 'menu' && (
@@ -1525,14 +1693,20 @@ const Founder = () => (
 
 const Services = () => {
   const services = [
-    { title: "Personal Counselling", desc: "Navigating anxiety, stress, relationships, and emotional well-being. Available online & offline.", icon: <Brain size={24}/>, color: "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300" },
-    { title: "Career Counselling", desc: "Scientific aptitude testing and personalized guidance to find your true path.", icon: <MapPin size={24}/>, color: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300" },
-    { title: "Student Mentorship", desc: "Supporting students with exam stress, focus, and academic pressure.", icon: <BookOpen size={24}/>, color: "bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-300" },
-    { title: "Psychometric Assessments", desc: "Standardized assessments for personality, IQ, and career suitability.", icon: <FileText size={24}/>, color: "bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300" },
+    { title: "Personal Counselling", desc: "Navigating anxiety, stress, relationships, and emotional well-being. Available online & offline.", icon: <Brain size={24}/>, color: "bg-gradient-to-br from-purple-100 to-violet-200 text-purple-700 dark:from-purple-900/40 dark:to-violet-900/40 dark:text-purple-300" },
+    { title: "Career Counselling", desc: "Scientific aptitude testing and personalized guidance to find your true path.", icon: <MapPin size={24}/>, color: "bg-gradient-to-br from-blue-100 to-cyan-200 text-blue-700 dark:from-blue-900/40 dark:to-cyan-900/40 dark:text-blue-300" },
+    { title: "Student Mentorship", desc: "Supporting students with exam stress, focus, and academic pressure.", icon: <BookOpen size={24}/>, color: "bg-gradient-to-br from-pink-100 to-rose-200 text-pink-700 dark:from-pink-900/40 dark:to-rose-900/40 dark:text-pink-300" },
+    { title: "Psychometric Assessments", desc: "Standardized assessments for personality, IQ, and career suitability.", icon: <FileText size={24}/>, color: "bg-gradient-to-br from-teal-100 to-emerald-200 text-teal-700 dark:from-teal-900/40 dark:to-emerald-900/40 dark:text-teal-300" },
   ];
 
   return (
-    <section id="services" className="py-20 md:py-32 bg-slate-50 dark:bg-slate-900 relative transition-colors duration-300">
+    <section id="services" className="py-20 md:py-32 bg-gradient-to-b from-slate-50 via-violet-50/30 to-slate-50 dark:from-slate-900 dark:via-violet-950/20 dark:to-slate-900 relative transition-colors duration-300 overflow-hidden">
+      <div className="absolute top-10 right-10 opacity-10 dark:opacity-5">
+        <BrainWellnessIllustration className="w-64 h-64" />
+      </div>
+      <div className="absolute bottom-10 left-10 opacity-10 dark:opacity-5">
+        <GrowthPlantIllustration className="w-48 h-64" />
+      </div>
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="text-center mb-16">
           <motion.div
@@ -1540,6 +1714,10 @@ const Services = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-violet-100 dark:bg-violet-900/30 rounded-full text-violet-700 dark:text-violet-300 text-sm font-semibold mb-4">
+              <Sparkles size={16} />
+              Our Services
+            </div>
             <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">How we help.</h2>
             <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Simple, effective support for whatever you're facing. We tailor our approach to your unique needs using Clinical Psychotherapy and Aptitude Testing.</p>
           </motion.div>
@@ -1547,8 +1725,8 @@ const Services = () => {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((s, i) => (
-            <Tilt3D key={i} className="bg-white dark:bg-slate-800 p-8 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-700 group cursor-default">
-              <div className={`w-14 h-14 ${s.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+            <Tilt3D key={i} className="backdrop-blur-xl bg-white/80 dark:bg-slate-800/80 p-8 rounded-[2rem] shadow-lg shadow-violet-500/5 border border-white/50 dark:border-slate-700/50 group cursor-default hover:shadow-xl hover:shadow-violet-500/10 transition-all duration-300">
+              <div className={`w-14 h-14 ${s.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg`}>
                 {s.icon}
               </div>
               <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">{s.title}</h3>
@@ -1701,22 +1879,41 @@ const FAQ = () => {
   const [openIndex, setOpenIndex] = useState(null);
 
   return (
-    <section className="py-20 bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
-      <div className="max-w-3xl mx-auto px-6">
+    <section className="py-20 bg-gradient-to-b from-slate-50 via-violet-50/20 to-slate-50 dark:from-slate-900 dark:via-violet-950/10 dark:to-slate-900 transition-colors duration-300 relative overflow-hidden">
+      <div className="absolute top-20 left-5 opacity-10 dark:opacity-5">
+        <HeartMindIllustration className="w-32 h-32" />
+      </div>
+      <div className="absolute bottom-20 right-5 opacity-10 dark:opacity-5">
+        <MindfulnessIllustration className="w-40 h-40" />
+      </div>
+      <div className="max-w-3xl mx-auto px-6 relative z-10">
         <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-violet-100 dark:bg-violet-900/30 rounded-full text-violet-700 dark:text-violet-300 text-sm font-semibold mb-4">
+            <MessageCircle size={16} />
+            FAQ
+          </div>
           <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">Common Questions</h2>
           <p className="text-lg text-slate-600 dark:text-slate-400">Everything you need to know before your visit.</p>
         </div>
 
         <div className="space-y-4">
           {FAQS.map((faq, i) => (
-            <div key={i} className="border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden bg-white dark:bg-slate-800">
+            <motion.div 
+              key={i} 
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.03 }}
+              className="border border-slate-200/50 dark:border-slate-700/50 rounded-2xl overflow-hidden backdrop-blur-xl bg-white/80 dark:bg-slate-800/80 shadow-sm hover:shadow-md hover:shadow-violet-500/5 transition-all"
+            >
               <button
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                className="w-full p-6 text-left flex justify-between items-center bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+                className="w-full p-6 text-left flex justify-between items-center hover:bg-violet-50/50 dark:hover:bg-slate-700/50 transition-colors"
               >
-                <span className="font-bold text-slate-800 dark:text-white text-lg">{faq.question}</span>
-                {openIndex === i ? <ChevronUp className="text-violet-600 dark:text-violet-400" /> : <ChevronDown className="text-slate-400" />}
+                <span className="font-bold text-slate-800 dark:text-white text-lg pr-4">{faq.question}</span>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${openIndex === i ? 'bg-violet-100 dark:bg-violet-900/50 rotate-180' : 'bg-slate-100 dark:bg-slate-700'}`}>
+                  <ChevronDown className={`transition-colors ${openIndex === i ? 'text-violet-600 dark:text-violet-400' : 'text-slate-400'}`} size={18} />
+                </div>
               </button>
               <AnimatePresence>
                 {openIndex === i && (
@@ -1724,15 +1921,15 @@ const FAQ = () => {
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    className="bg-white dark:bg-slate-800 border-t border-slate-100 dark:border-slate-700"
+                    className="border-t border-slate-100 dark:border-slate-700"
                   >
-                    <div className="p-6 pt-0 text-slate-600 dark:text-slate-300 leading-relaxed mt-4">
+                    <div className="p-6 pt-4 text-slate-600 dark:text-slate-300 leading-relaxed bg-gradient-to-b from-violet-50/30 to-transparent dark:from-violet-950/20 dark:to-transparent">
                       {faq.answer}
                     </div>
                   </motion.div>
                 )}
               </AnimatePresence>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -2110,6 +2307,7 @@ export default function App() {
             className="dark:bg-slate-950 transition-colors duration-300"
           >
             <Navbar currentView={view} onNavigate={handleNavigation} isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
+            <FloatingShapes />
             {view === 'home' ? (
               <MainContent key="home" onNavigate={handleNavigation} />
             ) : (
