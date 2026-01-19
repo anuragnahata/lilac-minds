@@ -61,23 +61,18 @@ const IMAGES = {
 
 // --- DATA CONSTANTS ---
 const SEO_DATA = {
-  title: "Lilac Minds | Psychologist & Career Counsellor in Jamnagar",
-  description: "Lilac Minds, founded by Prarthana Thaker, offers expert psychotherapy, career counselling, and student mentorship in Jamnagar. A safe haven for mental wellness.",
-  keywords: "Psychologist Jamnagar, Career Counselling, Mental Health, Prarthana Thaker, Psychotherapy, Student Counseling Gujarat",
-  schema: {
-    "@context": "https://schema.org",
-    "@type": "MedicalOrganization",
-    "name": "Lilac Minds",
-    "founder": "Prarthana Thaker",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Sarvoday Society, 9, Krishna Nagar Main Rd",
-      "addressLocality": "Jamnagar",
-      "addressRegion": "Gujarat",
-      "postalCode": "361006",
-      "addressCountry": "IN"
-    },
-    "telephone": "+918200711499" 
+  title: "Lilac Minds | Best Psychologist & Career Counsellor in Jamnagar, Gujarat",
+  description: "Lilac Minds by Prarthana Thaker offers expert psychotherapy, anxiety treatment, depression counselling, career guidance, and student mentorship in Jamnagar. Book your mental wellness session today.",
+  keywords: "psychologist Jamnagar, career counsellor Jamnagar, mental health clinic Gujarat, anxiety treatment, depression therapy, stress management, student career guidance, psychotherapy near me, best therapist Jamnagar, clinical psychologist Gujarat, emotional wellness, behavioral therapy, cognitive therapy, relationship counselling, adolescent counselling, online therapy India, psychological assessment, burnout treatment, sleep disorder therapy",
+  googleMyBusiness: "https://share.google/rmquC8AtoERfXER0R",
+  phone: "+918200711499",
+  email: "lilac.minds.in@gmail.com",
+  address: {
+    street: "Sarvoday Society, 9, Krishna Nagar Main Rd",
+    locality: "Jamnagar",
+    region: "Gujarat",
+    postalCode: "361006",
+    country: "India"
   }
 };
 
@@ -2063,27 +2058,46 @@ const Footer = () => (
             opp. Bardai Brahmin Boarding, Kamdar Colony,<br />
             Jamnagar, Gujarat 361006
           </p>
-          <p className="text-violet-400 hover:text-white transition-colors cursor-pointer">hello@lilacminds.com</p>
+          <a href="mailto:lilac.minds.in@gmail.com" className="text-violet-400 hover:text-white transition-colors">lilac.minds.in@gmail.com</a>
         </div>
       </div>
       <div>
         <h4 className="text-white font-bold mb-6 text-lg">Connect</h4>
-        <div className="flex gap-6 justify-center md:justify-start">
+        <div className="flex gap-4 justify-center md:justify-start flex-wrap">
+          <a 
+            href="https://share.google/rmquC8AtoERfXER0R"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Visit our Google My Business page"
+            title="Google My Business"
+            className="p-3 bg-slate-800 rounded-full hover:bg-violet-600 text-white transition-all cursor-pointer"
+          >
+            <MapPin size={20} />
+          </a>
           <a 
             href="https://www.instagram.com/lilacmindsofficial/" 
             target="_blank" 
             rel="noopener noreferrer"
+            aria-label="Follow us on Instagram"
+            title="Instagram"
             className="p-3 bg-slate-800 rounded-full hover:bg-violet-600 text-white transition-all cursor-pointer"
           >
             <Instagram size={20} />
           </a>
-          <div className="p-3 bg-slate-800 rounded-full hover:bg-violet-600 text-white transition-all cursor-pointer">
+          <a 
+            href="mailto:lilac.minds.in@gmail.com"
+            aria-label="Email us"
+            title="Email"
+            className="p-3 bg-slate-800 rounded-full hover:bg-violet-600 text-white transition-all cursor-pointer"
+          >
             <Mail size={20} />
-          </div>
-           <a 
+          </a>
+          <a 
             href="https://wa.me/918200711499"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="Chat with us on WhatsApp"
+            title="WhatsApp"
             className="p-3 bg-slate-800 rounded-full hover:bg-violet-600 text-white transition-all cursor-pointer"
           >
             <MessageCircle size={20} />
