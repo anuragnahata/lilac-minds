@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { 
   motion, 
   AnimatePresence, 
@@ -2281,6 +2281,13 @@ export default function App() {
     
     const timer = setTimeout(() => {
       setLoading(false);
+      // Hide native HTML splash screen
+      const nativeSplash = document.getElementById('native-splash');
+      if (nativeSplash) {
+        nativeSplash.style.opacity = '0';
+        nativeSplash.style.transition = 'opacity 0.5s ease-out';
+        setTimeout(() => nativeSplash.remove(), 500);
+      }
     }, 1200);
     
     if (document.documentElement.classList.contains('dark')) {
