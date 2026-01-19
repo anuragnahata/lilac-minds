@@ -2,18 +2,8 @@
 <html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <!-- CRITICAL: Preconnects MUST be first for maximum benefit -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://wsrv.nl" crossorigin />
-    <link rel="preconnect" href="https://i.ibb.co" crossorigin />
-    
-    <!-- Critical CSS inline for instant rendering -->
-    <style>html{-webkit-text-size-adjust:100%;line-height:1.5}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,sans-serif}.dark{background:#020617;color:#f8fafc}#native-splash{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(to bottom,#020617,#0f172a)}</style>
-    
     <link rel="icon" type="image/png" href="https://i.ibb.co/5WczQ7wJ/lilacminds-1-1.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <!-- Primary Meta Tags with LSI Keywords -->
     <title>Lilac Minds | Best Psychologist & Career Counsellor in Jamnagar, Gujarat</title>
@@ -61,7 +51,16 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     
-    <!-- Non-blocking font loading -->
+    <!-- DNS Prefetch and Preconnect for Performance (must be early in head) -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+    <link rel="dns-prefetch" href="//wsrv.nl" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://wsrv.nl" crossorigin />
+    <link rel="preconnect" href="https://i.ibb.co" crossorigin />
+    
+    <!-- Non-blocking font loading with single consolidated request -->
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Pinyon+Script&family=Playfair+Display:wght@400;600;700&display=swap" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Pinyon+Script&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
     <noscript>
@@ -310,18 +309,6 @@
     </script>
   </head>
   <body>
-    <!-- Native splash for instant first paint (hidden by React when loaded) -->
-    <div id="native-splash" style="position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(to bottom,#020617,#0f172a)">
-      <div style="position:absolute;width:250px;height:250px;background:rgba(139,92,246,0.2);border-radius:50%;filter:blur(50px)"></div>
-      <div style="position:relative;z-index:10;display:flex;flex-direction:column;align-items:center">
-        <div style="width:128px;height:128px;border-radius:50%;background:linear-gradient(to bottom right,#8b5cf6,#d946ef);box-shadow:0 0 60px rgba(167,139,250,0.6);border:4px solid rgba(255,255,255,0.2);overflow:hidden">
-          <img src="https://wsrv.nl/?url=https%3A%2F%2Fi.ibb.co%2F5WczQ7wJ%2Flilacminds-1-1.png&w=200&q=80&output=webp" alt="Lilac Minds" width="128" height="128" style="width:100%;height:100%;object-fit:cover" />
-        </div>
-        <h1 style="margin-top:2rem;font-size:3rem;font-weight:700;color:#fff;font-family:'Playfair Display',Georgia,serif;text-align:center">
-          <span style="background:linear-gradient(to right,#a78bfa,#e879f9,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Lilac</span> Minds
-        </h1>
-      </div>
-    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
