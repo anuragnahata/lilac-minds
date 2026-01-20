@@ -22,6 +22,7 @@ import {
   BrainWellnessIllustration, 
   GrowthPlantIllustration 
 } from '../components/shared';
+import { validateForm, checkRateLimit, sanitizeInput } from '../utils/security';
 
 const BLOGS_DATA = [
   {
@@ -566,6 +567,8 @@ const ResourcesView = ({ onNavigate }) => {
   const [answers, setAnswers] = useState({});
   const [result, setResult] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formErrors, setFormErrors] = useState({});
+  const [submitError, setSubmitError] = useState(null);
 
   const startTest = (testId) => {
     setActiveTest(ASSESSMENT_DATA[testId]);
@@ -573,6 +576,8 @@ const ResourcesView = ({ onNavigate }) => {
     setAnswers({});
     setResult(null);
     setUser({ name: '', phone: '', email: '', city: '' });
+    setFormErrors({});
+    setSubmitError(null);
   };
 
   const openArticle = (id) => {
@@ -582,8 +587,29 @@ const ResourcesView = ({ onNavigate }) => {
     window.scrollTo(0, 0);
   };
 
+  const handleUserChange = (field, value) => {
+    setUser(prev => ({ ...prev, [field]: sanitizeInput(value) }));
+    if (formErrors[field]) {
+      setFormErrors(prev => ({ ...prev, [field]: null }));
+    }
+  };
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    setSubmitError(null);
+
+    const rateCheck = checkRateLimit('assessment-form', 5, 60000);
+    if (!rateCheck.allowed) {
+      setSubmitError(`Too many submissions. Please wait ${rateCheck.retryAfter} seconds.`);
+      return;
+    }
+
+    const validation = validateForm(user, ['name', 'phone', 'email', 'city']);
+    if (!validation.isValid) {
+      setFormErrors(validation.errors);
+      return;
+    }
+
     setIsSubmitting(true);
     const totalScore = Object.values(answers).reduce((a, b) => a + b, 0);
     const res = activeTest.getResult(totalScore);
@@ -594,19 +620,19 @@ const ResourcesView = ({ onNavigate }) => {
         method: "POST",
         headers: { "Content-Type": "application/json", "Accept": "application/json" },
         body: JSON.stringify({
-          _subject: `New ${activeTest.title} Result: ${user.name}`,
-          user_name: user.name,
-          user_email: user.email,
-          user_phone: user.phone,
-          user_city: user.city,
+          _subject: `New ${activeTest.title} Result: ${validation.sanitizedData.name}`,
+          user_name: validation.sanitizedData.name,
+          user_email: validation.sanitizedData.email,
+          user_phone: validation.sanitizedData.phone,
+          user_city: validation.sanitizedData.city,
           test_name: activeTest.title,
           test_score: totalScore,
           result_level: res.level,
           result_text: res.text
         })
       });
-    } catch (error) {
-      console.error("Error sending result:", error);
+    } catch {
+      setSubmitError("Failed to save results. Your results are still displayed below.");
     } finally {
       setIsSubmitting(false);
       setStep('result');
@@ -792,38 +818,64 @@ const ResourcesView = ({ onNavigate }) => {
               <p className="text-slate-600 dark:text-slate-400">You answered all {activeTest.questions.length} questions. Please provide your details to view your personalized results.</p>
             </div>
             
+            {submitError && (
+              <div className="mb-6 p-4 rounded-xl bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 text-center font-medium">
+                {submitError}
+              </div>
+            )}
+
             {isSubmitting ? (
               <div className="flex flex-col items-center justify-center py-12">
                 <Loader2 className="animate-spin text-violet-600 w-12 h-12 mb-4" />
                 <p className="text-slate-600 dark:text-slate-400 font-medium">Analyzing your responses...</p>
               </div>
             ) : (
-              <form onSubmit={handleFormSubmit} className="space-y-5">
+              <form onSubmit={handleFormSubmit} className="space-y-5" noValidate>
                 <div>
                   <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Full Name</label>
-                  <input required type="text" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white transition-all" 
-                    value={user.name} onChange={e => setUser({...user, name: e.target.value})}
+                  <input 
+                    type="text" 
+                    maxLength={100}
+                    className={`w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white transition-all ${formErrors.name ? 'border-red-400' : 'border-slate-200 dark:border-slate-700'}`}
+                    value={user.name} 
+                    onChange={e => handleUserChange('name', e.target.value)}
                   />
+                  {formErrors.name && <p className="text-red-500 text-xs mt-1">{formErrors.name}</p>}
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Mobile Number</label>
-                    <input required type="tel" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white transition-all" 
-                      value={user.phone} onChange={e => setUser({...user, phone: e.target.value})}
+                    <input 
+                      type="tel" 
+                      maxLength={15}
+                      className={`w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white transition-all ${formErrors.phone ? 'border-red-400' : 'border-slate-200 dark:border-slate-700'}`}
+                      value={user.phone} 
+                      onChange={e => handleUserChange('phone', e.target.value)}
                     />
+                    {formErrors.phone && <p className="text-red-500 text-xs mt-1">{formErrors.phone}</p>}
                   </div>
                   <div>
                     <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">City</label>
-                    <input required type="text" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white transition-all" 
-                      value={user.city} onChange={e => setUser({...user, city: e.target.value})}
+                    <input 
+                      type="text" 
+                      maxLength={100}
+                      className={`w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white transition-all ${formErrors.city ? 'border-red-400' : 'border-slate-200 dark:border-slate-700'}`}
+                      value={user.city} 
+                      onChange={e => handleUserChange('city', e.target.value)}
                     />
+                    {formErrors.city && <p className="text-red-500 text-xs mt-1">{formErrors.city}</p>}
                   </div>
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Email Address</label>
-                  <input required type="email" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white transition-all" 
-                    value={user.email} onChange={e => setUser({...user, email: e.target.value})}
+                  <input 
+                    type="email" 
+                    maxLength={254}
+                    className={`w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white transition-all ${formErrors.email ? 'border-red-400' : 'border-slate-200 dark:border-slate-700'}`}
+                    value={user.email} 
+                    onChange={e => handleUserChange('email', e.target.value)}
                   />
+                  {formErrors.email && <p className="text-red-500 text-xs mt-1">{formErrors.email}</p>}
                 </div>
                 <button type="submit" className="w-full bg-violet-600 text-white font-bold py-4 rounded-xl hover:bg-violet-700 transition-colors shadow-lg mt-4">
                   View My Results

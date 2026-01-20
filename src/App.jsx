@@ -42,6 +42,7 @@ import {
   BrainWellnessIllustration, 
   HeartMindIllustration 
 } from './components/shared';
+import { validateForm, checkRateLimit, sanitizeInput } from './utils/security';
 
 const ResourcesView = lazy(() => import('./views/ResourcesView'));
 const PrivacyPolicy = lazy(() => import('./views/PrivacyPolicy'));
@@ -790,10 +791,62 @@ const FAQ = () => {
 
 const Booking = () => {
   const [appointmentType, setAppointmentType] = useState('in-person');
+  const [formData, setFormData] = useState({ name: '', phone: '', email: '', service: '', message: '' });
+  const [errors, setErrors] = useState({});
+  const [submitStatus, setSubmitStatus] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: sanitizeInput(value) }));
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: null }));
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    const rateCheck = checkRateLimit('booking-form', 5, 60000);
+    if (!rateCheck.allowed) {
+      setSubmitStatus({ type: 'error', message: `Too many requests. Please wait ${rateCheck.retryAfter} seconds.` });
+      return;
+    }
+
+    const validation = validateForm(formData, ['name', 'phone', 'email']);
+    if (!validation.isValid) {
+      setErrors(validation.errors);
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      const response = await fetch("https://formspree.io/f/xeoylwwl", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({
+          ...validation.sanitizedData,
+          appointmentType
+        })
+      });
+
+      if (response.ok) {
+        setSubmitStatus({ type: 'success', message: 'Request sent successfully! We will contact you soon.' });
+        setFormData({ name: '', phone: '', email: '', service: '', message: '' });
+      } else {
+        setSubmitStatus({ type: 'error', message: 'Failed to send. Please try again.' });
+      }
+    } catch {
+      setSubmitStatus({ type: 'error', message: 'Network error. Please try again.' });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <section id="contact" className="py-20 md:py-32 bg-white dark:bg-slate-950 relative overflow-hidden transition-colors duration-300">
-      {/* Decorative Circles */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-violet-100 dark:bg-violet-900/20 rounded-full translate-x-1/2 -translate-y-1/2"></div>
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-pink-50 dark:bg-pink-900/10 rounded-full -translate-x-1/2 translate-y-1/2"></div>
 
@@ -828,29 +881,66 @@ const Booking = () => {
               </button>
             </div>
 
+            {submitStatus && (
+              <div className={`mb-6 p-4 rounded-xl text-center font-medium ${submitStatus.type === 'success' ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300' : 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300'}`}>
+                {submitStatus.message}
+              </div>
+            )}
+
             <form 
-              action="https://formspree.io/f/xeoylwwl" 
-              method="POST" 
+              onSubmit={handleSubmit}
               className="space-y-5"
               name="booking"
               aria-label="Appointment booking form"
+              noValidate
             >
-              <input type="hidden" name="appointmentType" value={appointmentType} />
-              
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div className="space-y-1.5">
                   <label htmlFor="contact-name" className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase ml-1">Name</label>
-                  <input required id="contact-name" name="name" type="text" placeholder="Your Name" autoComplete="name" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all" />
+                  <input 
+                    id="contact-name" 
+                    name="name" 
+                    type="text" 
+                    placeholder="Your Name" 
+                    autoComplete="name" 
+                    maxLength={100}
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    className={`w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all ${errors.name ? 'border-red-400' : 'border-slate-200 dark:border-slate-700'}`} 
+                  />
+                  {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
                 </div>
                 <div className="space-y-1.5">
                   <label htmlFor="contact-phone" className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase ml-1">Phone</label>
-                  <input required id="contact-phone" name="phone" type="tel" placeholder="Phone Number" autoComplete="tel" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all" />
+                  <input 
+                    id="contact-phone" 
+                    name="phone" 
+                    type="tel" 
+                    placeholder="Phone Number" 
+                    autoComplete="tel" 
+                    maxLength={15}
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    className={`w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all ${errors.phone ? 'border-red-400' : 'border-slate-200 dark:border-slate-700'}`} 
+                  />
+                  {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
                 </div>
               </div>
               
               <div className="space-y-1.5">
                 <label htmlFor="contact-email" className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase ml-1">Email</label>
-                <input required id="contact-email" name="email" type="email" placeholder="your@email.com" autoComplete="email" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all" />
+                <input 
+                  id="contact-email" 
+                  name="email" 
+                  type="email" 
+                  placeholder="your@email.com" 
+                  autoComplete="email" 
+                  maxLength={254}
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  className={`w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all ${errors.email ? 'border-red-400' : 'border-slate-200 dark:border-slate-700'}`} 
+                />
+                {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
               </div>
 
               <div className="space-y-1.5">
@@ -858,7 +948,8 @@ const Booking = () => {
                 <select 
                   id="contact-service"
                   name="service" 
-                  defaultValue=""
+                  value={formData.service}
+                  onChange={handleInputChange}
                   className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 text-slate-600 dark:text-slate-300 focus:bg-white dark:focus:bg-slate-800 transition-all"
                 >
                   <option value="" disabled>What do you need help with?</option>
@@ -872,11 +963,24 @@ const Booking = () => {
               
               <div className="space-y-1.5">
                 <label htmlFor="contact-message" className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase ml-1">Message</label>
-                <textarea id="contact-message" name="message" rows="3" placeholder="Anything else you'd like to share?" className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all"></textarea>
+                <textarea 
+                  id="contact-message" 
+                  name="message" 
+                  rows="3" 
+                  placeholder="Anything else you'd like to share?" 
+                  maxLength={1000}
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  className="w-full p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white focus:bg-white dark:focus:bg-slate-800 transition-all"
+                ></textarea>
               </div>
               
-              <button type="submit" className="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold py-4 rounded-xl hover:bg-violet-600 dark:hover:bg-violet-300 transition-colors shadow-lg mt-2 text-lg focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2">
-                Request {appointmentType === 'online' ? 'Online' : 'In-Clinic'} Appointment
+              <button 
+                type="submit" 
+                disabled={isSubmitting}
+                className="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold py-4 rounded-xl hover:bg-violet-600 dark:hover:bg-violet-300 transition-colors shadow-lg mt-2 text-lg focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isSubmitting ? 'Sending...' : `Request ${appointmentType === 'online' ? 'Online' : 'In-Clinic'} Appointment`}
               </button>
             </form>
             
