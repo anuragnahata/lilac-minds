@@ -72,7 +72,7 @@ const SEO_DATA = {
   keywords: "psychologist Jamnagar, career counsellor Jamnagar, mental health clinic Gujarat, anxiety treatment, depression therapy, stress management, student career guidance, psychotherapy near me, best therapist Jamnagar, clinical psychologist Gujarat, emotional wellness, behavioral therapy, cognitive therapy, relationship counselling, adolescent counselling, online therapy India, psychological assessment, burnout treatment, sleep disorder therapy",
   googleMyBusiness: "https://share.google/rmquC8AtoERfXER0R",
   phone: "+918200711499",
-  email: "lilac.minds.in@gmail.com",
+  email: "hello@lilacminds.com",
   address: {
     street: "Sarvoday Society, 9, Krishna Nagar Main Rd",
     locality: "Jamnagar",
@@ -1022,7 +1022,7 @@ const Footer = ({ onNavigate }) => (
             opp. Bardai Brahmin Boarding, Kamdar Colony,<br />
             Jamnagar, Gujarat 361006
           </p>
-          <a href="mailto:lilac.minds.in@gmail.com" className="text-violet-400 hover:text-white transition-colors">lilac.minds.in@gmail.com</a>
+          <a href="mailto:hello@lilacminds.com" className="text-violet-400 hover:text-white transition-colors">hello@lilacminds.com</a>
         </div>
       </div>
       <div>
@@ -1066,7 +1066,7 @@ const Footer = ({ onNavigate }) => (
             <Instagram size={20} />
           </a>
           <a 
-            href="mailto:lilac.minds.in@gmail.com"
+            href="mailto:hello@lilacminds.com"
             aria-label="Email us"
             title="Email"
             className="p-3 bg-slate-800 rounded-full hover:bg-violet-600 text-white transition-all cursor-pointer"
