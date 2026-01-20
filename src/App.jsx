@@ -44,6 +44,8 @@ import {
 } from './components/shared';
 
 const ResourcesView = lazy(() => import('./views/ResourcesView'));
+const PrivacyPolicy = lazy(() => import('./views/PrivacyPolicy'));
+const TermsOfUse = lazy(() => import('./views/TermsOfUse'));
 
 // --- IMAGE OPTIMIZATION ---
 const optimize = (url, width) => 
@@ -890,9 +892,9 @@ const Booking = () => {
   );
 };
 
-const Footer = () => (
+const Footer = ({ onNavigate }) => (
   <footer className="bg-slate-900 text-slate-400 py-16 text-sm border-t border-white/5">
-    <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
+    <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12 text-center md:text-left">
       <div>
         <div className="flex items-center justify-center md:justify-start gap-2 mb-6">
           <img 
@@ -917,6 +919,23 @@ const Footer = () => (
             Jamnagar, Gujarat 361006
           </p>
           <a href="mailto:lilac.minds.in@gmail.com" className="text-violet-400 hover:text-white transition-colors">lilac.minds.in@gmail.com</a>
+        </div>
+      </div>
+      <div>
+        <h4 className="text-white font-bold mb-6 text-lg">Legal</h4>
+        <div className="space-y-3">
+          <button 
+            onClick={() => onNavigate('privacy', 'page')}
+            className="block text-slate-400 hover:text-violet-400 transition-colors"
+          >
+            Privacy Policy
+          </button>
+          <button 
+            onClick={() => onNavigate('terms', 'page')}
+            className="block text-slate-400 hover:text-violet-400 transition-colors"
+          >
+            Terms of Use
+          </button>
         </div>
       </div>
       <div>
@@ -1140,14 +1159,18 @@ export default function App() {
   }, []);
 
   const handleNavigation = (target, type = 'scroll') => {
-    if (type === 'page' && target === 'resources') {
-      setView('resources');
+    if (type === 'page') {
+      if (target === 'resources') {
+        setView('resources');
+      } else if (target === 'privacy') {
+        setView('privacy');
+      } else if (target === 'terms') {
+        setView('terms');
+      }
       window.scrollTo(0, 0);
     } else {
-      // Navigate to Home sections
       if (view !== 'home') {
         setView('home');
-        // Wait for render then scroll
         setTimeout(() => {
           const el = document.getElementById(target);
           if (el) el.scrollIntoView({ behavior: 'smooth' });
@@ -1174,12 +1197,14 @@ export default function App() {
                 <div className="text-violet-600 dark:text-violet-400 text-lg">Loading...</div>
               </div>
             }>
-              <ResourcesView key="resources" onNavigate={handleNavigation} />
+              {view === 'resources' && <ResourcesView key="resources" onNavigate={handleNavigation} />}
+              {view === 'privacy' && <PrivacyPolicy key="privacy" onNavigate={handleNavigation} />}
+              {view === 'terms' && <TermsOfUse key="terms" onNavigate={handleNavigation} />}
             </Suspense>
           )}
         </main>
         <FloatingWhatsApp />
-        <Footer />
+        <Footer onNavigate={handleNavigation} />
       </div>
       {/* Splash screen overlay - fades away after loading */}
       <AnimatePresence>
