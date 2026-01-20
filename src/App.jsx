@@ -1100,9 +1100,17 @@ const MainContent = ({ onNavigate }) => (
   </>
 );
 
+const getViewFromHash = () => {
+  const hash = window.location.hash.slice(1);
+  if (['resources', 'privacy', 'terms'].includes(hash)) {
+    return hash;
+  }
+  return 'home';
+};
+
 export default function App() {
   const [loading, setLoading] = useState(true);
-  const [view, setView] = useState('home'); 
+  const [view, setView] = useState(getViewFromHash()); 
   const [isDarkMode, setIsDarkMode] = useState(true);
 
   const toggleTheme = () => {
@@ -1113,6 +1121,19 @@ export default function App() {
       document.documentElement.classList.remove('dark');
     }
   };
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const newView = getViewFromHash();
+      setView(newView);
+      if (newView !== 'home') {
+        window.scrollTo(0, 0);
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
 
   useEffect(() => {
     document.title = SEO_DATA.title;
@@ -1160,17 +1181,11 @@ export default function App() {
 
   const handleNavigation = (target, type = 'scroll') => {
     if (type === 'page') {
-      if (target === 'resources') {
-        setView('resources');
-      } else if (target === 'privacy') {
-        setView('privacy');
-      } else if (target === 'terms') {
-        setView('terms');
-      }
+      window.location.hash = target;
       window.scrollTo(0, 0);
     } else {
       if (view !== 'home') {
-        setView('home');
+        window.location.hash = '';
         setTimeout(() => {
           const el = document.getElementById(target);
           if (el) el.scrollIntoView({ behavior: 'smooth' });
