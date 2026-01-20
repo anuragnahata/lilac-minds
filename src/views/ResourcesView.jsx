@@ -30,7 +30,7 @@ const BLOGS_DATA = [
     title: "Understanding Therapy: Dispelling Myths & Embracing Growth",
     desc: "Therapy isn't just for crises. Discover how professional counseling fosters resilience, self-awareness, and emotional hygiene in everyday life.",
     tag: "Psychoeducation",
-    readTime: "8 min",
+    readTime: "12 min",
     content: (
       <div className="space-y-6 text-slate-700 dark:text-slate-300 leading-loose">
         <p>
@@ -39,6 +39,9 @@ const BLOGS_DATA = [
         <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">The Science of Change: Neuroplasticity</h3>
         <p>
           Therapy is not just "venting." It is a biological intervention. Research in neuroscience shows that consistent talk therapy can alter the neural pathways in the brain—a concept known as <strong>neuroplasticity</strong>. By identifying and challenging negative thought patterns (Cognitive Behavioral Therapy), we physically weaken the neural connections associated with anxiety and strengthen those associated with calm and logic. A psychologist in Jamnagar or anywhere else acts as a guide in this rewiring process.
+        </p>
+        <p>
+          Studies published in journals like <em>JAMA Psychiatry</em> have shown that after just 12-16 weeks of CBT, brain scans reveal measurable changes in the prefrontal cortex and amygdala—the regions responsible for emotional regulation. This is not metaphorical change; it is physical, observable transformation of brain structure.
         </p>
         <div className="bg-violet-50 dark:bg-violet-900/20 p-6 rounded-xl border border-violet-100 dark:border-white/10 my-6">
           <h3 className="text-xl font-bold mb-4 text-violet-700 dark:text-violet-300">Common Myths vs. Clinical Facts</h3>
@@ -51,12 +54,49 @@ const BLOGS_DATA = [
               <p className="font-semibold text-slate-800 dark:text-white">Myth: "The therapist will tell me what to do."</p>
               <p className="mt-1"><strong>Fact:</strong> A psychologist's role is not to give advice, but to facilitate <em>insight</em>. We act as a mirror, helping you see blind spots in your behavior and equipping you with coping mechanisms to make your own empowered decisions.</p>
             </li>
+            <li>
+              <p className="font-semibold text-slate-800 dark:text-white">Myth: "I can just talk to my friends instead."</p>
+              <p className="mt-1"><strong>Fact:</strong> Friends provide social support, which is valuable. However, a trained therapist offers clinical objectivity, evidence-based techniques, and the ability to identify patterns you cannot see yourself. They are trained to hold space without judgment or personal agenda.</p>
+            </li>
+            <li>
+              <p className="font-semibold text-slate-800 dark:text-white">Myth: "Therapy takes years to work."</p>
+              <p className="mt-1"><strong>Fact:</strong> Many evidence-based therapies show significant improvement in 8-16 sessions. Solution-Focused Brief Therapy (SFBT) can produce meaningful change in as few as 3-5 sessions for specific issues.</p>
+            </li>
           </ul>
         </div>
         <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">The Therapeutic Alliance</h3>
         <p>
           Research consistently indicates that the strongest predictor of successful therapy is the <strong>Therapeutic Alliance</strong>—the trust and rapport between client and therapist. At Lilac Minds, we prioritize creating a safe, non-judgmental space where you feel heard and understood.
         </p>
+        <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">Types of Therapy We Offer</h3>
+        <div className="grid md:grid-cols-2 gap-4 my-6">
+          <div className="bg-slate-50 dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700">
+            <h4 className="font-bold text-violet-600 dark:text-violet-400 mb-2">Cognitive Behavioral Therapy (CBT)</h4>
+            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Focuses on identifying and changing negative thought patterns that influence behavior and emotions.</p>
+          </div>
+          <div className="bg-slate-50 dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700">
+            <h4 className="font-bold text-violet-600 dark:text-violet-400 mb-2">Person-Centered Therapy</h4>
+            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Emphasizes unconditional positive regard and empathetic understanding to facilitate self-discovery.</p>
+          </div>
+          <div className="bg-slate-50 dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700">
+            <h4 className="font-bold text-violet-600 dark:text-violet-400 mb-2">Mindfulness-Based Therapy</h4>
+            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Integrates meditation and awareness practices to reduce stress and improve emotional regulation.</p>
+          </div>
+          <div className="bg-slate-50 dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700">
+            <h4 className="font-bold text-violet-600 dark:text-violet-400 mb-2">Solution-Focused Brief Therapy</h4>
+            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">A goal-oriented approach that focuses on solutions rather than problems, ideal for specific challenges.</p>
+          </div>
+        </div>
+        <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">When to Consider Therapy</h3>
+        <p>Consider reaching out to a mental health professional if you experience:</p>
+        <ul className="list-disc list-inside space-y-2 my-4">
+          <li>Persistent feelings of sadness, anxiety, or emptiness lasting more than two weeks</li>
+          <li>Difficulty managing daily responsibilities or maintaining relationships</li>
+          <li>Major life transitions (marriage, divorce, job change, loss of a loved one)</li>
+          <li>Recurring patterns in relationships or behaviors you want to change</li>
+          <li>A desire for personal growth and deeper self-understanding</li>
+          <li>Feeling "stuck" or lacking direction in life</li>
+        </ul>
       </div>
     )
   },
@@ -65,7 +105,7 @@ const BLOGS_DATA = [
     title: "Mastering Exam Anxiety: A Neuro-Psychological View",
     desc: "Why does the mind go blank during exams? Understanding the 'Fight or Flight' response and learning scientifically proven grounding techniques.",
     tag: "Student Mentorship",
-    readTime: "9 min",
+    readTime: "14 min",
     content: (
       <div className="space-y-6 text-slate-700 dark:text-slate-300 leading-loose">
         <p>
@@ -75,19 +115,60 @@ const BLOGS_DATA = [
         <p>
           When your brain perceives the exam as a "threat" (similar to a predator), the <strong>Amygdala</strong> (the brain's fear center) activates. This floods your system with stress hormones like cortisol and adrenaline. While these hormones are excellent for running away from a tiger, they have a detrimental effect on the <strong>Prefrontal Cortex</strong>—the area of the brain responsible for higher-order logic, reasoning, and memory retrieval. Essentially, your survival instinct shuts down your thinking brain to save energy for physical escape.
         </p>
+        <p>
+          This is why you might remember everything perfectly the moment you step out of the exam hall—once the "threat" is removed, your prefrontal cortex comes back online and the information becomes accessible again.
+        </p>
+        <div className="bg-amber-50 dark:bg-amber-900/20 p-6 rounded-xl border border-amber-100 dark:border-white/10 my-6">
+          <h3 className="text-xl font-bold mb-4 text-amber-700 dark:text-amber-300">The Yerkes-Dodson Law</h3>
+          <p>
+            Not all stress is bad. The Yerkes-Dodson Law demonstrates that performance increases with physiological arousal—but only up to a point. Moderate levels of stress (the "optimal zone") actually enhance focus and memory. The problem arises when stress exceeds this threshold, causing performance to plummet. The goal is not to eliminate exam stress entirely, but to regulate it within the optimal zone.
+          </p>
+        </div>
         <div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-100 dark:border-white/10 my-8">
            <h3 className="text-xl font-bold mb-4 text-blue-700 dark:text-blue-300">Scientific Grounding Techniques</h3>
-           <p className="mb-4">To reverse this hijack, you must biologically convince your nervous system that you are safe. Here are two techniques to practice:</p>
+           <p className="mb-4">To reverse the amygdala hijack, you must biologically convince your nervous system that you are safe. Here are proven techniques to practice:</p>
            <div className="space-y-6">
              <div>
                <h4 className="font-bold text-slate-900 dark:text-white text-lg">1. The 4-7-8 Breathing Method</h4>
-               <p className="mt-1">Inhale quietly through the nose for <strong>4 seconds</strong>. Hold the breath for <strong>7 seconds</strong>. Exhale forcefully through the mouth for <strong>8 seconds</strong>. This specific rhythm stimulates the Vagus nerve, activating the Parasympathetic Nervous System (rest and digest mode), physically forcing your heart rate to drop.</p>
+               <p className="mt-1">Inhale quietly through the nose for <strong>4 seconds</strong>. Hold the breath for <strong>7 seconds</strong>. Exhale forcefully through the mouth for <strong>8 seconds</strong>. This specific rhythm stimulates the Vagus nerve, activating the Parasympathetic Nervous System (rest and digest mode), physically forcing your heart rate to drop. Repeat 3-4 cycles.</p>
              </div>
              <div>
                <h4 className="font-bold text-slate-900 dark:text-white text-lg">2. The 5-4-3-2-1 Sensory Check</h4>
                <p className="mt-1">When panic spirals internally, focus externally. Acknowledge <strong>5</strong> things you see, <strong>4</strong> you can touch (desk texture, pen grip), <strong>3</strong> you hear, <strong>2</strong> you can smell, and <strong>1</strong> you can taste. This sensory data forces the Prefrontal Cortex to come back online to process the information.</p>
              </div>
+             <div>
+               <h4 className="font-bold text-slate-900 dark:text-white text-lg">3. Progressive Muscle Relaxation (PMR)</h4>
+               <p className="mt-1">Systematically tense and release muscle groups, starting from your toes and moving upward. Clench your fists tightly for 5 seconds, then release. This physical release signals safety to your nervous system and reduces overall body tension.</p>
+             </div>
+             <div>
+               <h4 className="font-bold text-slate-900 dark:text-white text-lg">4. Cold Water Activation</h4>
+               <p className="mt-1">If possible, splash cold water on your face or hold a cold water bottle to your wrists. Cold water triggers the "dive reflex," which automatically slows heart rate and promotes calmness—a biological response inherited from our aquatic ancestors.</p>
+             </div>
            </div>
+        </div>
+        <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">Pre-Exam Preparation Strategies</h3>
+        <div className="space-y-4 my-6">
+          <div className="flex items-start gap-4">
+            <div className="w-8 h-8 rounded-full bg-green-100 dark:bg-green-900/50 flex items-center justify-center text-green-600 font-bold shrink-0">1</div>
+            <div>
+              <h4 className="font-bold text-slate-900 dark:text-white">Simulate Exam Conditions</h4>
+              <p className="text-slate-600 dark:text-slate-400 mt-1">Practice taking tests under timed conditions in a quiet environment. This "exposure therapy" helps desensitize your brain to the exam setting.</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-4">
+            <div className="w-8 h-8 rounded-full bg-green-100 dark:bg-green-900/50 flex items-center justify-center text-green-600 font-bold shrink-0">2</div>
+            <div>
+              <h4 className="font-bold text-slate-900 dark:text-white">Sleep Prioritization</h4>
+              <p className="text-slate-600 dark:text-slate-400 mt-1">Memory consolidation occurs during sleep. Pulling an all-nighter before an exam actually impairs memory retrieval. Aim for 7-8 hours the night before.</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-4">
+            <div className="w-8 h-8 rounded-full bg-green-100 dark:bg-green-900/50 flex items-center justify-center text-green-600 font-bold shrink-0">3</div>
+            <div>
+              <h4 className="font-bold text-slate-900 dark:text-white">Cognitive Reframing</h4>
+              <p className="text-slate-600 dark:text-slate-400 mt-1">Instead of thinking "I'm going to fail," reframe to "I'm prepared and I will do my best." This subtle shift reduces threat perception and keeps the prefrontal cortex engaged.</p>
+            </div>
+          </div>
         </div>
       </div>
     )
@@ -97,7 +178,7 @@ const BLOGS_DATA = [
     title: "Building Emotional Resilience: The Art of Bouncing Back",
     desc: "Resilience isn't a trait you're born with; it's a muscle you build. Learn the 'Three C's' and practical strategies for psychological strength.",
     tag: "Wellness",
-    readTime: "8 min",
+    readTime: "15 min",
     content: (
       <div className="space-y-6 text-slate-700 dark:text-slate-300 leading-loose">
         <p>
@@ -108,17 +189,50 @@ const BLOGS_DATA = [
         <div className="grid md:grid-cols-3 gap-4 my-6">
            <div className="bg-slate-50 dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700">
              <h4 className="font-bold text-violet-600 dark:text-violet-400 mb-2">1. Challenge</h4>
-             <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Viewing a difficulty as a challenge to overcome rather than a paralyzing threat.</p>
+             <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Viewing a difficulty as a challenge to overcome rather than a paralyzing threat. Resilient people see setbacks as opportunities for growth.</p>
            </div>
            <div className="bg-slate-50 dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700">
              <h4 className="font-bold text-violet-600 dark:text-violet-400 mb-2">2. Commitment</h4>
-             <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Being committed to your goals, relationships, and values. This provides a "North Star."</p>
+             <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Being committed to your goals, relationships, and values. This provides a "North Star" that guides you through difficult times.</p>
            </div>
            <div className="bg-slate-50 dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700">
              <h4 className="font-bold text-violet-600 dark:text-violet-400 mb-2">3. Control</h4>
-             <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Focusing your energy on what you <em>can</em> change (your reaction, your effort), rather than external events.</p>
+             <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Focusing your energy on what you <em>can</em> change (your reaction, your effort), rather than lamenting external events beyond your control.</p>
            </div>
         </div>
+        <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">The Neuroscience of Resilience</h3>
+        <p>
+          Research shows that resilient individuals have stronger connections between the prefrontal cortex (rational thinking) and the amygdala (emotional reactions). This neural pathway acts like a "brake pedal" on emotional responses, allowing for more measured reactions to stress. The good news? This connection can be strengthened through practice.
+        </p>
+        <div className="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl border border-green-100 dark:border-white/10 my-6">
+          <h3 className="text-xl font-bold mb-4 text-green-700 dark:text-green-300">Building Your Resilience Toolkit</h3>
+          <div className="space-y-4">
+            <div>
+              <h4 className="font-bold text-slate-900 dark:text-white">1. Develop a Growth Mindset</h4>
+              <p className="text-slate-600 dark:text-slate-400 mt-1">Psychologist Carol Dweck's research shows that believing abilities can be developed (growth mindset) vs. believing they're fixed leads to greater persistence and achievement. Reframe "I failed" to "I learned what doesn't work."</p>
+            </div>
+            <div>
+              <h4 className="font-bold text-slate-900 dark:text-white">2. Cultivate Social Connections</h4>
+              <p className="text-slate-600 dark:text-slate-400 mt-1">Strong social support is the single most protective factor against adversity. Nurture relationships that offer mutual support, encouragement, and honest feedback.</p>
+            </div>
+            <div>
+              <h4 className="font-bold text-slate-900 dark:text-white">3. Practice Self-Compassion</h4>
+              <p className="text-slate-600 dark:text-slate-400 mt-1">Treat yourself with the same kindness you would offer a good friend. Self-criticism depletes resilience; self-compassion rebuilds it. Research by Dr. Kristin Neff shows self-compassion is strongly linked to emotional well-being.</p>
+            </div>
+            <div>
+              <h4 className="font-bold text-slate-900 dark:text-white">4. Find Meaning and Purpose</h4>
+              <p className="text-slate-600 dark:text-slate-400 mt-1">Viktor Frankl, Holocaust survivor and psychiatrist, emphasized that finding meaning—even in suffering—is central to resilience. Ask: "What can I learn from this? How can this experience help others?"</p>
+            </div>
+            <div>
+              <h4 className="font-bold text-slate-900 dark:text-white">5. Take Decisive Action</h4>
+              <p className="text-slate-600 dark:text-slate-400 mt-1">Rather than detaching from problems, take active steps to address them. Even small actions build a sense of agency and momentum.</p>
+            </div>
+          </div>
+        </div>
+        <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">Post-Traumatic Growth</h3>
+        <p>
+          Beyond merely "bouncing back," many people who face significant adversity report positive psychological change—a phenomenon called <strong>Post-Traumatic Growth (PTG)</strong>. This includes deeper appreciation for life, enhanced personal strength, improved relationships, recognition of new possibilities, and spiritual development. Adversity, when processed effectively, can become a catalyst for profound personal transformation.
+        </p>
       </div>
     )
   },
@@ -127,7 +241,7 @@ const BLOGS_DATA = [
     title: "Navigating Career Confusion: Science Over Guesswork",
     desc: "Confused between passion and practicality? Understand how Psychometric Aptitude Testing and counselling align your skills with market reality.",
     tag: "Career Counselling",
-    readTime: "7 min",
+    readTime: "13 min",
     content: (
       <div className="space-y-6 text-slate-700 dark:text-slate-300 leading-loose">
         <p>
@@ -142,17 +256,313 @@ const BLOGS_DATA = [
              <div className="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center text-indigo-600 font-bold shrink-0 text-lg">1</div>
              <div>
                 <h4 className="font-bold text-slate-900 dark:text-white text-lg">Aptitude (Innate Potential)</h4>
-                <p className="text-slate-600 dark:text-slate-400 mt-1">This refers to your natural ability to learn specific skills. Tests measure Numerical, Verbal, Spatial, Mechanical, and Abstract reasoning.</p>
+                <p className="text-slate-600 dark:text-slate-400 mt-1">This refers to your natural ability to learn specific skills. Standardized tests measure Numerical, Verbal, Spatial, Mechanical, and Abstract reasoning. These scores indicate areas where you have natural talent and can excel with proper training.</p>
              </div>
            </div>
            <div className="flex items-start gap-4">
              <div className="w-10 h-10 rounded-full bg-pink-100 dark:bg-pink-900/50 flex items-center justify-center text-pink-600 font-bold shrink-0 text-lg">2</div>
              <div>
                 <h4 className="font-bold text-slate-900 dark:text-white text-lg">Personality (Behavioral Style)</h4>
-                <p className="text-slate-600 dark:text-slate-400 mt-1">Who are you at your core? Are you introverted or extroverted? Do you prefer structure or chaos?</p>
+                <p className="text-slate-600 dark:text-slate-400 mt-1">Who are you at your core? Are you introverted or extroverted? Do you prefer structure or flexibility? Tools like the MBTI or Big Five assessment reveal behavioral tendencies that predict job satisfaction and cultural fit.</p>
+             </div>
+           </div>
+           <div className="flex items-start gap-4">
+             <div className="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-900/50 flex items-center justify-center text-emerald-600 font-bold shrink-0 text-lg">3</div>
+             <div>
+                <h4 className="font-bold text-slate-900 dark:text-white text-lg">Interests (Motivational Drivers)</h4>
+                <p className="text-slate-600 dark:text-slate-400 mt-1">What activities genuinely engage you? The Holland Code (RIASEC) model categorizes interests into Realistic, Investigative, Artistic, Social, Enterprising, and Conventional domains, helping match you with compatible career fields.</p>
              </div>
            </div>
         </div>
+        <div className="bg-indigo-50 dark:bg-indigo-900/20 p-6 rounded-xl border border-indigo-100 dark:border-white/10 my-6">
+          <h3 className="text-xl font-bold mb-4 text-indigo-700 dark:text-indigo-300">The Ikigai Framework</h3>
+          <p className="mb-4">True career satisfaction lies at the intersection of four elements:</p>
+          <div className="grid grid-cols-2 gap-3">
+            <div className="bg-white dark:bg-slate-800 p-3 rounded-lg text-center">
+              <p className="font-bold text-slate-900 dark:text-white">What you LOVE</p>
+              <p className="text-xs text-slate-500">Passion</p>
+            </div>
+            <div className="bg-white dark:bg-slate-800 p-3 rounded-lg text-center">
+              <p className="font-bold text-slate-900 dark:text-white">What you're GOOD AT</p>
+              <p className="text-xs text-slate-500">Profession</p>
+            </div>
+            <div className="bg-white dark:bg-slate-800 p-3 rounded-lg text-center">
+              <p className="font-bold text-slate-900 dark:text-white">What the world NEEDS</p>
+              <p className="text-xs text-slate-500">Mission</p>
+            </div>
+            <div className="bg-white dark:bg-slate-800 p-3 rounded-lg text-center">
+              <p className="font-bold text-slate-900 dark:text-white">What you can be PAID FOR</p>
+              <p className="text-xs text-slate-500">Vocation</p>
+            </div>
+          </div>
+        </div>
+        <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">Common Career Confusion Traps</h3>
+        <ul className="list-disc list-inside space-y-2 my-4">
+          <li><strong>Following the crowd:</strong> Choosing engineering or medicine because "everyone does" without self-assessment</li>
+          <li><strong>Parental pressure:</strong> Pursuing a career to fulfill family expectations rather than personal inclination</li>
+          <li><strong>Salary obsession:</strong> Choosing solely based on earning potential, ignoring job satisfaction</li>
+          <li><strong>Trend chasing:</strong> Jumping into "hot" fields without considering long-term fit or interest</li>
+          <li><strong>Fixed mindset:</strong> Believing you must choose one career for life (modern careers are fluid and multi-faceted)</li>
+        </ul>
+        <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">The Career Counselling Process at Lilac Minds</h3>
+        <p>Our comprehensive career guidance includes:</p>
+        <ol className="list-decimal list-inside space-y-2 my-4">
+          <li>Standardized psychometric assessment (aptitude, personality, interests)</li>
+          <li>One-on-one counselling session to discuss results and aspirations</li>
+          <li>Industry mapping: matching your profile to viable career options</li>
+          <li>Action plan: specific steps, courses, and timelines</li>
+          <li>Follow-up support for implementation and course correction</li>
+        </ol>
+      </div>
+    )
+  },
+  {
+    id: 105,
+    title: "The Power of Mindfulness: A Practical Guide for Beginners",
+    desc: "Learn how ancient meditation practices, validated by modern neuroscience, can reduce stress, improve focus, and enhance emotional well-being.",
+    tag: "Wellness",
+    readTime: "11 min",
+    content: (
+      <div className="space-y-6 text-slate-700 dark:text-slate-300 leading-loose">
+        <p>
+          Mindfulness has moved from monastery to mainstream—and for good reason. Defined as the practice of paying attention to the present moment without judgment, mindfulness has been validated by thousands of scientific studies. From reducing cortisol levels to physically increasing gray matter in the brain, the benefits are not just "spiritual"—they are biological and measurable.
+        </p>
+        <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">What Mindfulness Is (And Isn't)</h3>
+        <p>
+          Mindfulness is often misunderstood as "emptying the mind" or achieving a state of bliss. In reality, it is simply the practice of <strong>noticing</strong> your thoughts, feelings, and sensations without getting swept away by them. You are not trying to stop thinking; you are learning to observe your thoughts as an impartial witness.
+        </p>
+        <div className="bg-teal-50 dark:bg-teal-900/20 p-6 rounded-xl border border-teal-100 dark:border-white/10 my-6">
+          <h3 className="text-xl font-bold mb-4 text-teal-700 dark:text-teal-300">The Science Behind Mindfulness</h3>
+          <ul className="space-y-3">
+            <li><strong>Reduced Amygdala Activity:</strong> Regular meditators show decreased reactivity in the brain's fear center, leading to calmer responses to stress.</li>
+            <li><strong>Increased Prefrontal Cortex Thickness:</strong> The region responsible for decision-making and emotional regulation literally grows with practice.</li>
+            <li><strong>Lower Cortisol Levels:</strong> Studies show significant reduction in the stress hormone after just 8 weeks of mindfulness practice.</li>
+            <li><strong>Improved Immune Function:</strong> Mindfulness practitioners show enhanced antibody production and faster healing.</li>
+          </ul>
+        </div>
+        <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">Simple Practices for Beginners</h3>
+        <div className="space-y-6 my-6">
+          <div className="bg-slate-50 dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700">
+            <h4 className="font-bold text-violet-600 dark:text-violet-400 mb-2">1. Breath Awareness (5 minutes)</h4>
+            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Sit comfortably, close your eyes, and focus on your natural breath. When your mind wanders (it will), gently return attention to the breath. This simple act trains the "attention muscle."</p>
+          </div>
+          <div className="bg-slate-50 dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700">
+            <h4 className="font-bold text-violet-600 dark:text-violet-400 mb-2">2. Body Scan (10 minutes)</h4>
+            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Lie down and systematically bring awareness to each part of your body, from toes to head. Notice sensations without trying to change them. This builds body-mind connection.</p>
+          </div>
+          <div className="bg-slate-50 dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700">
+            <h4 className="font-bold text-violet-600 dark:text-violet-400 mb-2">3. Mindful Walking (10 minutes)</h4>
+            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Walk slowly, paying attention to each step—the lifting, moving, and placing of each foot. Feel the ground beneath you. This integrates mindfulness into movement.</p>
+          </div>
+          <div className="bg-slate-50 dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700">
+            <h4 className="font-bold text-violet-600 dark:text-violet-400 mb-2">4. STOP Technique (1 minute)</h4>
+            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed"><strong>S</strong>top what you're doing. <strong>T</strong>ake a breath. <strong>O</strong>bserve your thoughts, feelings, and body. <strong>P</strong>roceed with awareness. Use this multiple times daily.</p>
+          </div>
+        </div>
+        <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">Common Obstacles and Solutions</h3>
+        <ul className="list-disc list-inside space-y-2 my-4">
+          <li><strong>"I can't stop thinking":</strong> You're not supposed to. The practice is noticing when you've wandered and returning—that IS the exercise.</li>
+          <li><strong>"I don't have time":</strong> Start with just 2 minutes. Consistency matters more than duration.</li>
+          <li><strong>"I get restless":</strong> This is normal. Try walking meditation or shorter sessions initially.</li>
+          <li><strong>"I fall asleep":</strong> Practice sitting up or at a time when you're more alert.</li>
+        </ul>
+      </div>
+    )
+  },
+  {
+    id: 106,
+    title: "Healthy Relationships: Communication, Boundaries, and Connection",
+    desc: "Explore the psychology of healthy relationships—from attachment styles to conflict resolution—and learn practical skills for deeper connection.",
+    tag: "Relationships",
+    readTime: "14 min",
+    content: (
+      <div className="space-y-6 text-slate-700 dark:text-slate-300 leading-loose">
+        <p>
+          Relationships are the cornerstone of human well-being. Research consistently shows that the quality of our relationships is the single strongest predictor of happiness and longevity—stronger than wealth, fame, or social class. Yet maintaining healthy relationships requires skills that are rarely taught explicitly.
+        </p>
+        <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">Understanding Attachment Styles</h3>
+        <p>
+          Psychologist John Bowlby's <strong>Attachment Theory</strong> suggests that our early experiences with caregivers shape how we relate to others throughout life. Understanding your attachment style can illuminate patterns in your relationships:
+        </p>
+        <div className="grid md:grid-cols-2 gap-4 my-6">
+          <div className="bg-green-50 dark:bg-green-900/20 p-5 rounded-xl border border-green-200 dark:border-green-800">
+            <h4 className="font-bold text-green-700 dark:text-green-400 mb-2">Secure Attachment</h4>
+            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Comfortable with intimacy and independence. Trusts others, communicates needs clearly, and handles conflict constructively.</p>
+          </div>
+          <div className="bg-amber-50 dark:bg-amber-900/20 p-5 rounded-xl border border-amber-200 dark:border-amber-800">
+            <h4 className="font-bold text-amber-700 dark:text-amber-400 mb-2">Anxious Attachment</h4>
+            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Craves closeness but fears rejection. May seek constant reassurance, become clingy, or feel insecure about partner's feelings.</p>
+          </div>
+          <div className="bg-blue-50 dark:bg-blue-900/20 p-5 rounded-xl border border-blue-200 dark:border-blue-800">
+            <h4 className="font-bold text-blue-700 dark:text-blue-400 mb-2">Avoidant Attachment</h4>
+            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Values independence highly. May seem emotionally distant, uncomfortable with too much closeness, or suppress needs.</p>
+          </div>
+          <div className="bg-purple-50 dark:bg-purple-900/20 p-5 rounded-xl border border-purple-200 dark:border-purple-800">
+            <h4 className="font-bold text-purple-700 dark:text-purple-400 mb-2">Disorganized Attachment</h4>
+            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Exhibits both anxious and avoidant behaviors. May desire closeness but push people away when it feels threatening.</p>
+          </div>
+        </div>
+        <p>
+          The good news: attachment styles are not fixed. Through awareness and intentional practice (often with therapeutic support), you can develop "earned security."
+        </p>
+        <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">The Art of Setting Boundaries</h3>
+        <p>
+          Boundaries are not walls—they are guidelines that define how you want to be treated. Healthy boundaries protect your physical, emotional, and mental well-being while allowing for genuine connection.
+        </p>
+        <div className="bg-violet-50 dark:bg-violet-900/20 p-6 rounded-xl border border-violet-100 dark:border-white/10 my-6">
+          <h3 className="text-xl font-bold mb-4 text-violet-700 dark:text-violet-300">Types of Boundaries</h3>
+          <ul className="space-y-3">
+            <li><strong>Physical:</strong> Your personal space, touch preferences, and physical needs (rest, nutrition)</li>
+            <li><strong>Emotional:</strong> Protecting your feelings, limiting exposure to negativity, choosing what to share</li>
+            <li><strong>Time:</strong> How you allocate your time and energy, saying no to overcommitment</li>
+            <li><strong>Digital:</strong> Screen time limits, social media boundaries, availability expectations</li>
+            <li><strong>Material:</strong> Your possessions, money, and resources</li>
+          </ul>
+        </div>
+        <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">Conflict Resolution: The Gottman Method</h3>
+        <p>
+          Dr. John Gottman's research identified four communication patterns that predict relationship failure—the "Four Horsemen":
+        </p>
+        <ul className="list-disc list-inside space-y-2 my-4">
+          <li><strong>Criticism:</strong> Attacking character instead of behavior ("You're so lazy" vs. "I feel frustrated when dishes pile up")</li>
+          <li><strong>Contempt:</strong> Disrespect, mockery, eye-rolling—the single biggest predictor of divorce</li>
+          <li><strong>Defensiveness:</strong> Refusing to take responsibility, making excuses</li>
+          <li><strong>Stonewalling:</strong> Withdrawing, shutting down, refusing to engage</li>
+        </ul>
+        <p>The antidotes include using "I" statements, expressing appreciation, taking responsibility, and practicing self-soothing during conflict.</p>
+      </div>
+    )
+  },
+  {
+    id: 107,
+    title: "Digital Wellness: Reclaiming Your Attention in the Age of Distraction",
+    desc: "Understand how technology affects mental health and learn evidence-based strategies to build a healthier relationship with your devices.",
+    tag: "Wellness",
+    readTime: "10 min",
+    content: (
+      <div className="space-y-6 text-slate-700 dark:text-slate-300 leading-loose">
+        <p>
+          The average person checks their smartphone 96 times per day—once every 10 minutes. Social media platforms are designed by teams of engineers and psychologists to maximize engagement, often at the cost of our well-being. Understanding this "attention economy" is the first step toward digital wellness.
+        </p>
+        <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">The Psychology of Digital Addiction</h3>
+        <p>
+          Social media and smartphone apps exploit fundamental psychological mechanisms:
+        </p>
+        <ul className="list-disc list-inside space-y-2 my-4">
+          <li><strong>Variable Reward:</strong> Like a slot machine, unpredictable rewards (likes, comments) trigger dopamine release more effectively than consistent ones</li>
+          <li><strong>Social Validation:</strong> Our brains are wired to seek social approval; likes and followers tap into this primal need</li>
+          <li><strong>Fear of Missing Out (FOMO):</strong> Endless scrolling is driven by the anxiety that we might miss something important</li>
+          <li><strong>Infinite Scroll:</strong> No natural stopping point means no cue to disengage</li>
+        </ul>
+        <div className="bg-red-50 dark:bg-red-900/20 p-6 rounded-xl border border-red-100 dark:border-white/10 my-6">
+          <h3 className="text-xl font-bold mb-4 text-red-700 dark:text-red-300">Signs of Problematic Use</h3>
+          <ul className="space-y-2">
+            <li>Reaching for your phone first thing in the morning and last thing at night</li>
+            <li>Feeling anxious or irritable when you can't access your phone</li>
+            <li>Using devices to escape uncomfortable emotions</li>
+            <li>Neglecting real-life relationships or responsibilities</li>
+            <li>Losing track of time while scrolling (time distortion)</li>
+            <li>Comparing yourself unfavorably to curated online personas</li>
+          </ul>
+        </div>
+        <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">Evidence-Based Digital Wellness Strategies</h3>
+        <div className="space-y-4 my-6">
+          <div className="flex items-start gap-4">
+            <div className="w-8 h-8 rounded-full bg-violet-100 dark:bg-violet-900/50 flex items-center justify-center text-violet-600 font-bold shrink-0">1</div>
+            <div>
+              <h4 className="font-bold text-slate-900 dark:text-white">Create Friction</h4>
+              <p className="text-slate-600 dark:text-slate-400 mt-1">Remove addictive apps from your home screen, turn off non-essential notifications, and use grayscale mode to make your screen less appealing.</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-4">
+            <div className="w-8 h-8 rounded-full bg-violet-100 dark:bg-violet-900/50 flex items-center justify-center text-violet-600 font-bold shrink-0">2</div>
+            <div>
+              <h4 className="font-bold text-slate-900 dark:text-white">Designate Tech-Free Zones</h4>
+              <p className="text-slate-600 dark:text-slate-400 mt-1">Keep phones out of the bedroom and dining table. Create physical spaces where presence is prioritized over connectivity.</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-4">
+            <div className="w-8 h-8 rounded-full bg-violet-100 dark:bg-violet-900/50 flex items-center justify-center text-violet-600 font-bold shrink-0">3</div>
+            <div>
+              <h4 className="font-bold text-slate-900 dark:text-white">Practice Intentional Use</h4>
+              <p className="text-slate-600 dark:text-slate-400 mt-1">Before picking up your phone, ask: "What am I looking for?" Set a timer for social media use. Distinguish between passive consumption and active creation.</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-4">
+            <div className="w-8 h-8 rounded-full bg-violet-100 dark:bg-violet-900/50 flex items-center justify-center text-violet-600 font-bold shrink-0">4</div>
+            <div>
+              <h4 className="font-bold text-slate-900 dark:text-white">Digital Sabbath</h4>
+              <p className="text-slate-600 dark:text-slate-400 mt-1">Designate one day (or portion of a day) per week as screen-free time. Use this for nature, hobbies, and in-person connection.</p>
+            </div>
+          </div>
+        </div>
+        <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">Social Media and Mental Health</h3>
+        <p>
+          Research shows a correlation between heavy social media use and increased rates of anxiety, depression, and loneliness—particularly among adolescents. The "highlight reel" nature of social media promotes unhealthy comparison, while algorithmic feeds can create echo chambers and fuel outrage.
+        </p>
+        <p className="mt-4">
+          However, technology is not inherently harmful. <strong>How</strong> we use it matters. Active use (messaging friends, creating content) is associated with better outcomes than passive consumption (endless scrolling). The goal is not elimination, but intentionality.
+        </p>
+      </div>
+    )
+  },
+  {
+    id: 108,
+    title: "Sleep Hygiene: The Foundation of Mental Health",
+    desc: "Discover the critical connection between sleep and psychological well-being, and learn proven strategies for better rest.",
+    tag: "Wellness",
+    readTime: "9 min",
+    content: (
+      <div className="space-y-6 text-slate-700 dark:text-slate-300 leading-loose">
+        <p>
+          Sleep is not a luxury—it is a biological necessity. During sleep, your brain consolidates memories, processes emotions, and clears metabolic waste. Chronic sleep deprivation is linked to anxiety, depression, impaired decision-making, weakened immunity, and even increased risk of Alzheimer's disease. Yet in our always-on culture, sleep is often sacrificed first.
+        </p>
+        <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">The Science of Sleep</h3>
+        <p>
+          Sleep occurs in cycles of approximately 90 minutes, alternating between Non-REM (restorative, physical repair) and REM (dreaming, emotional processing) stages. Adults need 7-9 hours per night, but quality matters as much as quantity.
+        </p>
+        <div className="bg-indigo-50 dark:bg-indigo-900/20 p-6 rounded-xl border border-indigo-100 dark:border-white/10 my-6">
+          <h3 className="text-xl font-bold mb-4 text-indigo-700 dark:text-indigo-300">Signs of Sleep Deprivation</h3>
+          <ul className="space-y-2">
+            <li>Difficulty concentrating or making decisions</li>
+            <li>Increased irritability and mood swings</li>
+            <li>Craving sugary or high-carb foods</li>
+            <li>Frequent illness due to weakened immunity</li>
+            <li>Falling asleep within 5 minutes of lying down (indicates severe deficit)</li>
+            <li>Needing an alarm to wake up or hitting snooze repeatedly</li>
+          </ul>
+        </div>
+        <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">Evidence-Based Sleep Hygiene Practices</h3>
+        <div className="grid md:grid-cols-2 gap-4 my-6">
+          <div className="bg-slate-50 dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700">
+            <h4 className="font-bold text-violet-600 dark:text-violet-400 mb-2">Consistent Schedule</h4>
+            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Go to bed and wake up at the same time daily—even on weekends. This regulates your circadian rhythm.</p>
+          </div>
+          <div className="bg-slate-50 dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700">
+            <h4 className="font-bold text-violet-600 dark:text-violet-400 mb-2">Dark, Cool Environment</h4>
+            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Keep your bedroom dark (use blackout curtains), cool (18-20°C), and quiet. Consider a white noise machine.</p>
+          </div>
+          <div className="bg-slate-50 dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700">
+            <h4 className="font-bold text-violet-600 dark:text-violet-400 mb-2">Screen Curfew</h4>
+            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Avoid screens 1 hour before bed. Blue light suppresses melatonin production. Use night mode if you must use devices.</p>
+          </div>
+          <div className="bg-slate-50 dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700">
+            <h4 className="font-bold text-violet-600 dark:text-violet-400 mb-2">Caffeine Cutoff</h4>
+            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Avoid caffeine after 2 PM. Its half-life is 5-6 hours, meaning half is still in your system hours later.</p>
+          </div>
+          <div className="bg-slate-50 dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700">
+            <h4 className="font-bold text-violet-600 dark:text-violet-400 mb-2">Wind-Down Routine</h4>
+            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Create a 30-60 minute pre-sleep ritual: dim lights, read physical books, take a warm bath, or practice gentle stretching.</p>
+          </div>
+          <div className="bg-slate-50 dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700">
+            <h4 className="font-bold text-violet-600 dark:text-violet-400 mb-2">Reserve Bed for Sleep</h4>
+            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Don't work, eat, or watch TV in bed. Train your brain to associate the bed only with sleep (and intimacy).</p>
+          </div>
+        </div>
+        <h3 className="text-2xl font-bold mt-8 text-slate-900 dark:text-white">When to Seek Help</h3>
+        <p>
+          If you consistently struggle with sleep despite good hygiene practices, you may have a sleep disorder such as insomnia, sleep apnea, or restless leg syndrome. Cognitive Behavioral Therapy for Insomnia (CBT-I) is the gold-standard treatment—more effective than sleeping pills without the side effects or dependency risk.
+        </p>
       </div>
     )
   }
