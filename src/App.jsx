@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, lazy, Suspense } from 'react';
+import { Routes, Route, useLocation, useNavigate, Link } from 'react-router-dom';
 import { 
   motion, 
   AnimatePresence, 
@@ -45,6 +46,8 @@ import {
 import { validateForm, checkRateLimit, sanitizeInput } from './utils/security';
 
 const ResourcesView = lazy(() => import('./views/ResourcesView'));
+const ArticleView = lazy(() => import('./views/ArticleView'));
+const AssessmentView = lazy(() => import('./views/AssessmentView'));
 const PrivacyPolicy = lazy(() => import('./views/PrivacyPolicy'));
 const TermsOfUse = lazy(() => import('./views/TermsOfUse'));
 
@@ -336,17 +339,27 @@ const Navbar = ({ currentView, onNavigate, isDarkMode, toggleTheme }) => {
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
           {navItems.map((item) => (
-            <button
-              key={item.label}
-              onClick={() => onNavigate(item.target, item.type)}
-              className={`${
-                currentView === 'resources' && item.target === 'resources' 
-                  ? 'text-violet-700 dark:text-violet-400 font-bold' 
-                  : 'text-slate-600 dark:text-slate-300 font-medium'
-              } hover:text-violet-600 dark:hover:text-white text-sm transition-colors`}
-            >
-              {item.label}
-            </button>
+            item.type === 'page' ? (
+              <Link
+                key={item.label}
+                to={`/${item.target}`}
+                className={`${
+                  currentView === item.target 
+                    ? 'text-violet-700 dark:text-violet-400 font-bold' 
+                    : 'text-slate-600 dark:text-slate-300 font-medium'
+                } hover:text-violet-600 dark:hover:text-white text-sm transition-colors`}
+              >
+                {item.label}
+              </Link>
+            ) : (
+              <button
+                key={item.label}
+                onClick={() => onNavigate(item.target, item.type)}
+                className="text-slate-600 dark:text-slate-300 font-medium hover:text-violet-600 dark:hover:text-white text-sm transition-colors"
+              >
+                {item.label}
+              </button>
+            )
           ))}
           
           {/* Dark Mode Toggle */}
@@ -397,13 +410,24 @@ const Navbar = ({ currentView, onNavigate, isDarkMode, toggleTheme }) => {
           >
             <div className="flex flex-col gap-6 text-center">
               {navItems.map((item) => (
-                <button
-                  key={item.label}
-                  onClick={() => { setMobileMenuOpen(false); onNavigate(item.target, item.type); }}
-                  className="text-2xl font-bold text-slate-800 dark:text-white"
-                >
-                  {item.label}
-                </button>
+                item.type === 'page' ? (
+                  <Link
+                    key={item.label}
+                    to={`/${item.target}`}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="text-2xl font-bold text-slate-800 dark:text-white"
+                  >
+                    {item.label}
+                  </Link>
+                ) : (
+                  <button
+                    key={item.label}
+                    onClick={() => { setMobileMenuOpen(false); onNavigate(item.target, item.type); }}
+                    className="text-2xl font-bold text-slate-800 dark:text-white"
+                  >
+                    {item.label}
+                  </button>
+                )
               ))}
               <button 
                 onClick={() => { setMobileMenuOpen(false); onNavigate('contact', 'scroll'); }}
@@ -1022,7 +1046,7 @@ const Footer = ({ onNavigate }) => (
             opp. Bardai Brahmin Boarding, Kamdar Colony,<br />
             Jamnagar, Gujarat 361006
           </p>
-          <a href="mailto:hello@lilacminds.com" className="text-violet-400 hover:text-white transition-colors">hello@lilacminds.com</a>
+          <a href="mailto:lilac.minds.in@gmail.com" className="text-violet-400 hover:text-white transition-colors">lilac.minds.in@gmail.com</a>
         </div>
       </div>
       <div>
@@ -1066,7 +1090,7 @@ const Footer = ({ onNavigate }) => (
             <Instagram size={20} />
           </a>
           <a 
-            href="mailto:hello@lilacminds.com"
+            href="mailto:lilac.minds.in@gmail.com"
             aria-label="Email us"
             title="Email"
             className="p-3 bg-slate-800 rounded-full hover:bg-violet-600 text-white transition-all cursor-pointer"
@@ -1204,18 +1228,11 @@ const MainContent = ({ onNavigate }) => (
   </>
 );
 
-const getViewFromHash = () => {
-  const hash = window.location.hash.slice(1);
-  if (['resources', 'privacy', 'terms'].includes(hash)) {
-    return hash;
-  }
-  return 'home';
-};
-
 export default function App() {
   const [loading, setLoading] = useState(true);
-  const [view, setView] = useState(getViewFromHash()); 
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
@@ -1227,17 +1244,10 @@ export default function App() {
   };
 
   useEffect(() => {
-    const handleHashChange = () => {
-      const newView = getViewFromHash();
-      setView(newView);
-      if (newView !== 'home') {
-        window.scrollTo(0, 0);
-      }
-    };
-
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
-  }, []);
+    if (location.pathname !== '/') {
+      window.scrollTo(0, 0);
+    }
+  }, [location.pathname]);
 
   useEffect(() => {
     document.title = SEO_DATA.title;
@@ -1256,15 +1266,6 @@ export default function App() {
       document.head.appendChild(metaKeywords);
     }
     metaKeywords.content = SEO_DATA.keywords;
-
-    let scriptSchema = document.querySelector("#schema-json");
-    if (!scriptSchema) {
-      scriptSchema = document.createElement("script");
-      scriptSchema.id = "schema-json";
-      scriptSchema.type = "application/ld+json";
-      scriptSchema.text = JSON.stringify(SEO_DATA.schema);
-      document.head.appendChild(scriptSchema);
-    }
     
     const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
     link.type = 'image/png';
@@ -1283,13 +1284,15 @@ export default function App() {
     return () => clearTimeout(timer);
   }, []);
 
+  const currentView = location.pathname === '/' ? 'home' : location.pathname.slice(1);
+
   const handleNavigation = (target, type = 'scroll') => {
     if (type === 'page') {
-      window.location.hash = target;
+      navigate(`/${target}`);
       window.scrollTo(0, 0);
     } else {
-      if (view !== 'home') {
-        window.location.hash = '';
+      if (currentView !== 'home') {
+        navigate('/');
         setTimeout(() => {
           const el = document.getElementById(target);
           if (el) el.scrollIntoView({ behavior: 'smooth' });
@@ -1300,27 +1303,63 @@ export default function App() {
       }
     }
   };
-  
+
   return (
     <div className={`font-sans text-slate-900 bg-white selection:bg-violet-200 selection:text-violet-900 overflow-x-hidden ${isDarkMode ? 'dark' : ''}`}>
       {/* Render main content immediately for LCP - splash overlays on top */}
       <div className="dark:bg-slate-950 transition-colors duration-300">
-        <Navbar currentView={view} onNavigate={handleNavigation} isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
+        <Navbar currentView={currentView} onNavigate={handleNavigation} isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
         <FloatingShapes />
         <main id="main-content" role="main">
-          {view === 'home' ? (
-            <MainContent key="home" onNavigate={handleNavigation} />
-          ) : (
-            <Suspense fallback={
-              <div className="min-h-screen flex items-center justify-center bg-white dark:bg-slate-950">
-                <div className="text-violet-600 dark:text-violet-400 text-lg">Loading...</div>
-              </div>
-            }>
-              {view === 'resources' && <ResourcesView key="resources" onNavigate={handleNavigation} />}
-              {view === 'privacy' && <PrivacyPolicy key="privacy" onNavigate={handleNavigation} />}
-              {view === 'terms' && <TermsOfUse key="terms" onNavigate={handleNavigation} />}
-            </Suspense>
-          )}
+          <Routes>
+            <Route path="/" element={<MainContent onNavigate={handleNavigation} />} />
+            <Route path="/resources" element={
+              <Suspense fallback={
+                <div className="min-h-screen flex items-center justify-center bg-white dark:bg-slate-950">
+                  <div className="text-violet-600 dark:text-violet-400 text-lg">Loading...</div>
+                </div>
+              }>
+                <ResourcesView onNavigate={handleNavigation} />
+              </Suspense>
+            } />
+            <Route path="/articles/:slug" element={
+              <Suspense fallback={
+                <div className="min-h-screen flex items-center justify-center bg-white dark:bg-slate-950">
+                  <div className="text-violet-600 dark:text-violet-400 text-lg">Loading...</div>
+                </div>
+              }>
+                <ArticleView onNavigate={handleNavigation} />
+              </Suspense>
+            } />
+            <Route path="/tools/:slug" element={
+              <Suspense fallback={
+                <div className="min-h-screen flex items-center justify-center bg-white dark:bg-slate-950">
+                  <div className="text-violet-600 dark:text-violet-400 text-lg">Loading...</div>
+                </div>
+              }>
+                <AssessmentView onNavigate={handleNavigation} />
+              </Suspense>
+            } />
+            <Route path="/privacy" element={
+              <Suspense fallback={
+                <div className="min-h-screen flex items-center justify-center bg-white dark:bg-slate-950">
+                  <div className="text-violet-600 dark:text-violet-400 text-lg">Loading...</div>
+                </div>
+              }>
+                <PrivacyPolicy onNavigate={handleNavigation} />
+              </Suspense>
+            } />
+            <Route path="/terms" element={
+              <Suspense fallback={
+                <div className="min-h-screen flex items-center justify-center bg-white dark:bg-slate-950">
+                  <div className="text-violet-600 dark:text-violet-400 text-lg">Loading...</div>
+                </div>
+              }>
+                <TermsOfUse onNavigate={handleNavigation} />
+              </Suspense>
+            } />
+            <Route path="*" element={<MainContent onNavigate={handleNavigation} />} />
+          </Routes>
         </main>
         <FloatingWhatsApp />
         <Footer onNavigate={handleNavigation} />
