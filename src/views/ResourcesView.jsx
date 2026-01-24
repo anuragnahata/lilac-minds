@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
   ArrowRight,
@@ -27,6 +28,7 @@ import { validateForm, checkRateLimit, sanitizeInput } from '../utils/security';
 const BLOGS_DATA = [
   {
     id: 101,
+    slug: "understanding-therapy",
     title: "Understanding Therapy: Dispelling Myths & Embracing Growth",
     desc: "Therapy isn't just for crises. Discover how professional counseling fosters resilience, self-awareness, and emotional hygiene in everyday life.",
     tag: "Psychoeducation",
@@ -102,6 +104,7 @@ const BLOGS_DATA = [
   },
   {
     id: 102,
+    slug: "exam-anxiety",
     title: "Mastering Exam Anxiety: A Neuro-Psychological View",
     desc: "Why does the mind go blank during exams? Understanding the 'Fight or Flight' response and learning scientifically proven grounding techniques.",
     tag: "Student Mentorship",
@@ -175,6 +178,7 @@ const BLOGS_DATA = [
   },
   {
     id: 103,
+    slug: "emotional-resilience",
     title: "Building Emotional Resilience: The Art of Bouncing Back",
     desc: "Resilience isn't a trait you're born with; it's a muscle you build. Learn the 'Three C's' and practical strategies for psychological strength.",
     tag: "Wellness",
@@ -238,6 +242,7 @@ const BLOGS_DATA = [
   },
   {
     id: 104,
+    slug: "career-guidance",
     title: "Navigating Career Confusion: Science Over Guesswork",
     desc: "Confused between passion and practicality? Understand how Psychometric Aptitude Testing and counselling align your skills with market reality.",
     tag: "Career Counselling",
@@ -318,6 +323,7 @@ const BLOGS_DATA = [
   },
   {
     id: 105,
+    slug: "mindfulness-guide",
     title: "The Power of Mindfulness: A Practical Guide for Beginners",
     desc: "Learn how ancient meditation practices, validated by modern neuroscience, can reduce stress, improve focus, and enhance emotional well-being.",
     tag: "Wellness",
@@ -371,6 +377,7 @@ const BLOGS_DATA = [
   },
   {
     id: 106,
+    slug: "healthy-relationships",
     title: "Healthy Relationships: Communication, Boundaries, and Connection",
     desc: "Explore the psychology of healthy relationships—from attachment styles to conflict resolution—and learn practical skills for deeper connection.",
     tag: "Relationships",
@@ -435,6 +442,7 @@ const BLOGS_DATA = [
   },
   {
     id: 107,
+    slug: "digital-wellness",
     title: "Digital Wellness: Reclaiming Your Attention in the Age of Distraction",
     desc: "Understand how technology affects mental health and learn evidence-based strategies to build a healthier relationship with your devices.",
     tag: "Wellness",
@@ -508,6 +516,7 @@ const BLOGS_DATA = [
   },
   {
     id: 108,
+    slug: "sleep-hygiene",
     title: "Sleep Hygiene: The Foundation of Mental Health",
     desc: "Discover the critical connection between sleep and psychological well-being, and learn proven strategies for better rest.",
     tag: "Wellness",
@@ -571,6 +580,7 @@ const BLOGS_DATA = [
 const ASSESSMENT_DATA = {
   anxiety: {
     id: 'anxiety',
+    slug: 'anxiety-assessment',
     title: "Comprehensive Anxiety Assessment",
     desc: "An in-depth screening tool to evaluate the severity and impact of anxiety symptoms across physical, emotional, and behavioral dimensions over the past 2 weeks.",
     icon: Wind,
@@ -653,6 +663,7 @@ const ASSESSMENT_DATA = {
   },
   depression: {
     id: 'depression',
+    slug: 'depression-assessment',
     title: "Depression & Mood Assessment",
     desc: "A comprehensive evaluation based on the PHQ-9 to assess the presence and severity of depressive symptoms over the past 2 weeks.",
     icon: Cloud,
@@ -749,6 +760,7 @@ const ASSESSMENT_DATA = {
   },
   burnout: {
     id: 'burnout',
+    slug: 'burnout-assessment',
     title: "Burnout & Exhaustion Assessment",
     desc: "A comprehensive evaluation of physical, emotional, and mental exhaustion related to work, studies, or life demands.",
     icon: Battery,
@@ -822,6 +834,7 @@ const ASSESSMENT_DATA = {
   },
   sleep: {
     id: 'sleep',
+    slug: 'sleep-assessment',
     title: "Sleep Quality & Insomnia Assessment",
     desc: "A thorough evaluation of your sleep patterns, quality, and daytime functioning over the past month.",
     icon: Moon,
@@ -893,6 +906,7 @@ const ASSESSMENT_DATA = {
   },
   career: {
     id: 'career',
+    slug: 'career-assessment',
     title: "Career Clarity & Direction Assessment",
     desc: "A comprehensive evaluation of your career readiness, self-awareness, and decision-making confidence.",
     icon: Compass,
@@ -970,6 +984,7 @@ const ASSESSMENT_DATA = {
 };
 
 const ResourcesView = ({ onNavigate }) => {
+  const navigate = useNavigate();
   const [activeTest, setActiveTest] = useState(null);
   const [activeArticle, setActiveArticle] = useState(null);
   const [step, setStep] = useState('menu'); 
@@ -1105,7 +1120,7 @@ const ResourcesView = ({ onNavigate }) => {
                     const IconComponent = test.icon;
                     return (
                       <Tilt3D key={i} className="group flex items-start gap-4 p-6 rounded-2xl border border-slate-100 dark:border-white/10 bg-white dark:bg-slate-900 hover:border-violet-100 dark:hover:border-violet-500/30 hover:shadow-lg transition-all cursor-pointer">
-                        <div onClick={() => startTest(test.id)} className="w-full flex items-start gap-4">
+                        <div onClick={() => navigate(`/tools/${test.slug}`)} className="w-full flex items-start gap-4">
                           <div className={`p-3 rounded-full ${test.bg} ${test.color}`}>
                             <IconComponent size={20} />
                           </div>
@@ -1155,7 +1170,7 @@ const ResourcesView = ({ onNavigate }) => {
                  {BLOGS_DATA.map((blog, i) => (
                     <Tilt3D key={i} className="group p-0 rounded-2xl border border-slate-100 dark:border-white/10 bg-white dark:bg-slate-900 hover:border-violet-100 dark:hover:border-violet-500/30 hover:shadow-lg transition-all cursor-pointer overflow-hidden flex flex-col h-full">
                        <div className="h-2 bg-gradient-to-r from-violet-500 to-fuchsia-500 w-full" />
-                       <div className="p-6 flex flex-col h-full" onClick={() => openArticle(blog.id)}>
+                       <div className="p-6 flex flex-col h-full" onClick={() => navigate(`/articles/${blog.slug}`)}>
                           <div className="flex items-center gap-2 mb-3">
                              <span className="px-2 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">{blog.tag}</span>
                              <span className="text-[10px] text-slate-400 flex items-center gap-1"><Coffee size={10} /> {blog.readTime}</span>
@@ -1449,3 +1464,4 @@ const ResourcesView = ({ onNavigate }) => {
 };
 
 export default ResourcesView;
+export { BLOGS_DATA, ASSESSMENT_DATA };
