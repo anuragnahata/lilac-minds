@@ -213,7 +213,7 @@ const TermsOfUse = ({ onNavigate }) => {
                 <p>Jamnagar, Gujarat 361006, India</p>
                 <p className="flex items-center gap-2 mt-3">
                   <Mail className="w-4 h-4" />
-                  <a href="mailto:hello@lilacminds.com" className="text-violet-600 dark:text-violet-400 hover:underline">hello@lilacminds.com</a>
+                  <a href="mailto:lilac.minds.in@gmail.com" className="text-violet-600 dark:text-violet-400 hover:underline">lilac.minds.in@gmail.com</a>
                 </p>
                 <p className="flex items-center gap-2">
                   <Phone className="w-4 h-4" />
